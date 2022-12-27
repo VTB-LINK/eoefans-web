@@ -1,39 +1,14 @@
-import React, { useEffect, useRef } from "react";
-import { Masonry } from "masonic";
-import { useFakerImages } from "./utils/faker/index";
+// import Masonry from "@components/masonry";
+
+import Image from "@components/image";
+
 export default function App() {
-  const lists = useFakerImages(100);
+  // return <Masonry />;
+  const url = `https://images.pexels.com/photos/5702958/pexels-photo-5702958.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1`;
 
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-      }}
-    >
-      <div className='feedContainer'>
-        <Masonry
-          items={lists}
-          columnWidth={180}
-          rowGutter={10}
-          columnGutter={10}
-          maxColumnCount={5}
-          render={FakerCard}
-        />
-      </div>
+    <div>
+      <Image url={url} />
     </div>
-  );
-}
-
-function FakerCard({ data: { id, image, name } }) {
-  return (
-    <section key={id} className='element-item'>
-      <img src={image} alt='' />
-      <div className='footer'>
-        <p>
-          <span>{name}</span>
-        </p>
-      </div>
-    </section>
   );
 }
