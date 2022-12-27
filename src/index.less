@@ -1,0 +1,30 @@
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+.feedContainer {
+    max-width: 1200px;
+    display: flex;
+    align-items: flex-start;
+    position: relative;
+    transition: width .5s;
+    width: 100%;
+
+    .element-item {
+        min-width: 180px;
+
+        img:first-child {
+            width: 100%;
+            display: inline-block;
+            border-radius: 8px;
+            outline: 0.5px solid rgba(0, 0, 0, .05);
+            object-fit: cover;
+        }
+
+        .footer {
+            padding: 12px;
+        }
+    }
+}
