@@ -1,13 +1,13 @@
 import { Masonry } from "masonic";
+import Image from "@components/image";
 import { useFakerImages } from "@utils/faker/index";
 export default function App() {
-  const lists = useFakerImages(100);
+  const lists = useFakerImages(20);
 
   return (
     <div
       style={{
-        display: "flex",
-        justifyContent: "center",
+        marginTop: "30px",
       }}
     >
       <div className='feedContainer'>
@@ -18,6 +18,7 @@ export default function App() {
           columnGutter={10}
           maxColumnCount={5}
           render={FakerCard}
+          overscanBy={Infinity}
         />
       </div>
     </div>
@@ -27,7 +28,8 @@ export default function App() {
 function FakerCard({ data: { id, image, name } }) {
   return (
     <section key={id} className='element-item'>
-      <img src={image} alt='' loading='lazy' />
+      {/* <img src={image} alt='' loading='lazy' /> */}
+      <Image url={image} />
       <div className='footer'>
         <p>
           <span>{name}</span>

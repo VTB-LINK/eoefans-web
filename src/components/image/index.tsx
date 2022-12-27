@@ -1,23 +1,44 @@
-import { useEffect, useState } from "react";
-import { getImageSize } from "./tool";
-export default function Image({ url }) {
+import { useMemo } from "react";
+import { useEffect, useState, memo } from "react";
+import { getImageSize, getResizeHeight, fallbackUrl } from "./tool";
+
+type ImageProps = {
+  url: string;
+};
+
+function useLoading(url: string) {
   const [loading, setLoading] = useState<boolean>(true);
-  const [obj, setObj] = useState({});
-  useEffect(() => {
-    getImageSize(url).then((data) => {
-      setLoading(() => false);
-      setObj(() => ({
-        width: data.width,
-        height: data.height,
+  const [size, setSize] = useState<{ width: number; height: number }>({
+    width: 0,
+    height: 0,
+  });
+  useMemo(() => {
+    getImageSize(url).then(({ width, height }) => {
+      setTimeout(() => {
+        setLoading(() => false);
+      }, 500);
+      setSize(() => ({
+        width: width,
+        height: height,
       }));
     });
   }, [url]);
-  if (loading) {
-    return <div>loading</div>;
-  }
+  return { loading, size };
+}
+
+export default function Image({ url }: ImageProps) {
+  const { loading, size } = useLoading(url);
   return (
     <div>
-      <img width={obj.width} height={obj.height} src={url} />
+      <img
+        width={180}
+        height={getResizeHeight(size, 180)}
+        src={loading ? fallbackUrl : url}
+        style={{
+          opacity: loading ? 0.09 : 1.0,
+        }}
+        alt=''
+      />
     </div>
   );
 }

@@ -5,11 +5,11 @@
 }
 
 .feedContainer {
+    margin: 0 auto;
     max-width: 1200px;
     display: flex;
     align-items: flex-start;
     position: relative;
-    transition: width .5s;
     width: 100%;
 
     .element-item {
@@ -21,6 +21,8 @@
             border-radius: 8px;
             outline: 0.5px solid rgba(0, 0, 0, .05);
             object-fit: cover;
+            transition: opacity .5s;
+            -webkit-transition: opacity .5s;
         }
 
         .footer {
