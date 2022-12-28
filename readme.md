@@ -1,4 +1,4 @@
-# eoefans-web端
+# eoefans-web 端
 
 ## 目录结构（暂定）
 
@@ -12,10 +12,10 @@
 # install dependencies
 $ npm install
 
-# serve with hot reload 
+# serve with hot reload
 $ npm run dev
 
-# build for production 
+# build for production
 $ npm run build
 ```
 
@@ -25,7 +25,6 @@ $ npm run build
 - [ ] 二创图展示页
 - [ ] 二创视频展示页
 - [x] 首屏瀑布流
-- [ ] 首屏加载流
-- [ ] UI设计
+- [x] 首屏加载流
+- [ ] UI 设计
 - [ ] 接口测试
-
