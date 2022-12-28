@@ -8,6 +8,7 @@ export default function App() {
   return (
     <div>
       <Masonry />
+      {/* <Image url={url} /> */}
     </div>
   );
 }

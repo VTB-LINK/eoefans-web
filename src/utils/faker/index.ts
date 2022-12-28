@@ -11,7 +11,7 @@ const randomListImageUrls = [
   `https://images.pexels.com/photos/3254555/pexels-photo-3254555.jpeg?auto=compress&cs=tinysrgb&w=600`,
 ];
 
-function createRandomBlob() {
+export function createRandomBlob() {
   return {
     // image: faker.image.imageUrl(640, 480, "cat", true),
     image:
@@ -27,4 +27,18 @@ export function useFakerImages(size: number = 10) {
     return Array.from({ length: size }, () => createRandomBlob());
   }, [size]);
   return _list;
+}
+export function FetchNewImages(size: number = 10): Promise<
+  {
+    image: string;
+    name: string;
+    id: string;
+  }[]
+> {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      const arr = Array.from({ length: size }, () => createRandomBlob());
+      resolve(arr);
+    }, 100 + Math.random() * 100);
+  });
 }

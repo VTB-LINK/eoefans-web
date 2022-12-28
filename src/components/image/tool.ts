@@ -1,7 +1,8 @@
 import { Once } from "@utils/index";
-type ImageSize = {
+export type ImageSize = {
   width: number;
   height: number;
+  again: boolean;
 };
 /**
  * image组件的工具库
@@ -14,12 +15,14 @@ export function getImageSize(imageSrc: string): Promise<ImageSize> {
       resolve({
         width: image.width,
         height: image.height,
+        again: true,
       });
     }
     image.onload = () =>
       resolve({
         width: image.width,
         height: image.height,
+        again: false,
       });
   });
 }

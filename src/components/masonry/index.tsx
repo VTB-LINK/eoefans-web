@@ -1,9 +1,35 @@
-import { Masonry } from "masonic";
+import { FC, useState, useEffect } from "react";
+import { Masonry, useInfiniteLoader } from "masonic";
 import Image from "@components/image";
-import { useFakerImages } from "@utils/faker/index";
+import { FetchNewImages, createRandomBlob } from "@utils/faker/index";
 export default function App() {
-  const lists = useFakerImages(20);
-
+  const [lists, setLists] = useState<
+    {
+      image: string;
+      name: string;
+      id: string;
+    }[]
+  >([]);
+  const fetchMoreItems = async (
+    startIndex: number,
+    stopIndex: number,
+    currentItems: any[]
+  ) => {
+    const res = await FetchNewImages(stopIndex - startIndex);
+    // console.log({ startIndex, stopIndex });
+    setLists((lists) => [...lists, ...res]);
+  };
+  useEffect(() => {
+    fetchMoreItems(0, 10, []);
+  }, []);
+  const maybeLoaadMore = useInfiniteLoader(fetchMoreItems, {
+    threshold: 6,
+    isItemLoaded: (index, items) => {
+      return !!items[index];
+    },
+    minimumBatchSize: 12,
+    // totalItems: 30,
+  });
   return (
     <div
       style={{
@@ -18,17 +44,25 @@ export default function App() {
           columnGutter={10}
           maxColumnCount={5}
           render={FakerCard}
-          overscanBy={Infinity}
+          // overscanBy={Infinity}
+          overscanBy={3}
+          onRender={maybeLoaadMore}
         />
       </div>
     </div>
   );
 }
+type CardType = {
+  data: {
+    id: string;
+    image: string;
+    name: string;
+  };
+};
 
-function FakerCard({ data: { id, image, name } }) {
+const FakerCard: FC<CardType> = ({ data: { id, image, name } }) => {
   return (
     <section key={id} className='element-item'>
-      {/* <img src={image} alt='' loading='lazy' /> */}
       <Image url={image} />
       <div className='footer'>
         <p>
@@ -37,4 +71,4 @@ function FakerCard({ data: { id, image, name } }) {
       </div>
     </section>
   );
-}
+};

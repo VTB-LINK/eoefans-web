@@ -1,33 +1,34 @@
 import { useMemo } from "react";
 import { useEffect, useState, memo } from "react";
-import { getImageSize, getResizeHeight, fallbackUrl } from "./tool";
+import { getImageSize, getResizeHeight, fallbackUrl, ImageSize } from "./tool";
 
 type ImageProps = {
   url: string;
 };
 
 function useLoading(url: string) {
-  const [loading, setLoading] = useState<boolean>(true);
-  const [size, setSize] = useState<{ width: number; height: number }>({
+  const [obj, setObj] = useState<ImageSize & { loading: boolean }>({
     width: 0,
     height: 0,
+    again: false,
+    loading: true,
   });
   useMemo(() => {
-    getImageSize(url).then(({ width, height }) => {
-      setTimeout(() => {
-        setLoading(() => false);
-      }, 500);
-      setSize(() => ({
+    getImageSize(url).then(({ width, height, again }) => {
+      setObj(() => ({
         width: width,
         height: height,
+        again: again,
+        loading: false,
       }));
     });
   }, [url]);
-  return { loading, size };
+  return { loading: obj.loading, size: obj };
 }
 
 export default function Image({ url }: ImageProps) {
   const { loading, size } = useLoading(url);
+  console.log({ loading, size });
   return (
     <div>
       <img
