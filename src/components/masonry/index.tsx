@@ -28,7 +28,7 @@ export default function App() {
       return !!items[index];
     },
     minimumBatchSize: 12,
-    // totalItems: 30,
+    // totalItems: 10,
   });
   return (
     <div

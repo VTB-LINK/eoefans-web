@@ -1,9 +1,14 @@
 import { Once } from "@utils/index";
-export type ImageSize = {
-  width: number;
-  height: number;
-  again: boolean;
-};
+export type ImageSize =
+  | {
+      width: number;
+      height: number;
+      again: boolean;
+      success: true;
+    }
+  | {
+      success: false;
+    };
 /**
  * image组件的工具库
  */
@@ -16,6 +21,7 @@ export function getImageSize(imageSrc: string): Promise<ImageSize> {
         width: image.width,
         height: image.height,
         again: true,
+        success: true,
       });
     }
     image.onload = () =>
@@ -23,18 +29,28 @@ export function getImageSize(imageSrc: string): Promise<ImageSize> {
         width: image.width,
         height: image.height,
         again: false,
+        success: true,
       });
+    image.onerror = () => {
+      resolve({
+        success: false,
+      });
+    };
   });
 }
 
 export function getResizeHeight(imageSizeObj: ImageSize, realwidth: number) {
-  const res = 100 + Math.ceil(Math.random() * 100);
-  if (imageSizeObj.width < 1 || imageSizeObj.height < 1) {
+  const res = Math.ceil((100 + Math.ceil(Math.random() * 100)) / 5) * 5;
+  if (
+    imageSizeObj.success !== true ||
+    imageSizeObj.width < 1 ||
+    imageSizeObj.height < 1
+  ) {
     return res;
   }
   const realheight =
     imageSizeObj.height / Math.floor(imageSizeObj.width / realwidth);
-  return isNaN(realheight) ? res : realheight;
+  return isNaN(realheight) ? res : Math.ceil(realheight / 5) * 5;
 }
 
 export const fallbackUrl =

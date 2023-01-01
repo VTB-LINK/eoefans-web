@@ -1,5 +1,5 @@
 import Masonry from "@components/masonry";
-
+import { Link, Outlet } from "react-router-dom";
 import Image from "@components/image";
 export default function App() {
   // return <Masonry />;
@@ -7,8 +7,12 @@ export default function App() {
 
   return (
     <div>
-      <Masonry />
+      {/* <Masonry /> */}
       {/* <Image url={url} /> */}
+      <Link to='/photo'>测试第一个跳转</Link>
+      <Link to='/video'>test to video</Link>
+      <Link to='/read'>test to read</Link>
+      <Outlet />
     </div>
   );
 }

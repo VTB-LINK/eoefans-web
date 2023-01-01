@@ -7,36 +7,36 @@ type ImageProps = {
 };
 
 function useLoading(url: string) {
-  const [obj, setObj] = useState<ImageSize & { loading: boolean }>({
+  const [obj, setObj] = useState<ImageSize & { isLoaded: boolean }>({
     width: 0,
     height: 0,
     again: false,
-    loading: true,
+    isLoaded: false,
+    success: true,
   });
-  useMemo(() => {
-    getImageSize(url).then(({ width, height, again }) => {
-      setObj(() => ({
-        width: width,
-        height: height,
-        again: again,
-        loading: false,
-      }));
-    });
+  useMemo(async () => {
+    const res = await getImageSize(url);
+    if (res.success === false) {
+      setObj(() => ({ success: false, isLoaded: true }));
+    } else {
+      setObj(() => ({ ...res, isLoaded: true }));
+    }
   }, [url]);
-  return { loading: obj.loading, size: obj };
+  return obj;
 }
 
 export default function Image({ url }: ImageProps) {
-  const { loading, size } = useLoading(url);
-  console.log({ loading, size });
+  const res = useLoading(url),
+    { isLoaded, success } = res;
+  // console.log(res);
   return (
     <div>
       <img
         width={180}
-        height={getResizeHeight(size, 180)}
-        src={loading ? fallbackUrl : url}
+        height={getResizeHeight(res, 180)}
+        src={isLoaded && success ? url : fallbackUrl}
         style={{
-          opacity: loading ? 0.09 : 1.0,
+          opacity: isLoaded ? 1.0 : 0.09,
         }}
         alt=''
       />
