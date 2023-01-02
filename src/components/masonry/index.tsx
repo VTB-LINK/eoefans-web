@@ -1,8 +1,9 @@
-import { FC, useState, useEffect } from "react";
-import { Masonry, useInfiniteLoader } from "masonic";
+import { FC, useState, useEffect, useCallback } from "react";
+import { Masonry as Masonic_masonry, useInfiniteLoader } from "masonic";
 import Image from "@components/image";
-import { FetchNewImages, createRandomBlob } from "@utils/faker/index";
-export default function App() {
+import { FetchNewImages } from "@utils/faker/index";
+import { SingleRun } from "@utils/index";
+export default function Masonry() {
   const [lists, setLists] = useState<
     {
       image: string;
@@ -16,19 +17,28 @@ export default function App() {
     currentItems: any[]
   ) => {
     const res = await FetchNewImages(stopIndex - startIndex);
-    // console.log({ startIndex, stopIndex });
-    setLists((lists) => [...lists, ...res]);
+    setLists((lists) => {
+      console.log({
+        startIndex,
+        stopIndex,
+        currentNum: lists.length + res.length,
+      });
+      return [...lists, ...res];
+    });
   };
+  const fetchMoreItemsHandler = useCallback(SingleRun(fetchMoreItems), [
+    setLists,
+  ]);
   useEffect(() => {
-    fetchMoreItems(0, 10, []);
-  }, []);
-  const maybeLoaadMore = useInfiniteLoader(fetchMoreItems, {
-    threshold: 6,
+    fetchMoreItemsHandler(0, 20, []);
+    console.log("effect");
+  }, [fetchMoreItemsHandler]);
+  const maybeLoaadMore = useInfiniteLoader(fetchMoreItemsHandler, {
+    threshold: 10,
     isItemLoaded: (index, items) => {
       return !!items[index];
     },
-    minimumBatchSize: 12,
-    // totalItems: 10,
+    minimumBatchSize: 20,
   });
   return (
     <div
@@ -37,7 +47,7 @@ export default function App() {
       }}
     >
       <div className='feedContainer'>
-        <Masonry
+        <Masonic_masonry
           items={lists}
           columnWidth={180}
           rowGutter={10}
