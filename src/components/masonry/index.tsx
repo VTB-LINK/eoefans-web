@@ -3,6 +3,8 @@ import { Masonry as Masonic_masonry, useInfiniteLoader } from "masonic";
 import Image from "@components/image";
 import { FetchNewImages } from "@utils/faker/index";
 import { SingleRun } from "@utils/index";
+import { fetchVideos } from "@utils/fetch";
+import { nanoid } from "nanoid";
 export default function Masonry() {
   const [lists, setLists] = useState<
     {
@@ -16,14 +18,27 @@ export default function Masonry() {
     stopIndex: number,
     currentItems: any[]
   ) => {
-    const res = await FetchNewImages(stopIndex - startIndex);
+    // const res = await FetchNewImages(stopIndex - startIndex);
+    const res = await fetchVideos({
+        order: "view",
+        page: 1,
+      }),
+      data = res.data.result;
+
     setLists((lists) => {
-      console.log({
-        startIndex,
-        stopIndex,
-        currentNum: lists.length + res.length,
-      });
-      return [...lists, ...res];
+      // console.log({
+      //   startIndex,
+      //   stopIndex,
+      //   currentNum: lists.length + res.length,
+      // });
+      return [
+        ...lists,
+        ...data.map((item) => ({
+          image: item.face,
+          name: item.name,
+          id: nanoid(10),
+        })),
+      ];
     });
   };
   const fetchMoreItemsHandler = useCallback(SingleRun(fetchMoreItems), [

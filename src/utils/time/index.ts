@@ -5,5 +5,5 @@ dayJs.locale("zh-cn");
 dayJs.extend(realtiveTime);
 
 export default function getrealtiveTime(time: number): string {
-  return dayJs(time).toNow();
+  return dayJs(time).fromNow();
 }

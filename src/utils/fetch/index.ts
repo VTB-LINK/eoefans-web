@@ -11,6 +11,8 @@ import { IFetchVideoParams, RFetchVideoRes } from "./fetchtype";
 /**
  * video视频数据获取接口
  */
-export function fetchVideos(params: IFetchVideoParams): RFetchVideoRes {
-  return videoJson;
+export function fetchVideos(
+  params: IFetchVideoParams
+): Promise<RFetchVideoRes> {
+  return Promise.resolve(videoJson);
 }
