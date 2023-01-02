@@ -1,13 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
-import App from "./App";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import VideoPage from "./routers/video";
 import "./index.less";
 import ReadPage from "./routers/read";
@@ -34,14 +27,17 @@ const router = createBrowserRouter([
             element: <PhotoPage />,
           },
           {
+            // video瀑布流展示页面
             path: "video",
             element: <VideoPage />,
           },
           {
+            // 二创文章瀑布流展示页面
             path: "read",
             element: <ReadPage />,
           },
           {
+            // 二创图片瀑布流展示页面
             path: "photo",
             element: <PhotoPage />,
           },
