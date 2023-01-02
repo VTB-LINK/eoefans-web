@@ -7,6 +7,7 @@ import {
   useNavigation,
   useSubmit,
 } from "react-router-dom";
+import message from "@components/message";
 export default function Layout() {
   const nav_lists = [
     {
@@ -24,7 +25,12 @@ export default function Layout() {
   ];
   return (
     <>
-      <header>首部</header>
+      <header>
+        <p>header</p>
+        <div>
+          <button onClick={() => message.info("测试info")}>test message</button>
+        </div>
+      </header>
       <main>
         <nav>
           <ul>
