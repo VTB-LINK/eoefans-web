@@ -8,6 +8,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "dayjs": "^1.11.7",
     "imagesloaded": "^5.0.0",
     "masonic": "^3.7.0",
     "nanoid": "^4.0.0",
