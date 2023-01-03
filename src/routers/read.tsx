@@ -5,7 +5,7 @@ export default function ReadPage() {
     <>
       <h1>这里是read路由页面</h1>
       <p>
-        <span>1672570020000->{time}</span>
+        <span>1672570020000-{time}</span>
       </p>
     </>
   );

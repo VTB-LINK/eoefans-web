@@ -7,6 +7,7 @@ import ReadPage from "./routers/read";
 import Layout from "./routers/layout";
 import PhotoPage from "./routers/photo";
 import ErrorPage from "./routers/error";
+import "intersection-observer";
 
 const router = createBrowserRouter([
   {

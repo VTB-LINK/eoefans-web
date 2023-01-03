@@ -1,4 +1,7 @@
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
+import { InView } from "react-intersection-observer";
+import { Once } from "@utils/index";
+import styles from "./image.module.less";
 import {
   getImageSize,
   getResizeHeight,
@@ -27,6 +30,15 @@ type ImageProps = {
    * @example 180
    */
   width?: number;
+  /**
+   * @description 是否选择监听该组件，设计出来就是为了在出现该图片之后进行网络请求
+   * @example true
+   */
+  observer?: boolean;
+  /**
+   * @description 在observer为true时，该组件在可视区时执行callback，默认只执行一次。
+   */
+  callback?: (inView: boolean) => void;
 };
 
 /**
@@ -43,11 +55,7 @@ function useLoading(url: string) {
   });
   useMemo(async () => {
     const res = await getImageSize(url);
-    if (res.success === false) {
-      setObj(() => ({ success: false, isLoaded: true }));
-    } else {
-      setObj(() => ({ ...res, isLoaded: true }));
-    }
+    setObj(() => ({ ...res, isLoaded: true }));
   }, [url]);
   return obj;
 }
@@ -60,22 +68,30 @@ export default function Image({
   url,
   width = 180,
   fallbackUrl = DefaultFallbackUrl,
+  observer,
+  callback,
 }: ImageProps) {
   const res = useLoading(url),
     { isLoaded, success } = res,
     real_width = width || 180,
     real_fallback_url = fallbackUrl || DefaultFallbackUrl;
+  const once_callback = useCallback(Once(callback!!), []);
   return (
-    <div>
-      <img
-        width={real_width}
-        height={getResizeHeight(res, real_width)}
-        src={isLoaded && success ? url : real_fallback_url}
-        style={{
-          opacity: isLoaded ? 1.0 : 0.09,
-        }}
-        alt=''
-      />
-    </div>
+    <InView>
+      {({ inView, ref, entry }) => (
+        <div ref={ref}>
+          <img
+            width={real_width}
+            height={getResizeHeight(res, real_width)}
+            src={isLoaded && success ? url : real_fallback_url}
+            style={{
+              opacity: isLoaded ? 1.0 : 0.09,
+            }}
+            alt=''
+          />
+          <>{observer && inView && once_callback(inView)}</>
+        </div>
+      )}
+    </InView>
   );
 }

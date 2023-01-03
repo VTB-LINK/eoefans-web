@@ -8,16 +8,24 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
+    "@mui/lab": "5.0.0-alpha.114",
+    "@mui/material": "^5.11.3",
     "dayjs": "^1.11.7",
     "imagesloaded": "^5.0.0",
+    "intersection-observer": "^0.12.2",
     "masonic": "^3.7.0",
     "nanoid": "^4.0.0",
+    "normalize.css": "^8.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-intersection-observer": "^9.4.1",
     "react-photo-view": "^1.2.3",
     "react-router-dom": "^6.6.1"
   },
   "devDependencies": {
+    "@babel/core": ">=7.0.0 <8.0.0",
     "@faker-js/faker": "^7.6.0",
     "@types/imagesloaded": "^4.1.2",
     "@types/node": "^18.11.18",

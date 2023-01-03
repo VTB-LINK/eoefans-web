@@ -1,43 +1,47 @@
 import { FC, useState, useEffect, useCallback } from "react";
-import { Masonry as Masonic_masonry, useInfiniteLoader } from "masonic";
+import { Masonry as Masonic_masonry } from "masonic";
 import Image from "@components/image";
 import { FetchNewImages } from "@utils/faker/index";
-import { SingleRun } from "@utils/index";
+import { SingleRun, concurrencyRequest } from "@utils/index";
 import { fetchVideos } from "@utils/fetch";
 import { nanoid } from "nanoid";
 export default function Masonry() {
-  const [lists, setLists] = useState<
-    {
-      image: string;
-      name: string;
-      id: string;
-    }[]
-  >([]);
+  const [lists, setLists] = useState<MasonryImageType[]>([]);
   const fetchMoreItems = async (
     startIndex: number,
     stopIndex: number,
     currentItems: any[]
   ) => {
-    // const res = await FetchNewImages(stopIndex - startIndex);
     const res = await fetchVideos({
         order: "view",
         page: 1,
       }),
-      data = res.data.result;
-
+      data = res.data.result,
+      urls = data.map((item) => item.face);
+    await concurrencyRequest(urls, 6, "success", "error");
     setLists((lists) => {
-      // console.log({
-      //   startIndex,
-      //   stopIndex,
-      //   currentNum: lists.length + res.length,
-      // });
       return [
         ...lists,
-        ...data.map((item) => ({
-          image: item.face,
-          name: item.name,
-          id: nanoid(10),
-        })),
+        ...data.map((item, index) => {
+          if (index !== data.length - 6) {
+            return {
+              image: item.face,
+              name: item.name,
+              id: nanoid(10),
+            };
+          }
+          return {
+            image: item.face,
+            name: item.name,
+            id: nanoid(10),
+            observer: true,
+            callback: (inView: boolean) => {
+              //@ts-ignore
+              fetchMoreItems();
+              console.log("fetching!");
+            },
+          };
+        }),
       ];
     });
   };
@@ -48,13 +52,6 @@ export default function Masonry() {
     fetchMoreItemsHandler(0, 20, []);
     console.log("effect");
   }, [fetchMoreItemsHandler]);
-  const maybeLoaadMore = useInfiniteLoader(fetchMoreItemsHandler, {
-    threshold: 10,
-    isItemLoaded: (index, items) => {
-      return !!items[index];
-    },
-    minimumBatchSize: 20,
-  });
   return (
     <div
       style={{
@@ -69,26 +66,29 @@ export default function Masonry() {
           columnGutter={10}
           maxColumnCount={5}
           render={FakerCard}
-          // overscanBy={Infinity}
-          overscanBy={3}
-          onRender={maybeLoaadMore}
+          overscanBy={Infinity}
         />
       </div>
     </div>
   );
 }
-type CardType = {
-  data: {
-    id: string;
-    image: string;
-    name: string;
-  };
+
+type MasonryImageType = {
+  id: string;
+  image: string;
+  name: string;
+  observer?: boolean;
+  callback?: (inView: boolean) => void;
 };
 
-const FakerCard: FC<CardType> = ({ data: { id, image, name } }) => {
+type CardType = {
+  data: MasonryImageType;
+};
+
+const FakerCard: FC<CardType> = ({ data: { id, image, name, ...res } }) => {
   return (
     <section key={id} className='element-item'>
-      <Image url={image} />
+      <Image url={image} {...res} />
       <div className='footer'>
         <p>
           <span>{name}</span>
