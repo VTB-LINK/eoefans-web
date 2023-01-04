@@ -50,6 +50,7 @@ export function getImageSize(imageSrc: string): Promise<ImageSize> {
 export function getResizeHeight(imageSizeObj: ImageSize, realwidth: number) {
   const res = Math.ceil((100 + Math.ceil(Math.random() * 100)) / 5) * 5;
   if (
+    !imageSizeObj ||
     imageSizeObj.success !== true ||
     imageSizeObj.width < 1 ||
     imageSizeObj.height < 1

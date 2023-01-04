@@ -39,18 +39,17 @@ export function SingleRun<T extends (...args: any) => any>(handler: T) {
 /**
  * @description 网络请求并发限制函数,默认返回结果队列，如果提供successStatus或者errorStatus则替换resolve和reject结果
  */
-export function concurrencyRequest(
+export function concurrencyRequest<T>(
   urls: string[],
-  maxNum: number = 1,
-  successStatus?: unknown,
-  errorStatus?: unknown
-): Promise<unknown[]> {
+  requestFn: (url: string) => Promise<T>,
+  maxNum: number = 1
+): Promise<T[]> {
   return new Promise((resolve) => {
     if (urls.length === 0) {
       resolve([]);
       return;
     }
-    const results: unknown[] = [];
+    const results: T[] = [];
     let index = 0; // 下一个请求的下标
     let count = 0; // 当前请求完成的数量
 
@@ -61,12 +60,12 @@ export function concurrencyRequest(
       const url = urls[index];
       index++;
       try {
-        const resp = await fetch(url);
+        const resp = await requestFn(url);
         // resp 加入到results
-        results[i] = successStatus || resp;
+        results[i] = resp;
       } catch (err) {
         // err 加入到results
-        results[i] = errorStatus || err;
+        results[i] = err as T;
       } finally {
         count++;
         // 判断是否所有的请求都已完成
@@ -83,4 +82,40 @@ export function concurrencyRequest(
       request();
     }
   });
+}
+
+export function Pick<T extends object>(originObj: T, ...getAttr: (keyof T)[]) {
+  let res = {};
+  //@ts-ignore
+  getAttr.forEach((value) => (res[value] = originObj[value]));
+  return res;
+}
+
+type test = keyof {
+  a: number;
+  b: number;
+};
+
+/**
+ * 节流函数,指连续触发事件但是在 n 秒中只执行一次函数
+ */
+
+export function thorttleFn<T extends (...args: any) => any>(
+  fn: T,
+  absTime: number = 3000
+) {
+  let time: number | Date = 0;
+  return function (...res: Parameters<T>) {
+    let curTime = new Date();
+    if (time === 0) {
+      //@ts-ignore
+      fn.apply(this, res);
+      time = curTime;
+      //@ts-ignore
+    } else if (curTime - time >= absTime) {
+      time = curTime;
+      //@ts-ignore
+      fn.apply(this, res);
+    }
+  };
 }

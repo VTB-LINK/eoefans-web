@@ -5,6 +5,7 @@ import { FetchNewImages } from "@utils/faker/index";
 import { SingleRun, concurrencyRequest } from "@utils/index";
 import { fetchVideos } from "@utils/fetch";
 import { nanoid } from "nanoid";
+import { getImageSize } from "../image/tool";
 export default function Masonry() {
   const [lists, setLists] = useState<MasonryImageType[]>([]);
   const fetchMoreItems = async (
@@ -18,18 +19,18 @@ export default function Masonry() {
       }),
       data = res.data.result,
       urls = data.map((item) => item.face);
-    await concurrencyRequest(urls, 6, "success", "error");
+    const fetchimagres = await concurrencyRequest(urls, getImageSize, 6);
     setLists((lists) => {
       return [
         ...lists,
         ...data.map((item, index) => {
-          if (index !== data.length - 6) {
-            return {
-              image: item.face,
-              name: item.name,
-              id: nanoid(10),
-            };
-          }
+          // if (index !== data.length - 6) {
+          return {
+            image: item.face,
+            name: item.name,
+            id: nanoid(10),
+          };
+          // }
           return {
             image: item.face,
             name: item.name,

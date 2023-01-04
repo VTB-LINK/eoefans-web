@@ -1,6 +1,8 @@
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo, useState, memo, ReactElement } from "react";
 import { InView } from "react-intersection-observer";
+import { useImageShouldResize } from "@components/proview/imageSize";
 import { Once } from "@utils/index";
+import { ImageProps } from "./imagetype";
 import styles from "./image.module.less";
 import {
   getImageSize,
@@ -8,38 +10,6 @@ import {
   fallbackUrl as DefaultFallbackUrl,
   ImageSize,
 } from "./tool";
-
-/**
- * @description Image组件参数
- */
-type ImageProps = {
-  /**
-   * @description 图片的url
-   * @example "www.example.com/1.jpg"
-   */
-  url: string;
-  /**
-   * @description 图片失效的兜底图片url
-   * @example "www.example.com/fallback.jpg"
-   * 建议提供base64版本
-   */
-  fallbackUrl?: string;
-  /**
-   * @description 图片默认宽度，因为自适应的原因最终效果可能大于该宽度
-   * @default 180
-   * @example 180
-   */
-  width?: number;
-  /**
-   * @description 是否选择监听该组件，设计出来就是为了在出现该图片之后进行网络请求
-   * @example true
-   */
-  observer?: boolean;
-  /**
-   * @description 在observer为true时，该组件在可视区时执行callback，默认只执行一次。
-   */
-  callback?: (inView: boolean) => void;
-};
 
 /**
  * @description 图片预加载hook
@@ -64,25 +34,31 @@ function useLoading(url: string) {
  *@description 图片组件库，默认支持图片加载fallback。
  */
 
-export default function Image({
+export default memo(function Image({
   url,
   width = 180,
+  height,
   fallbackUrl = DefaultFallbackUrl,
   observer,
   callback,
-}: ImageProps) {
+  children,
+}: ImageProps & {
+  children?: ReactElement;
+}) {
   const res = useLoading(url),
     { isLoaded, success } = res,
-    real_width = width || 180,
+    real_width = width,
+    real_height = height || getResizeHeight(res, real_width),
     real_fallback_url = fallbackUrl || DefaultFallbackUrl;
   const once_callback = useCallback(Once(callback!!), []);
+  const { isShouldchangeSize } = useImageShouldResize();
   return (
     <InView>
       {({ inView, ref, entry }) => (
-        <div ref={ref}>
+        <div ref={ref} className={styles.imgWrapper}>
           <img
-            width={real_width}
-            height={getResizeHeight(res, real_width)}
+            width={isShouldchangeSize ? "100%" : real_width}
+            height={isShouldchangeSize ? "100%" : real_height}
             src={isLoaded && success ? url : real_fallback_url}
             style={{
               opacity: isLoaded ? 1.0 : 0.09,
@@ -90,8 +66,9 @@ export default function Image({
             alt=''
           />
           <>{observer && inView && once_callback(inView)}</>
+          {children}
         </div>
       )}
     </InView>
   );
-}
+});

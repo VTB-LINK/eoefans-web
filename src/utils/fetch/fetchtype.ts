@@ -115,7 +115,7 @@ interface RFetchVideoResResult {
    */
   pubdate: number;
   /**
-   * @description 不知道是啥
+   * @description 应该是时长
    */
   duration: string;
   /**
@@ -124,14 +124,23 @@ interface RFetchVideoResResult {
    */
   view: number;
   /**
-   * @description 不知道是啥
+   * @description 应该是弹幕数量
    *
    */
   danmaku: number;
   reply: number;
   favorite: number;
+  /**
+   * @description 视频硬币数
+   */
   coin: number;
+  /**
+   * @description 视频分享数
+   */
   share: number;
+  /**
+   * @description 视频点赞数
+   */
   like: number;
   score: number;
   status: number;
