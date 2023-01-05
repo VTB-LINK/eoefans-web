@@ -84,22 +84,58 @@ export function concurrencyRequest<T>(
   });
 }
 
-export function Pick<T extends object>(originObj: T, ...getAttr: (keyof T)[]) {
-  let res = {};
-  //@ts-ignore
-  getAttr.forEach((value) => (res[value] = originObj[value]));
-  return res;
+/**
+ * @description Pick函数，将对象中的某些属性抽离出来返回一个新对象
+ */
+export function Pick<T extends object, P extends keyof T>(
+  originObj: T,
+  ...getAttr: P[]
+): Pick<T, P> {
+  return getAttr.reduce((pre, cur) => {
+    pre[cur] = originObj[cur];
+    return pre;
+  }, Object.create(null));
 }
 
-type test = keyof {
-  a: number;
-  b: number;
-};
+/**
+ * @description Omit函数，将对象中的某些属性剔除返回一个新对象
+ */
+export function Omit<T extends object, P extends keyof T>(
+  originObj: T,
+  ...noUseAttr: P[]
+): Omit<T, P> {
+  return noUseAttr.reduce((pre, cur) => {
+    delete pre[cur];
+    return pre;
+  }, deepClone(originObj));
+}
 
 /**
- * 节流函数,指连续触发事件但是在 n 秒中只执行一次函数
+ * @description 深拷贝对象
  */
+export function deepClone(obj: any, hash = new WeakMap()) {
+  if (obj === null) return obj; // 如果是null或者undefined我就不进行拷贝操作
+  if (obj instanceof Date) return new Date(obj);
+  if (obj instanceof RegExp) return new RegExp(obj);
+  // 可能是对象或者普通的值  如果是函数的话是不需要深拷贝
+  if (typeof obj !== "object") return obj;
+  // 是对象的话就要进行深拷贝
+  if (hash.get(obj)) return hash.get(obj);
+  let cloneObj = new obj.constructor();
+  // 找到的是所属类原型上的constructor,而原型上的 constructor指向的是当前类本身
+  hash.set(obj, cloneObj);
+  for (let key in obj) {
+    if (obj.hasOwnProperty(key)) {
+      // 实现一个递归拷贝
+      cloneObj[key] = deepClone(obj[key], hash);
+    }
+  }
+  return cloneObj;
+}
 
+/**
+ * @description 节流函数,指连续触发事件但是在 n 秒中只执行一次函数
+ */
 export function thorttleFn<T extends (...args: any) => any>(
   fn: T,
   absTime: number = 3000

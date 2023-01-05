@@ -1,13 +1,20 @@
 .imgWrapper {
     position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    outline: 0.5px solid rgba(0, 0, 0, .05);
 
     &>img {
         width: 100%;
         display: inline-block;
-        border-radius: 8px;
-        outline: 0.5px solid rgba(0, 0, 0, .05);
         object-fit: cover;
         transition: opacity .5s linear;
         -webkit-transition: opacity .5s linear;
+        transition: transform .2s linear;
+        -webkit-transition: transform .2s linear;
+
+        &:hover {
+            transform: scale(1.1);
+        }
     }
 }
