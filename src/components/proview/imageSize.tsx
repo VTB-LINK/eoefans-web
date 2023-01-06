@@ -1,18 +1,24 @@
-import { useContext, useState, createContext, useEffect } from "react";
+import {
+  useContext,
+  useState,
+  createContext,
+  useEffect,
+  ReactElement,
+} from "react";
 import { thorttleFn } from "@utils/index";
-export const image_order_width = 180;
+export const image_order_width = 200;
 
 const ImageContext = createContext<{ isShouldchangeSize: boolean }>({
   isShouldchangeSize: false,
 });
 
-//todo
-//@ts-ignore
-const ImageShouldResizeProview = ({ children }) => {
+type ImageProviewProps = {
+  children: ReactElement;
+};
+const ImageShouldResizeProview = ({ children }: ImageProviewProps) => {
   const [isShouldchangeSize, setIs] = useState<boolean>(false);
   useEffect(() => {
     const handleWindowResize = () => {
-      // console.log({ width: window.innerWidth });
       setIs(() => window.innerWidth < image_order_width * 2.5);
     };
     handleWindowResize();

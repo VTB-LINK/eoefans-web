@@ -15,7 +15,7 @@ import { VideoRouterImageCard } from "./masonryItem";
  */
 export default function VideoMasonry(props: any) {
   const [lists, setLists] = useState<VideoRouterImageCardType[]>([]);
-  const order_width = 180;
+  const order_width = 200;
   useEffect(() => {
     // 在内部定义fetchHandler，保证拿到的是同步的
     const fetchHandler = async () => {
@@ -45,7 +45,9 @@ export default function VideoMasonry(props: any) {
               "like",
               "updated_at",
               "danmaku",
-              "duration"
+              "duration",
+              "favorite",
+              "face"
             );
 
           if (imageSize.success === true) {

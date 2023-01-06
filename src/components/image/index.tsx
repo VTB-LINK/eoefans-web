@@ -36,7 +36,7 @@ function useLoading(url: string) {
 
 export default memo(function Image({
   url,
-  width = 180,
+  width = 200,
   height,
   fallbackUrl = DefaultFallbackUrl,
   observer,

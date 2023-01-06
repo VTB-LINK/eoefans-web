@@ -53,7 +53,7 @@ interface RFetchVideoResResult {
    */
   bvid: string;
   /**
-   * @description 暂时不知道是啥
+   * @description 视频AVID
    */
   aid: number;
   /**
@@ -62,7 +62,7 @@ interface RFetchVideoResResult {
    */
   name: string;
   /**
-   * @description 暂时不知道是什么
+   * @description 视频作者UID
    */
   mid: number;
   /**
@@ -71,7 +71,7 @@ interface RFetchVideoResResult {
    */
   face: string;
   /**
-   * @description 暂时不知道是什么
+   * @description 视频分区ID
    */
   tid: number;
   /**
@@ -111,7 +111,7 @@ interface RFetchVideoResResult {
    */
   tag: string;
   /**
-   * @description 不知道是啥
+   * @description 视频上传时间
    */
   pubdate: number;
   /**
@@ -128,7 +128,13 @@ interface RFetchVideoResResult {
    *
    */
   danmaku: number;
+  /**
+   * @description 视频评论条数
+   */
   reply: number;
+  /**
+   * @description 收藏数量
+   */
   favorite: number;
   /**
    * @description 视频硬币数

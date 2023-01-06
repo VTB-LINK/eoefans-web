@@ -62,7 +62,7 @@ export default function Masonry() {
       <div className='feedContainer'>
         <Masonic_masonry
           items={lists}
-          columnWidth={180}
+          columnWidth={200}
           rowGutter={10}
           columnGutter={10}
           maxColumnCount={5}

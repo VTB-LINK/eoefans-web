@@ -15,8 +15,8 @@ export type ImageProps = {
   fallbackUrl?: string;
   /**
    * @description 图片默认宽度，因为自适应的原因最终效果可能大于该宽度
-   * @default 180
-   * @example 180
+   * @default 200
+   * @example 200
    */
   width?: number;
   /**

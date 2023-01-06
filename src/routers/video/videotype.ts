@@ -23,6 +23,8 @@ export type VideoRouterImageCardType = Pick<
   | "updated_at"
   | "danmaku"
   | "duration"
+  | "favorite"
+  | "face"
 > &
   Omit<ImageProps, "url">;
 
