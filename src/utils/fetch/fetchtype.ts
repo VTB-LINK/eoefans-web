@@ -14,7 +14,7 @@ export interface IFetchVideoParams {
    */
   page: number;
   /**
-   * @description q高级搜索语句，详细看API文档 @access {https://portal.eoe.api.vtb.link/api-details_get-video}
+   * @description q高级搜索语句，详细看API文档 @access {https://portal.api.eoe.best/api-details_get-video}
    * @example tag.乃琳+手绘.OR~name.贾布加布~pubdate.1619416601+1649416601.BETWEEN
    */
   q?: string;

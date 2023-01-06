@@ -8,7 +8,7 @@ import Layout from "./routers/layout";
 import PhotoPage from "./routers/photo";
 import ErrorPage from "./routers/error";
 import "intersection-observer";
-
+import "./normalize.css";
 const router = createBrowserRouter([
   {
     path: "/",

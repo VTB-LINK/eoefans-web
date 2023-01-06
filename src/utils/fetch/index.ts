@@ -15,4 +15,11 @@ export function fetchVideos(
   params: IFetchVideoParams
 ): Promise<RFetchVideoRes> {
   return Promise.resolve(videoJson);
+  // return fetch("/v1/video-interface/advanced-search?order=pubdate&page=1", {
+  //   method: "GET",
+  //   headers: {
+  //     "ocp-Apim-Subscription-Key": "3cc4284fbb864965a7a9ad0f28af8496",
+  //     origin: "https://portal.api.eoe.best",
+  //   },
+  // }).then((response) => response.json() as Promise<RFetchVideoRes>);
 }

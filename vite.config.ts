@@ -28,4 +28,12 @@ export default defineConfig({
       },
     },
   },
+  server: {
+    proxy: {
+      "/v1": {
+        target: "https://api.eoe.best/eoefans-api",
+        changeOrigin: true,
+      },
+    },
+  },
 });

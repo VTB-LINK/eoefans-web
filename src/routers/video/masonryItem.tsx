@@ -4,7 +4,7 @@ import SlowMotionVideoSharpIcon from "@mui/icons-material/SlowMotionVideoSharp";
 import SubjectSharpIcon from "@mui/icons-material/SubjectSharp";
 import ThumbUpSharpIcon from "@mui/icons-material/ThumbUpSharp";
 import FavoriteSharpIcon from "@mui/icons-material/FavoriteSharp";
-import Link from "@mui/material/Link";
+import { Link, Avatar } from "@mui/material";
 import { VideoRouterImageCardType } from "./videotype";
 import getrealtiveTime, { getVideoTime } from "@utils/time";
 import styles from "./video.module.less";
@@ -108,9 +108,7 @@ const VideoInfo: FC<
         </Link>
       </p>
       <div className={styles["video-up"]}>
-        <div className={styles["video-up-face"]} title={`芝士${name}`}>
-          <img src={face} />
-        </div>
+        <Avatar alt={name} src={face} />
         <div className={styles["video-up-desc"]}>
           <Link underline='none' color='inherit'>
             <span title={name}>{name}</span>
