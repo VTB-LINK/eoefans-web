@@ -72,3 +72,35 @@ export default memo(function Image({
     </InView>
   );
 });
+
+export function ImageBasic({
+  url,
+  fallbackUrl = DefaultFallbackUrl,
+  observer,
+  callback,
+  children,
+}: Omit<ImageProps, "width" | "height"> & {
+  children?: ReactElement;
+}) {
+  const res = useLoading(url),
+    { isLoaded, success } = res,
+    real_fallback_url = fallbackUrl || DefaultFallbackUrl;
+  const once_callback = useCallback(Once(callback!!), []);
+  return (
+    <InView>
+      {({ inView, ref, entry }) => (
+        <div ref={ref} className={styles.imgWrapper}>
+          <img
+            src={isLoaded && success ? url : real_fallback_url}
+            style={{
+              opacity: isLoaded ? 1.0 : 0.09,
+            }}
+            alt=''
+          />
+          <>{observer && inView && once_callback(inView)}</>
+          {children}
+        </div>
+      )}
+    </InView>
+  );
+}

@@ -104,10 +104,13 @@ export function Omit<T extends object, P extends keyof T>(
   originObj: T,
   ...noUseAttr: P[]
 ): Omit<T, P> {
-  return noUseAttr.reduce((pre, cur) => {
-    delete pre[cur];
-    return pre;
-  }, deepClone(originObj));
+  return noUseAttr.reduce(
+    (pre, cur) => {
+      delete pre[cur];
+      return pre;
+    },
+    { ...originObj }
+  );
 }
 
 /**
@@ -117,6 +120,7 @@ export function deepClone(obj: any, hash = new WeakMap()) {
   if (obj === null) return obj; // 如果是null或者undefined我就不进行拷贝操作
   if (obj instanceof Date) return new Date(obj);
   if (obj instanceof RegExp) return new RegExp(obj);
+  if (obj instanceof Function) return obj;
   // 可能是对象或者普通的值  如果是函数的话是不需要深拷贝
   if (typeof obj !== "object") return obj;
   // 是对象的话就要进行深拷贝

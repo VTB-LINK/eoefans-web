@@ -8,6 +8,7 @@ import {
   ImageSize,
 } from "@components/image/tool";
 import { Masonry as Masonic_masonry } from "masonic";
+import Grid from "@mui/material/Unstable_Grid2";
 import ImageShouldResizeProview from "@components/proview/imageSize";
 import { VideoRouterImageCard } from "./masonryItem";
 /**
@@ -50,13 +51,13 @@ export default function VideoMasonry(props: any) {
               "face"
             );
 
-          if (imageSize.success === true) {
-            return {
-              ...itemRes,
-              width: order_width,
-              height: getResizeHeight(imageSize, order_width),
-            };
-          }
+          // if (imageSize.success === true) {
+          //   return {
+          //     ...itemRes,
+          //     width: order_width,
+          //     height: Math.floor((order_width * 3) / 4),
+          //   };
+          // }
           return itemRes;
         }),
       ]);
@@ -66,14 +67,22 @@ export default function VideoMasonry(props: any) {
   return (
     <div className='feedContainer'>
       <ImageShouldResizeProview>
-        <Masonic_masonry
-          items={lists}
-          columnWidth={order_width}
-          rowGutter={10}
-          maxColumnCount={5}
-          render={VideoRouterImageCard}
-          overscanBy={Infinity}
-        />
+        <Grid
+          container
+          spacing={2}
+          columns={{
+            lg: 10,
+            md: 8,
+            sm: 6,
+            xs: 4,
+          }}
+        >
+          {lists.map((item, index) => (
+            <Grid key={index} xs={2}>
+              <VideoRouterImageCard data={item} />
+            </Grid>
+          ))}
+        </Grid>
       </ImageShouldResizeProview>
     </div>
   );

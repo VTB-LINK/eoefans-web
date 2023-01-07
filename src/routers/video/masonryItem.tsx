@@ -1,4 +1,4 @@
-import Image from "@components/image";
+import { ImageBasic } from "@components/image";
 import { FC } from "react";
 import SlowMotionVideoSharpIcon from "@mui/icons-material/SlowMotionVideoSharp";
 import SubjectSharpIcon from "@mui/icons-material/SubjectSharp";
@@ -16,14 +16,14 @@ export const VideoRouterImageCard: FC<{ data: VideoRouterImageCardType }> = ({
 }) => {
   const { pic, bvid } = data;
   return (
-    <section className='element-item'>
+    <section className={styles["video-section"]}>
       <Link
         target='_blank'
         href={`https://www.bilibili.com/video/${bvid}`}
         underline='none'
         color='inherit'
       >
-        <Image
+        <ImageBasic
           url={pic}
           {...Omit(
             data,
@@ -43,7 +43,7 @@ export const VideoRouterImageCard: FC<{ data: VideoRouterImageCardType }> = ({
           )}
         >
           <VideoData {...Pick(data, "view", "danmaku", "duration")} />
-        </Image>
+        </ImageBasic>
       </Link>
       <VideoInfo
         {...Pick(
@@ -70,11 +70,11 @@ const VideoData: FC<
       <div className={styles["video-data-left"]}>
         <span title='播放量'>
           <SlowMotionVideoSharpIcon fontSize='small' />
-          {view}
+          {getFixedNumber(view)}
         </span>
         <span title='弹幕数'>
           <SubjectSharpIcon fontSize='small' />
-          {danmaku}
+          {getFixedNumber(danmaku)}
         </span>
       </div>
       <span title='视频时长'>{getVideoTime(duration)}</span>
@@ -132,7 +132,6 @@ const VideoInfo: FC<
     </div>
   );
 };
-// 1-6 todo：写完视频页面展示瀑布图
 
 export const CoinIcon: FC<{
   height: number | string;
