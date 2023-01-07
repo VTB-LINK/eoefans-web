@@ -126,7 +126,7 @@
                         text-overflow: ellipsis;
                         word-break: break-all;
 
-                        &:not(:last-of-type):after {
+                        &:not(:first-of-type)::before {
                             content: '·';
                             margin: 0 4px;
                         }

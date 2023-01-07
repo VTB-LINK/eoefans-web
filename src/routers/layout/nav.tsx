@@ -1,4 +1,7 @@
 import { Chip, Stack } from "@mui/material";
+import { useInView } from "react-intersection-observer";
+import SegmentIcon from "@mui/icons-material/Segment";
+import CloseFullscreenIcon from "@mui/icons-material/CloseFullscreen";
 import {
   Outlet,
   NavLink,
@@ -10,7 +13,7 @@ import {
 } from "react-router-dom";
 import { nanoid } from "nanoid";
 import styles from "./layout.module.less";
-import { FC, useState } from "react";
+import { FC, forwardRef, useState, useEffect, useMemo } from "react";
 
 const router_lists = [
   {
@@ -80,9 +83,12 @@ const nav_lists = [
 
 export default function Header_Nav() {
   //todo 这里存放到context中间去
-  return (
-    <>
-      <Stack direction='row' spacing={2} className={styles["navstack"]}>
+  const { ref, inView } = useInView({ initialInView: true });
+  const [showed, setShow] = useState(false);
+  console.log({ inView });
+  const ComRes = useMemo(
+    () => (
+      <>
         {router_lists.map((router) => (
           <NavLink
             key={router.id}
@@ -91,24 +97,64 @@ export default function Header_Nav() {
               `${styles["navlink"]} ${isActive ? styles["navlink-active"] : ""}`
             }
           >
-            <Chip label={router.name} clickable />
+            <Chip
+              className={styles["navstack-filter-tag"]}
+              label={router.name}
+              clickable
+            />
           </NavLink>
         ))}
         {nav_lists.map((nav) => (
           <ClickChip key={nav.id} label={nav.query} />
         ))}
+      </>
+    ),
+    []
+  );
+  return (
+    <div className={styles["nav"]}>
+      <Stack
+        direction='row'
+        alignItems='center'
+        className={`${styles["navstack"]}`}
+        style={{
+          display: showed ? "grid" : "flex",
+        }}
+        data-showed={showed}
+      >
+        {ComRes}
+        <span
+          ref={ref}
+          style={{
+            margin: 0,
+            width: "1px",
+          }}
+        ></span>
+        <div
+          className={styles["nav-right-show-btn"]}
+          onClick={() => setShow((showed) => !showed)}
+          style={{
+            display: inView ? "none" : "flex",
+          }}
+        >
+          <SegmentIcon fontSize='medium' />
+        </div>
       </Stack>
-    </>
+    </div>
   );
 }
 
 const ClickChip: FC<{ label: string }> = (props) => {
   const [clicked, setClick] = useState<boolean>(false);
   return (
+    //@ts-ignore
     <Chip
+      className={styles["navstack-filter-tag"]}
       {...props}
       color={clicked ? "info" : "default"}
       onClick={() => setClick((clicked) => !clicked)}
     />
   );
 };
+//todo：修复展示更多栏的bug
+//todo：改造nav栏，通过拖拽修改排序
