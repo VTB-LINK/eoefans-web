@@ -5,7 +5,7 @@ import "dayjs/locale/zh-cn";
 dayJs.locale("zh-cn");
 dayJs.extend(realtiveTime);
 dayJs.extend(duration);
-
+//todo 修改时间显示，1天前这种要改成具体的时间
 export default function getrealtiveTime(time: number): string {
   return dayJs(time).fromNow();
 }

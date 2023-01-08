@@ -22,12 +22,11 @@ import { nanoid } from "nanoid";
 import styles from "./layout.module.less";
 import { FC, useState, useEffect, useMemo, memo } from "react";
 import { Pick } from "@utils/index";
-
+//todo 拆分组件
+//todo 修改文件夹
 export default function Header_Nav() {
   //todo 这里在loacalstorage中查找
   const [navLists, setLists] = useState<NavListItemType[]>(nav_tag_list);
-  //最后一个span是否可见
-  const { ref, inView } = useInView({ initialInView: true });
   //tag区是否展开
   const [showed, setShow] = useState(false);
   //拖拽事件绑定
@@ -86,29 +85,41 @@ export default function Header_Nav() {
           data-showed={showed}
         >
           <SortableContext items={navLists}>{ComRes}</SortableContext>
-          <span
-            ref={ref}
-            style={{
-              margin: 0,
-              width: "1px",
-            }}
-          ></span>
-          <div
-            className={styles["nav-right-show-btn"]}
-            onClick={() => setShow((showed) => !showed)}
-            style={{
-              display: inView ? "none" : "flex",
-            }}
-          >
-            <SegmentIcon fontSize='medium' />
-          </div>
+          <NavInViewItem handlerClick={() => setShow((show) => !show)} />
         </Stack>
       </DndContext>
     </div>
   );
 }
 
-const NavItem: FC<NavListItemType> = (props) => {
+const NavInViewItem: FC<{
+  handlerClick: React.MouseEventHandler<HTMLDivElement>;
+}> = ({ handlerClick }) => {
+  //最后一个span是否可见
+  const { ref, inView } = useInView({ initialInView: true });
+  return (
+    <>
+      <span
+        ref={ref}
+        style={{
+          margin: 0,
+          width: "1px",
+        }}
+      ></span>
+      <div
+        className={styles["nav-right-show-btn"]}
+        onClick={handlerClick}
+        style={{
+          display: inView ? "none" : "flex",
+        }}
+      >
+        <SegmentIcon fontSize='medium' />
+      </div>
+    </>
+  );
+};
+
+const NavItem: FC<NavListItemType> = memo((props) => {
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id: props.id });
   const style = {
@@ -126,7 +137,7 @@ const NavItem: FC<NavListItemType> = (props) => {
       )}
     </div>
   );
-};
+});
 
 const NavRouterChipItem: FC<Pick<NavRouterItemType, "pathname" | "name">> =
   memo((props) => (
@@ -162,8 +173,16 @@ type NavRouterItemType = {
   type: "router";
   pathname: string;
   name: string;
+  cancelable: boolean;
 };
-type NavQueryItemType = { id: string; type: "query"; query: string };
+type NavQueryItemType = {
+  id: string;
+  type: "query";
+  query: string;
+  queryType: "q" | "tname" | "copyright";
+  queryString: string;
+  cancelable: boolean;
+};
 type NavListItemType = NavQueryItemType | NavRouterItemType;
 
 const nav_tag_list = [
@@ -180,49 +199,77 @@ const nav_tag_list = [
   {
     type: "query",
     query: "所有二创",
+    queryType: "q",
+    queryString: "",
   },
   {
     type: "query",
     query: "露早",
+    queryType: "q",
+    queryString: "露早",
   },
   {
     type: "query",
     query: "柚恩",
+    queryType: "q",
+    queryString: "柚恩",
   },
   {
     type: "query",
     query: "莞儿",
+    queryType: "q",
+    queryString: "莞儿",
   },
   {
     type: "query",
     query: "米诺",
+    queryType: "q",
+    queryString: "米诺",
   },
   {
     type: "query",
     query: "虞莫",
+    queryType: "q",
+    queryString: "虞莫",
   },
   {
     type: "query",
     query: "动画分区",
+    queryType: "tname",
+    queryString: "animation",
   },
   {
     type: "query",
     query: "音乐分区",
+    queryType: "tname",
+    queryString: "music",
   },
   {
     type: "query",
     query: "舞蹈分区",
+    queryType: "tname",
+    queryString: "dance",
   },
   {
     type: "query",
     query: "游戏分区",
+    queryType: "tname",
+    queryString: "delicacy",
   },
   {
     type: "query",
     query: "鬼畜分区",
+    queryType: "tname",
+    queryString: "guichu",
   },
   {
     type: "query",
     query: "其他分区",
+    queryType: "tname",
+    queryString: "other",
   },
-].map((item) => ({ ...item, id: nanoid(3) })) as NavListItemType[];
+].map((item) => ({
+  ...item,
+  id: nanoid(3),
+  cancelable: false,
+})) as NavListItemType[];

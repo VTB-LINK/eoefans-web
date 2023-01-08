@@ -76,9 +76,7 @@
     }
 }
 
-::-webkit-scrollbar {
-    display: none;
-}
+
 
 .nav {
     position: relative;
@@ -89,6 +87,11 @@
         overflow-x: auto;
         scrollbar-width: none;
         -ms-overflow-style: none;
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
+
         @itemWidth: 80px;
         @itemMarginHalfWidth: 8px;
         @itemMarginHalfHeight: 4px;
@@ -141,5 +144,3 @@
         cursor: pointer;
     }
 }
-
-//todo 写好header

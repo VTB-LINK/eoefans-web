@@ -1,28 +1,39 @@
 import { fetchVideos } from "@utils/fetch";
 import { concurrencyRequest, Pick } from "@utils/index";
-import { useState, useEffect, FC } from "react";
+import { useState, useEffect, FC, memo } from "react";
 import { VideoRouterImageCardType, VideoRouterMasonryType } from "./videotype";
 import { getImageSize } from "@components/image/tool";
 import Grid from "@mui/material/Unstable_Grid2";
 import ImageShouldResizeProview from "@components/proview/imageSize";
 import { VideoRouterImageCard } from "./masonryItem";
 import { Skeleton } from "@mui/material";
+import { nanoid } from "nanoid";
 /**
  * @description 该组件负责渲染视频图片的瀑布流
  */
 export default function VideoMasonry(props: any) {
-  const [lists, setLists] = useState<VideoRouterImageCardType[]>([]);
+  const [lists, setLists] = useState<
+    (VideoRouterImageCardType & { id: string })[]
+  >([]);
   const [isLoading, setLoading] = useState<boolean>(true);
   useEffect(() => {
     // 在内部定义fetchHandler，保证拿到的是同步的
-    const fetchHandler = async () => {
+    const fetchHandler = async (page: number = 1, ...resProps: any[]) => {
       const res = await fetchVideos({
           order: "view",
-          page: 1,
+          page,
+          ...resProps,
         }),
         data = res.data.result,
-        urls = data.map((item) => item.pic);
-      const imageSizelists = await concurrencyRequest(urls, getImageSize, 6);
+        url_pic = data.map(
+          (item) => `${item.pic}@672w_378h_1c_!web-search-common-cover`
+        ),
+        url_face = data.map((item) => item.face);
+      const imageSizelists = await concurrencyRequest(
+        [...url_pic, ...url_face],
+        getImageSize,
+        10
+      );
       setLists((lists) => [
         ...lists,
         ...data.map((item, index) => {
@@ -45,7 +56,17 @@ export default function VideoMasonry(props: any) {
             "favorite",
             "face"
           );
-          return itemRes;
+          if (index === data.length - 3) {
+            return {
+              ...itemRes,
+              id: nanoid(4),
+              observer: true,
+              callback: (inView: boolean) => {
+                fetchHandler(page + 1, ...resProps);
+              },
+            };
+          }
+          return { ...itemRes, id: nanoid(4) };
         }),
       ]);
     };
@@ -64,10 +85,8 @@ export default function VideoMasonry(props: any) {
             xs: 4,
           }}
         >
-          {lists.map((item, index) => (
-            <Grid key={index} xs={2}>
-              <VideoRouterImageCard data={item} />
-            </Grid>
+          {lists.map((item) => (
+            <MemoItems key={item.id} {...item} />
           ))}
           {isLoading && <LoadingSkeleton num={20} />}
         </Grid>
@@ -75,6 +94,13 @@ export default function VideoMasonry(props: any) {
     </div>
   );
 }
+const MemoItems: FC<VideoRouterImageCardType> = memo((props) => {
+  return (
+    <Grid xs={2}>
+      <VideoRouterImageCard data={props} />
+    </Grid>
+  );
+});
 
 const LoadingSkeleton: FC<{ num: number }> = ({ num = 0 }) => {
   return (
@@ -115,4 +141,4 @@ const LoadingSkeleton: FC<{ num: number }> = ({ num = 0 }) => {
   );
 };
 
-//todo：改成feed流
+//todo：修改获取数据的方式

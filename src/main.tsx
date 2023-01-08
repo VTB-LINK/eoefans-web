@@ -1,14 +1,14 @@
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import VideoPage from "./routers/video";
 import "./index.less";
-import ReadPage from "./routers/read";
-import Layout from "./routers/layout";
-import PhotoPage from "./routers/photo";
-import ErrorPage from "./routers/error";
 import "intersection-observer";
 import "./normalize.css";
+const ReadPage = lazy(() => import("./routers/read")),
+  Layout = lazy(() => import("./routers/layout")),
+  PhotoPage = lazy(() => import("./routers/photo")),
+  ErrorPage = lazy(() => import("./routers/error"));
 const router = createBrowserRouter([
   {
     path: "/",
@@ -50,7 +50,9 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   // <React.StrictMode>
-  <RouterProvider router={router} />
+  <Suspense>
+    <RouterProvider router={router} />
+  </Suspense>
 
   // </React.StrictMode>
 );

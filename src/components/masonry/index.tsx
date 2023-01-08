@@ -1,7 +1,6 @@
 import { FC, useState, useEffect, useCallback } from "react";
 import { Masonry as Masonic_masonry } from "masonic";
 import Image from "@components/image";
-import { FetchNewImages } from "@utils/faker/index";
 import { SingleRun, concurrencyRequest } from "@utils/index";
 import { fetchVideos } from "@utils/fetch";
 import { nanoid } from "nanoid";

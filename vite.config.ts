@@ -18,15 +18,15 @@ export default defineConfig({
   build: {
     target: "es2015",
     minify: "esbuild",
-    rollupOptions: {
-      output: {
-        manualChunks(id) {
-          if (id.includes("node_modules")) {
-            return "vendor";
-          }
-        },
-      },
-    },
+    // rollupOptions: {
+    //   output: {
+    //     manualChunks(id) {
+    //       if (id.includes("node_modules")) {
+    //         return "vendor";
+    //       }
+    //     },
+    //   },
+    // },
   },
   server: {
     proxy: {
