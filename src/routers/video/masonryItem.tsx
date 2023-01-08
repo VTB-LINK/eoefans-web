@@ -5,6 +5,8 @@ import SubjectSharpIcon from "@mui/icons-material/SubjectSharp";
 import ThumbUpSharpIcon from "@mui/icons-material/ThumbUpSharp";
 import FavoriteSharpIcon from "@mui/icons-material/FavoriteSharp";
 import { Link, Avatar } from "@mui/material";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { useTheme } from "@mui/material";
 import { VideoRouterImageCardType } from "./videotype";
 import getrealtiveTime, { getVideoTime } from "@utils/time";
 import styles from "./video.module.less";
@@ -95,6 +97,8 @@ const VideoInfo: FC<
   >
 > = (props) => {
   const { title, name, bvid, updated_at, coin, like, favorite, face } = props;
+  const theme = useTheme();
+  const matchesPhone = useMediaQuery(theme.breakpoints.up("sm"));
   return (
     <div className={styles["video-info"]}>
       <p title={title}>
@@ -108,25 +112,27 @@ const VideoInfo: FC<
         </Link>
       </p>
       <div className={styles["video-up"]}>
-        <Avatar alt={name} src={face} />
+        {matchesPhone && <Avatar alt={name} src={face} />}
         <div className={styles["video-up-desc"]}>
           <Link underline='none' color='inherit'>
             <span title={name}>{name}</span>
-            <span>{getrealtiveTime(updated_at * 1000)}</span>
+            {matchesPhone && <span>{getrealtiveTime(updated_at * 1000)}</span>}
           </Link>
-          <div className={styles["video-up-desc-data"]}>
-            <span title='点赞数'>
-              <ThumbUpSharpIcon fontSize='small' htmlColor='#707070' />{" "}
-              {getFixedNumber(like)}
-            </span>
-            <span title='硬币数'>
-              <CoinIcon height={"1.25rem"} /> {getFixedNumber(coin)}
-            </span>
-            <span title='收藏数'>
-              <FavoriteSharpIcon fontSize='small' htmlColor='#707070' />{" "}
-              {getFixedNumber(favorite)}
-            </span>
-          </div>
+          {matchesPhone && (
+            <div className={styles["video-up-desc-data"]}>
+              <span title='点赞数'>
+                <ThumbUpSharpIcon fontSize='small' htmlColor='#707070' />{" "}
+                {getFixedNumber(like)}
+              </span>
+              <span title='硬币数'>
+                <CoinIcon height={"1.25rem"} /> {getFixedNumber(coin)}
+              </span>
+              <span title='收藏数'>
+                <FavoriteSharpIcon fontSize='small' htmlColor='#707070' />{" "}
+                {getFixedNumber(favorite)}
+              </span>
+            </div>
+          )}
         </div>
       </div>
     </div>
