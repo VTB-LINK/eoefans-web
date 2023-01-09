@@ -22,6 +22,7 @@ import { nanoid } from "nanoid";
 import styles from "./layout.module.less";
 import { FC, useState, useEffect, useMemo, memo } from "react";
 import { Pick } from "@utils/index";
+import { Flipped, Flipper } from "react-flip-toolkit";
 //todo 拆分组件
 //todo 修改文件夹
 export default function Header_Nav() {
@@ -68,27 +69,33 @@ export default function Header_Nav() {
     [navLists]
   );
   return (
-    <div className={styles["nav"]}>
-      <DndContext
-        sensors={sensors}
-        collisionDetection={closestCenter}
-        onDragEnd={handleDragEnd}
-        modifiers={[restrictToParentElement]}
-      >
-        <Stack
-          direction='row'
-          alignItems='center'
-          className={`${styles["navstack"]}`}
-          style={{
-            display: showed ? "grid" : "flex",
-          }}
-          data-showed={showed}
-        >
-          <SortableContext items={navLists}>{ComRes}</SortableContext>
-          <NavInViewItem handlerClick={() => setShow((show) => !show)} />
-        </Stack>
-      </DndContext>
-    </div>
+    <Flipper flipKey={showed} decisionData={showed} spring={"veryGentle"}>
+      <Flipped flipId={"list"} spring={"veryGentle"}>
+        <div className={styles["nav"]}>
+          <DndContext
+            sensors={sensors}
+            collisionDetection={closestCenter}
+            onDragEnd={handleDragEnd}
+            modifiers={[restrictToParentElement]}
+          >
+            <Flipped inverseFlipId='list'>
+              <Stack
+                direction='row'
+                alignItems='center'
+                className={`${styles["navstack"]}`}
+                style={{
+                  display: showed ? "grid" : "flex",
+                }}
+                data-showed={showed}
+              >
+                <SortableContext items={navLists}>{ComRes}</SortableContext>
+                <NavInViewItem handlerClick={() => setShow((show) => !show)} />
+              </Stack>
+            </Flipped>
+          </DndContext>
+        </div>
+      </Flipped>
+    </Flipper>
   );
 }
 
@@ -106,15 +113,17 @@ const NavInViewItem: FC<{
           width: "1px",
         }}
       ></span>
-      <div
-        className={styles["nav-right-show-btn"]}
-        onClick={handlerClick}
-        style={{
-          display: inView ? "none" : "flex",
-        }}
-      >
-        <SegmentIcon fontSize='medium' />
-      </div>
+      <Flipped flipId={"nav-right"} delayUntil='list'>
+        <div
+          className={styles["nav-right-show-btn"]}
+          onClick={handlerClick}
+          style={{
+            display: inView ? "none" : "flex",
+          }}
+        >
+          <SegmentIcon fontSize='medium' />
+        </div>
+      </Flipped>
     </>
   );
 };
@@ -127,15 +136,17 @@ const NavItem: FC<NavListItemType> = memo((props) => {
     transition,
   };
   return (
-    <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
-      {props.type === "router" ? (
-        <NavRouterChipItem
-          {...Pick(props as NavRouterItemType, "pathname", "name")}
-        />
-      ) : (
-        <NavTagChipItem {...Pick(props as NavQueryItemType, "query")} />
-      )}
-    </div>
+    <Flipped flipId={props.id} translate spring={"veryGentle"}>
+      <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
+        {props.type === "router" ? (
+          <NavRouterChipItem
+            {...Pick(props as NavRouterItemType, "pathname", "name")}
+          />
+        ) : (
+          <NavTagChipItem {...Pick(props as NavQueryItemType, "query")} />
+        )}
+      </div>
+    </Flipped>
   );
 });
 
