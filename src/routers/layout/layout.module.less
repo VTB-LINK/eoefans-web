@@ -96,8 +96,7 @@
         @itemMarginHalfWidth: 8px;
         @itemMarginHalfHeight: 4px;
         // grid布局
-        grid-template-columns: repeat(auto-fill, @itemWidth+2*@itemMarginHalfWidth);
-        transition: display 2s;
+        grid-template-columns: repeat(auto-fit, minmax(@itemWidth+2*@itemMarginHalfWidth, 1fr));
 
         &>* {
             margin: @itemMarginHalfHeight @itemMarginHalfWidth;

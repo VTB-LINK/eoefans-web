@@ -5,10 +5,15 @@ import VideoPage from "./routers/video";
 import "./index.less";
 import "intersection-observer";
 import "./normalize.css";
-const ReadPage = lazy(() => import("./routers/read")),
-  Layout = lazy(() => import("./routers/layout")),
-  PhotoPage = lazy(() => import("./routers/photo")),
-  ErrorPage = lazy(() => import("./routers/error"));
+import ReadPage from "./routers/read";
+import Layout from "./routers/layout";
+import PhotoPage from "./routers/photo";
+import ErrorPage from "./routers/error";
+import ScreenProview from "@components/proview/screenSize";
+// const ReadPage = lazy(() => import("./routers/read")),
+//   Layout = lazy(() => import("./routers/layout")),
+//   PhotoPage = lazy(() => import("./routers/photo")),
+//   ErrorPage = lazy(() => import("./routers/error"));
 const router = createBrowserRouter([
   {
     path: "/",
@@ -50,9 +55,11 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   // <React.StrictMode>
-  <Suspense>
+  // <Suspense>
+  <ScreenProview>
     <RouterProvider router={router} />
-  </Suspense>
+  </ScreenProview>
+  // </Suspense>
 
   // </React.StrictMode>
 );

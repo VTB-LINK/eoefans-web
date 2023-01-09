@@ -5,13 +5,13 @@ import SubjectSharpIcon from "@mui/icons-material/SubjectSharp";
 import ThumbUpSharpIcon from "@mui/icons-material/ThumbUpSharp";
 import FavoriteSharpIcon from "@mui/icons-material/FavoriteSharp";
 import { Link, Avatar } from "@mui/material";
-import useMediaQuery from "@mui/material/useMediaQuery";
-import { useTheme } from "@mui/material";
 import { VideoRouterImageCardType } from "./videotype";
 import getrealtiveTime, { getVideoTime } from "@utils/time";
 import styles from "./video.module.less";
 import { Omit, Pick } from "@utils/index";
 import getFixedNumber from "../../utils/number/index";
+import { useScreenMatchSize } from "@utils/hooks/match";
+import { useScreenSize } from "@components/proview/screenSize";
 
 export const VideoRouterImageCard: FC<{ data: VideoRouterImageCardType }> = ({
   data,
@@ -67,6 +67,7 @@ const VideoData: FC<
   Pick<VideoRouterImageCardType, "view" | "danmaku" | "duration">
 > = (props) => {
   const { view, danmaku, duration } = props;
+  const { sm } = useScreenSize();
   return (
     <div className={styles["video-data"]}>
       <div className={styles["video-data-left"]}>
@@ -74,10 +75,12 @@ const VideoData: FC<
           <SlowMotionVideoSharpIcon fontSize='small' />
           {getFixedNumber(view)}
         </span>
-        <span title='弹幕数'>
-          <SubjectSharpIcon fontSize='small' />
-          {getFixedNumber(danmaku)}
-        </span>
+        {sm && (
+          <span title='弹幕数'>
+            <SubjectSharpIcon fontSize='small' />
+            {getFixedNumber(danmaku)}
+          </span>
+        )}
       </div>
       <span title='视频时长'>{getVideoTime(duration)}</span>
     </div>
@@ -97,8 +100,7 @@ const VideoInfo: FC<
   >
 > = (props) => {
   const { title, name, bvid, updated_at, coin, like, favorite, face } = props;
-  const theme = useTheme();
-  const matchesPhone = useMediaQuery(theme.breakpoints.up("sm"));
+  const matchsmSize = useScreenMatchSize("sm");
   return (
     <div className={styles["video-info"]}>
       <p title={title}>
@@ -112,13 +114,13 @@ const VideoInfo: FC<
         </Link>
       </p>
       <div className={styles["video-up"]}>
-        {matchesPhone && <Avatar alt={name} src={face} />}
+        {matchsmSize && <Avatar alt={name} src={`${face}@96w_96h_1s.webp`} />}
         <div className={styles["video-up-desc"]}>
           <Link underline='none' color='inherit'>
             <span title={name}>{name}</span>
-            {matchesPhone && <span>{getrealtiveTime(updated_at * 1000)}</span>}
+            {matchsmSize && <span>{getrealtiveTime(updated_at * 1000)}</span>}
           </Link>
-          {matchesPhone && (
+          {matchsmSize && (
             <div className={styles["video-up-desc-data"]}>
               <span title='点赞数'>
                 <ThumbUpSharpIcon fontSize='small' htmlColor='#707070' />{" "}

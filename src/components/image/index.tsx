@@ -4,6 +4,7 @@ import { useImageShouldResize } from "@components/proview/imageSize";
 import { Once } from "@utils/index";
 import { ImageProps } from "./imagetype";
 import styles from "./image.module.less";
+import { useScreenSize } from "../proview/screenSize";
 import {
   getImageSize,
   getResizeHeight,
@@ -82,18 +83,18 @@ export function ImageBasic({
 }: Omit<ImageProps, "width" | "height"> & {
   children?: ReactElement;
 }) {
-  const // res = useLoading(url),
-    //   { isLoaded, success } = res,
-    real_fallback_url = fallbackUrl || DefaultFallbackUrl;
+  const real_fallback_url = fallbackUrl || DefaultFallbackUrl;
   const once_callback = useCallback(Once(callback!!), []);
+  const { md } = useScreenSize();
   return (
     <InView>
       {({ inView, ref, entry }) => (
         <div ref={ref} className={styles.imgWrapper}>
           <img
             src={
-              `${url}@672w_378h_1c_!web-search-common-cover` ||
-              real_fallback_url
+              `${url}${
+                !md ? `@480w_270h_1c` : `@672w_378h_1c_!web-search-common-cover`
+              }` || real_fallback_url
             }
             style={{
               opacity: 1.0 || 0.09,

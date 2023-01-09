@@ -12,21 +12,34 @@ export default defineConfig({
       "@utils": path.resolve(__dirname, "src/utils"),
       "@components": path.resolve(__dirname, "src/components"),
       "@store": path.resolve(__dirname, "src/store"),
+      "@routers": path.resolve(__dirname, "src/routers"),
     },
   },
   plugins: [react(), visualizer(), viteCompression()],
   build: {
     target: "es2015",
     minify: "esbuild",
-    // rollupOptions: {
-    //   output: {
-    //     manualChunks(id) {
-    //       if (id.includes("node_modules")) {
-    //         return "vendor";
-    //       }
-    //     },
-    //   },
-    // },
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          react: ["react", "react-dom"],
+          "react-router": ["react-router-dom"],
+          lib: [
+            "@mui/icons-material",
+            "@mui/lab",
+            "@mui/material",
+            "@emotion/react",
+            "@emotion/styled",
+          ],
+          "dnd-tool": [
+            "@dnd-kit/core",
+            "@dnd-kit/modifiers",
+            "@dnd-kit/sortable",
+            "@dnd-kit/utilities",
+          ],
+        },
+      },
+    },
   },
   server: {
     proxy: {

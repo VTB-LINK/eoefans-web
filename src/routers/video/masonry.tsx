@@ -8,6 +8,7 @@ import ImageShouldResizeProview from "@components/proview/imageSize";
 import { VideoRouterImageCard } from "./masonryItem";
 import { Skeleton } from "@mui/material";
 import { nanoid } from "nanoid";
+import { useScreenSize } from "../../components/proview/screenSize";
 /**
  * @description 该组件负责渲染视频图片的瀑布流
  */
@@ -24,16 +25,17 @@ export default function VideoMasonry(props: any) {
           page,
           ...resProps,
         }),
-        data = res.data.result,
-        url_pic = data.map(
-          (item) => `${item.pic}@672w_378h_1c_!web-search-common-cover`
-        ),
-        url_face = data.map((item) => item.face);
-      const imageSizelists = await concurrencyRequest(
-        [...url_pic, ...url_face],
-        getImageSize,
-        10
-      );
+        data = res.data.result;
+      // ,
+      // url_pic = data.map(
+      //   (item) => `${item.pic}@672w_378h_1c_!web-search-common-cover`
+      // ),
+      // url_face = data.map((item) => item.face);
+      // const imageSizelists = await concurrencyRequest(
+      //   [...url_pic, ...url_face],
+      //   getImageSize,
+      //   10
+      // );
       setLists((lists) => [
         ...lists,
         ...data.map((item, index) => {
@@ -62,7 +64,7 @@ export default function VideoMasonry(props: any) {
               id: nanoid(4),
               observer: true,
               callback: (inView: boolean) => {
-                fetchHandler(page + 1, ...resProps);
+                // fetchHandler(page + 1, ...resProps);
               },
             };
           }
@@ -77,7 +79,12 @@ export default function VideoMasonry(props: any) {
       <ImageShouldResizeProview>
         <Grid
           container
-          spacing={2}
+          spacing={{
+            lg: 2,
+            md: 1,
+            sm: 1,
+            xs: 1,
+          }}
           columns={{
             lg: 10,
             md: 8,
