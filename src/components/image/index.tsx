@@ -65,6 +65,7 @@ export default memo(function Image({
               opacity: isLoaded ? 1.0 : 0.09,
             }}
             alt=''
+            loading='lazy'
           />
           <>{observer && inView && once_callback(inView)}</>
           {children}
@@ -76,14 +77,12 @@ export default memo(function Image({
 
 export function ImageBasic({
   url,
-  fallbackUrl = DefaultFallbackUrl,
   observer,
   callback,
   children,
 }: Omit<ImageProps, "width" | "height"> & {
   children?: ReactElement;
 }) {
-  const real_fallback_url = fallbackUrl || DefaultFallbackUrl;
   const once_callback = useCallback(Once(callback!!), []);
   const { md } = useScreenSize();
   return (
@@ -91,15 +90,16 @@ export function ImageBasic({
       {({ inView, ref, entry }) => (
         <div ref={ref} className={styles.imgWrapper}>
           <img
-            src={
-              `${url}${
-                !md ? `@480w_270h_1c` : `@672w_378h_1c_!web-search-common-cover`
-              }` || real_fallback_url
-            }
+            src={`${url}${
+              !md ? `@480w_270h_1c` : `@672w_378h_1c_!web-search-common-cover`
+            }`}
             style={{
-              opacity: 1.0 || 0.09,
+              opacity: 1.0,
             }}
+            width='640'
+            height='360'
             alt=''
+            loading='lazy'
           />
           <>{observer && inView && once_callback(inView)}</>
           {children}

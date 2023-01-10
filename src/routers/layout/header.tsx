@@ -13,9 +13,9 @@ import styles from "./layout.module.less";
 import { useFocus } from "./hooks";
 export default function Header() {
   return (
-    <header>
+    <header className={styles["header"]}>
       <Search />
-      {/* <ListShuffler /> */}
+
       <Header_Nav />
     </header>
   );

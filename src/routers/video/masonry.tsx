@@ -2,13 +2,12 @@ import { fetchVideos } from "@utils/fetch";
 import { concurrencyRequest, Pick } from "@utils/index";
 import { useState, useEffect, FC, memo } from "react";
 import { VideoRouterImageCardType, VideoRouterMasonryType } from "./videotype";
-import { getImageSize } from "@components/image/tool";
-import Grid from "@mui/material/Unstable_Grid2";
+import { Unstable_Grid2 as Grid } from "@mui/material";
 import ImageShouldResizeProview from "@components/proview/imageSize";
-import { VideoRouterImageCard } from "./masonryItem";
+import { VideoRouterImageCard } from "./item";
 import { Skeleton } from "@mui/material";
 import { nanoid } from "nanoid";
-import { useScreenSize } from "../../components/proview/screenSize";
+import styles from "./video.module.less";
 /**
  * @description 该组件负责渲染视频图片的瀑布流
  */
@@ -117,27 +116,18 @@ const LoadingSkeleton: FC<{ num: number }> = ({ num = 0 }) => {
           <Skeleton
             variant='rounded'
             animation='wave'
-            width={"100%"}
-            height={180}
+            className={styles["skeleton-img"]}
           />
           <Skeleton animation='wave' height={20} />
           <Skeleton animation='wave' width={"50%"} height={20} />
-          <div
-            style={{
-              display: "flex",
-            }}
-          >
+          <div className={styles["skeleton-content"]}>
             <Skeleton
               variant='circular'
               animation='wave'
               width={40}
               height={40}
             />
-            <div
-              style={{
-                flex: "1",
-              }}
-            >
+            <div className={styles["skeleton-info"]}>
               <Skeleton animation='wave' width={"80%"} height={20} />
               <Skeleton animation='wave' width={"80%"} height={20} />
             </div>
@@ -147,5 +137,3 @@ const LoadingSkeleton: FC<{ num: number }> = ({ num = 0 }) => {
     </>
   );
 };
-
-//todo：修改获取数据的方式

@@ -3,8 +3,6 @@ import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import VideoPage from "./routers/video";
 import "./index.less";
-import "intersection-observer";
-import "./normalize.css";
 import ReadPage from "./routers/read";
 import Layout from "./routers/layout";
 import PhotoPage from "./routers/photo";
@@ -14,6 +12,11 @@ import ScreenProview from "@components/proview/screenSize";
 //   Layout = lazy(() => import("./routers/layout")),
 //   PhotoPage = lazy(() => import("./routers/photo")),
 //   ErrorPage = lazy(() => import("./routers/error"));
+
+//ployfill
+import "intersection-observer";
+import "./normalize.css";
+import "loading-attribute-polyfill";
 const router = createBrowserRouter([
   {
     path: "/",

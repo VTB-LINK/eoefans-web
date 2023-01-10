@@ -1,0 +1,66 @@
+.nav {
+    position: relative;
+    overflow: hidden;
+    margin: 10px;
+    background-color: aquamarine;
+
+    .navstack {
+        overflow-x: auto;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
+
+        @itemWidth: 80px;
+        @itemMarginHalfWidth: 8px;
+        @itemMarginHalfHeight: 4px;
+        // grid布局
+        // grid-template-columns: repeat(auto-fit, minmax(@itemWidth+2*@itemMarginHalfWidth, 1fr));
+
+        &>* {
+            margin: @itemMarginHalfHeight @itemMarginHalfWidth;
+        }
+
+        &[data-showed=true] {
+            &>span:nth-last-child(2) {
+                display: none;
+            }
+
+            &>div:last-child {
+                position: relative;
+            }
+        }
+
+        &-filter-tag {
+            // width: @itemWidth;
+            // flex: 0 0 @itemWidth;
+        }
+
+        .navlink {
+            text-decoration: none;
+
+            &-active>div {
+                // background-color: ;
+            }
+        }
+    }
+
+    &-right-show-btn {
+        justify-content: center;
+        margin: 0 !important;
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        height: 40px;
+        display: flex;
+        justify-items: center;
+        align-items: center;
+        overflow: hidden;
+        background-color: #fff;
+        box-shadow: rgb(255 255 255) -11px 0px 12px 0px;
+        z-index: 1;
+        cursor: pointer;
+    }
+}

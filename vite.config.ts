@@ -1,10 +1,12 @@
-import { defineConfig } from "vite";
+import { defineConfig, splitVendorChunkPlugin } from "vite";
 import path from "path";
 import react from "@vitejs/plugin-react-swc";
 // 可视化打包文件
 import { visualizer } from "rollup-plugin-visualizer";
 // gzip
 import viteCompression from "vite-plugin-compression";
+// polyfill
+import legacy from "@vitejs/plugin-legacy";
 // https://vitejs.dev/config/
 export default defineConfig({
   resolve: {
@@ -15,9 +17,21 @@ export default defineConfig({
       "@routers": path.resolve(__dirname, "src/routers"),
     },
   },
-  plugins: [react(), visualizer(), viteCompression()],
+  plugins: [
+    react(),
+    visualizer(),
+    viteCompression(),
+    legacy({
+      // 设置目标浏览器，browserslist 配置语法
+      targets: [
+        "defaults",
+        "iOS >= 9, Android >= 4.4, last 2 versions, > 0.2%, not dead",
+      ],
+    }),
+    splitVendorChunkPlugin(),
+  ],
   build: {
-    target: "es2015",
+    // target: "es2015",
     minify: "esbuild",
     rollupOptions: {
       output: {

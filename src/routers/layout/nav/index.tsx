@@ -19,7 +19,7 @@ import {
   restrictToParentElement,
 } from "@dnd-kit/modifiers";
 import { nanoid } from "nanoid";
-import styles from "./layout.module.less";
+import styles from "./nav.module.less";
 import { FC, useState, useEffect, useMemo, memo } from "react";
 import { Pick } from "@utils/index";
 import { Flipped, Flipper } from "react-flip-toolkit";
@@ -84,7 +84,8 @@ export default function Header_Nav() {
                 alignItems='center'
                 className={`${styles["navstack"]}`}
                 style={{
-                  display: showed ? "grid" : "flex",
+                  // display: showed ? "grid" : "flex",
+                  flexWrap: showed ? "wrap" : "nowrap",
                 }}
                 data-showed={showed}
               >
@@ -132,11 +133,11 @@ const NavItem: FC<NavListItemType> = memo((props) => {
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id: props.id });
   const style = {
-    transform: CSS.Transform.toString(transform),
+    transform: CSS.Translate.toString(transform),
     transition,
   };
   return (
-    <Flipped flipId={props.id} translate spring={"veryGentle"}>
+    <Flipped flipId={props.id} spring={"veryGentle"} translate>
       <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
         {props.type === "router" ? (
           <NavRouterChipItem
