@@ -17,6 +17,7 @@ import ScreenProview from "@components/proview/screenSize";
 import "intersection-observer";
 import "./normalize.css";
 import "loading-attribute-polyfill";
+import TagSelectProview from "@components/proview/tagSelect";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -60,7 +61,9 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   // <React.StrictMode>
   // <Suspense>
   <ScreenProview>
-    <RouterProvider router={router} />
+    <TagSelectProview>
+      <RouterProvider router={router} />
+    </TagSelectProview>
   </ScreenProview>
   // </Suspense>
 

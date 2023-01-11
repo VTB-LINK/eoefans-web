@@ -29,9 +29,9 @@ import {
   useNavList,
 } from "./tools";
 import { setLocalstorage } from "../tools";
+import { useTagsSelected } from "@components/proview/tagSelect";
 //todo 拆分组件
 export default function Header_Nav() {
-  //todo 这里在loacalstorage中查找
   const [navLists, setLists] = useNavList();
   //tag区是否展开
   const [showed, setShow] = useState(false);
@@ -147,41 +147,50 @@ const NavItem: FC<NavListItemType> = memo((props) => {
     <Flipped flipId={props.id} spring={"veryGentle"} translate>
       <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
         {props.type === "router" ? (
-          <NavRouterChipItem
-            {...Pick(props as NavRouterItemType, "pathname", "name")}
-          />
+          <NavRouterChipItem {...props} />
         ) : (
-          <NavTagChipItem {...Pick(props as NavQueryItemType, "query")} />
+          <NavTagChipItem {...props} />
         )}
       </div>
     </Flipped>
   );
 });
 
-const NavRouterChipItem: FC<Pick<NavRouterItemType, "pathname" | "name">> =
-  memo((props) => (
-    <NavLink
-      to={props.pathname}
-      className={({ isActive, isPending }) =>
-        `${styles["navlink"]} ${isActive ? styles["navlink-active"] : ""}`
-      }
-    >
-      <Chip
-        className={styles["navstack-filter-tag"]}
-        label={props.name}
-        clickable
-      />
-    </NavLink>
-  ));
+const NavRouterChipItem: FC<NavRouterItemType> = memo((props) => (
+  <NavLink
+    to={props.pathname}
+    className={({ isActive, isPending }) =>
+      `${styles["navlink"]} ${isActive ? styles["navlink-active"] : ""}`
+    }
+  >
+    <Chip
+      className={styles["navstack-filter-tag"]}
+      label={props.name}
+      clickable
+    />
+  </NavLink>
+));
 
-const NavTagChipItem: FC<Pick<NavQueryItemType, "query">> = memo((props) => {
-  const [clicked, setClick] = useState<boolean>(false);
+const NavTagChipItem: FC<NavQueryItemType> = memo((props) => {
+  const [clicked, setClick] = useState<boolean>(false),
+    { handerAddTag, handerDeleteTag } = useTagsSelected();
   return (
     <Chip
       className={styles["navstack-filter-tag"]}
       label={props.query}
       color={clicked ? "info" : "default"}
-      onClick={() => setClick((clicked) => !clicked)}
+      onClick={() =>
+        setClick((clicked) => {
+          //注意这里是要改变点击状态，所以应该反着来
+          //说明之前是点击状态，现在要取消点击
+          if (clicked) {
+            handerDeleteTag(props);
+          } else {
+            handerAddTag(props);
+          }
+          return !clicked;
+        })
+      }
     />
   );
 });

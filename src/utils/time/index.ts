@@ -1,13 +1,22 @@
 import dayJs from "dayjs";
 import realtiveTime from "dayjs/plugin/relativeTime";
 import duration from "dayjs/plugin/duration";
+import isToday from "dayjs/plugin/isToday";
+import isYesterday from "dayjs/plugin/isYesterday";
 import "dayjs/locale/zh-cn";
 dayJs.locale("zh-cn");
 dayJs.extend(realtiveTime);
+dayJs.extend(isToday);
+dayJs.extend(isYesterday);
 dayJs.extend(duration);
-//todo 修改时间显示，1天前这种要改成具体的时间
 export default function getrealtiveTime(time: number): string {
-  return dayJs(time).fromNow();
+  const format_time = dayJs(time);
+  if (format_time.isToday()) {
+    return format_time.fromNow();
+  } else if (format_time.isYesterday()) {
+    return "昨天";
+  }
+  return format_time.format("M-D");
 }
 
 export function getVideoTime(time: string): string {

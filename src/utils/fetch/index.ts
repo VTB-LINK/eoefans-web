@@ -11,11 +11,12 @@ import { IFetchVideoParams, RFetchVideoRes } from "./fetchtype";
 export function fetchVideos(
   params: IFetchVideoParams
 ): Promise<RFetchVideoRes> {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(videoJson);
-    }, 1000);
-  });
+  console.log({ params });
+  // return new Promise((resolve) => {
+  //   setTimeout(() => {
+  //     resolve(videoJson);
+  //   }, 1000);
+  // });
   return fetch(
     `/v1/video-interface/advanced-search?order=${params.order}&page=${
       params.page

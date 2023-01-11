@@ -11,18 +11,18 @@ import styles from "./video.module.less";
 /**
  * @description 该组件负责渲染视频图片的瀑布流
  */
-export default function VideoMasonry(props: any) {
+export default function VideoMasonry(props: { q?: string }) {
   const [lists, setLists] = useState<
     (VideoRouterImageCardType & { id: string })[]
   >([]);
   const [isLoading, setLoading] = useState<boolean>(true);
   useEffect(() => {
     // 在内部定义fetchHandler，保证拿到的是同步的
-    const fetchHandler = async (page: number = 1, ...resProps: any[]) => {
+    const fetchHandler = async (page: number = 1) => {
       const res = await fetchVideos({
           order: "view",
           page,
-          ...resProps,
+          q: props.q,
         }),
         data = res.data.result;
       // ,
@@ -71,7 +71,9 @@ export default function VideoMasonry(props: any) {
         }),
       ]);
     };
-    fetchHandler().then(() => setLoading(false));
+    setLists([]);
+    setLoading(true);
+    fetchHandler(1).then(() => setLoading(false));
   }, [props]);
   return (
     <div className='feedContainer'>
