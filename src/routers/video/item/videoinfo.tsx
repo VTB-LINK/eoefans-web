@@ -6,7 +6,7 @@ import getFixedNumber from "@utils/number";
 import getrealtiveTime from "@utils/time";
 import { FC } from "react";
 import { VideoRouterImageCardType } from "../videotype";
-import { CoinIcon } from "./icon";
+import { BiliIcon, CoinIcon } from "./icon";
 import styles from "./item.module.less";
 export const VideoInfo: FC<
   Pick<
@@ -25,18 +25,20 @@ export const VideoInfo: FC<
   const matchsmSize = useScreenMatchSize("sm");
   return (
     <div className={styles["video-info"]}>
-      <DataP title={title}>
-        <Link
-          target='_blank'
-          href={`https://www.bilibili.com/video/${bvid}`}
-          underline='none'
-          color='inherit'
-        >
-          {title}
-        </Link>
-      </DataP>
+      <Link
+        target='_blank'
+        href={`https://www.bilibili.com/video/${bvid}`}
+        underline='none'
+        color='inherit'
+      >
+        <DataP title={title}>{title}</DataP>
+      </Link>
       <div className={styles["video-up"]}>
-        {matchsmSize && <Avatar alt={name} src={`${face}@96w_96h_1s.webp`} />}
+        {matchsmSize ? (
+          <Avatar alt={name} src={`${face}@96w_96h_1s.webp`} />
+        ) : (
+          <BiliIcon height={18} color='grey' />
+        )}
         <div className={styles["video-up-desc"]}>
           <Link underline='none' color='inherit'>
             <span title={name}>{name}</span>
@@ -65,7 +67,11 @@ export const VideoInfo: FC<
 
 const DataP = styled("p")(({ theme }) => ({
   fontSize: "15px",
+  height: "40px",
+  lineHeight: "20px",
   [theme.breakpoints.down("sm")]: {
     fontSize: "13px",
+    height: "30px",
+    lineHeight: "15px",
   },
 }));

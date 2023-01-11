@@ -19,16 +19,19 @@ export default defineConfig({
   },
   plugins: [
     react(),
-    visualizer(),
-    viteCompression(),
-    legacy({
-      // 设置目标浏览器，browserslist 配置语法
-      targets: [
-        "defaults",
-        "iOS >= 9, Android >= 4.4, last 2 versions, > 0.2%, not dead",
-      ],
-    }),
-    splitVendorChunkPlugin(),
+    { ...visualizer(), apply: "build" },
+    { ...viteCompression(), apply: "build" },
+    {
+      ...legacy({
+        // 设置目标浏览器，browserslist 配置语法
+        targets: [
+          "defaults",
+          "iOS >= 9, Android >= 4.4, last 2 versions, > 0.2%, not dead",
+        ],
+      }),
+      apply: "build",
+    },
+    { ...splitVendorChunkPlugin(), apply: "build" },
   ],
   build: {
     // target: "es2015",

@@ -18,16 +18,21 @@ import {
   restrictToHorizontalAxis,
   restrictToParentElement,
 } from "@dnd-kit/modifiers";
-import { nanoid } from "nanoid";
 import styles from "./nav.module.less";
 import { FC, useState, useEffect, useMemo, memo } from "react";
 import { Pick } from "@utils/index";
 import { Flipped, Flipper } from "react-flip-toolkit";
+import {
+  NavListItemType,
+  NavRouterItemType,
+  NavQueryItemType,
+  useNavList,
+} from "./tools";
+import { setLocalstorage } from "../tools";
 //todo 拆分组件
-//todo 修改文件夹
 export default function Header_Nav() {
   //todo 这里在loacalstorage中查找
-  const [navLists, setLists] = useState<NavListItemType[]>(nav_tag_list);
+  const [navLists, setLists] = useNavList();
   //tag区是否展开
   const [showed, setShow] = useState(false);
   //拖拽事件绑定
@@ -52,9 +57,11 @@ export default function Header_Nav() {
     const { active, over } = event;
     if (over && active.id !== over.id) {
       setLists((items) => {
-        const oldIndex = items.findIndex((item) => item.id === active.id);
-        const newIndex = items.findIndex((item) => item.id === over.id);
-        return arrayMove(items, oldIndex, newIndex);
+        const oldIndex = items.findIndex((item) => item.id === active.id),
+          newIndex = items.findIndex((item) => item.id === over.id),
+          newLists = arrayMove(items, oldIndex, newIndex);
+        setLocalstorage("navTagLists", newLists);
+        return newLists;
       });
     }
   }
@@ -179,109 +186,3 @@ const NavTagChipItem: FC<Pick<NavQueryItemType, "query">> = memo((props) => {
   );
 });
 //todo：修复展示更多栏的bug
-
-type NavRouterItemType = {
-  id: string;
-  type: "router";
-  pathname: string;
-  name: string;
-  cancelable: boolean;
-};
-type NavQueryItemType = {
-  id: string;
-  type: "query";
-  query: string;
-  queryType: "q" | "tname" | "copyright";
-  queryString: string;
-  cancelable: boolean;
-};
-type NavListItemType = NavQueryItemType | NavRouterItemType;
-
-const nav_tag_list = [
-  {
-    type: "router",
-    pathname: "photo",
-    name: "图片",
-  },
-  {
-    type: "router",
-    pathname: "video",
-    name: "视频",
-  },
-  {
-    type: "query",
-    query: "所有二创",
-    queryType: "q",
-    queryString: "",
-  },
-  {
-    type: "query",
-    query: "露早",
-    queryType: "q",
-    queryString: "露早",
-  },
-  {
-    type: "query",
-    query: "柚恩",
-    queryType: "q",
-    queryString: "柚恩",
-  },
-  {
-    type: "query",
-    query: "莞儿",
-    queryType: "q",
-    queryString: "莞儿",
-  },
-  {
-    type: "query",
-    query: "米诺",
-    queryType: "q",
-    queryString: "米诺",
-  },
-  {
-    type: "query",
-    query: "虞莫",
-    queryType: "q",
-    queryString: "虞莫",
-  },
-  {
-    type: "query",
-    query: "动画分区",
-    queryType: "tname",
-    queryString: "animation",
-  },
-  {
-    type: "query",
-    query: "音乐分区",
-    queryType: "tname",
-    queryString: "music",
-  },
-  {
-    type: "query",
-    query: "舞蹈分区",
-    queryType: "tname",
-    queryString: "dance",
-  },
-  {
-    type: "query",
-    query: "游戏分区",
-    queryType: "tname",
-    queryString: "delicacy",
-  },
-  {
-    type: "query",
-    query: "鬼畜分区",
-    queryType: "tname",
-    queryString: "guichu",
-  },
-  {
-    type: "query",
-    query: "其他分区",
-    queryType: "tname",
-    queryString: "other",
-  },
-].map((item) => ({
-  ...item,
-  id: nanoid(3),
-  cancelable: false,
-})) as NavListItemType[];

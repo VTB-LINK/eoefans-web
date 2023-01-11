@@ -3,9 +3,9 @@
     display: flex;
     flex-flow: column nowrap;
 
-    &>:first-child {
-        flex: 1;
-    }
+    // &>:first-child {
+    //     flex: 1;
+    // }
 
     .video-data {
         transition: opacity .3s linear;
@@ -56,15 +56,14 @@
             margin-top: 5px;
         }
 
-        &>p {
+        p {
             color: #18191c;
-            // font-size: 15px;
             cursor: pointer;
             transition: color .2s linear;
-            height: 40px;
             overflow: hidden;
             display: -webkit-box;
             -webkit-box-orient: vertical;
+            vertical-align: baseline;
             text-overflow: ellipsis;
             line-break: anywhere;
             -webkit-line-clamp: 2;
@@ -74,21 +73,18 @@
             &:active {
                 color: #00aeec;
             }
-
-            &>a {
-                line-height: 1.25;
-            }
         }
 
         .video-up {
             display: flex;
-            align-items: stretch;
+            align-items: center;
 
             &>*:not(:first-child) {
                 margin-left: 5px;
             }
 
             &-desc {
+                flex: 1;
                 font-size: 13px;
                 display: flex;
                 flex-flow: column nowrap;
@@ -96,19 +92,17 @@
                 cursor: default;
 
                 &-data {
+                    flex: 1;
                     display: flex;
                     flex-flow: row nowrap;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
+                    justify-content: space-evenly;
 
                     &>span {
                         white-space: nowrap;
                         display: flex;
                         align-items: center;
 
-                        &:not(:first-of-type) {
-                            margin-left: 10px;
-                        }
+
                     }
                 }
 
