@@ -1,5 +1,3 @@
-// import videoJson from "./video.json";
-
 /**
  * 类型文件导入
  */
@@ -11,12 +9,7 @@ import { IFetchVideoParams, RFetchVideoRes } from "./fetchtype";
 export function fetchVideos(
   params: IFetchVideoParams
 ): Promise<RFetchVideoRes> {
-  console.log({ params });
-  // return new Promise((resolve) => {
-  //   setTimeout(() => {
-  //     resolve(videoJson);
-  //   }, 1000);
-  // });
+  // console.log({ params });
   return fetch(
     `/v1/video-interface/advanced-search?order=${params.order}&page=${
       params.page

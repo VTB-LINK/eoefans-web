@@ -2,7 +2,7 @@
     position: relative;
     overflow: hidden;
     margin: 10px;
-    background-color: aquamarine;
+    background-color: #fff;
 
     .navstack {
         overflow-x: auto;
@@ -16,8 +16,6 @@
         @itemWidth: 80px;
         @itemMarginHalfWidth: 8px;
         @itemMarginHalfHeight: 4px;
-        // grid布局
-        // grid-template-columns: repeat(auto-fit, minmax(@itemWidth+2*@itemMarginHalfWidth, 1fr));
 
         &>* {
             margin: @itemMarginHalfHeight @itemMarginHalfWidth;
@@ -33,17 +31,12 @@
             }
         }
 
-        &-filter-tag {
-            // width: @itemWidth;
-            // flex: 0 0 @itemWidth;
-        }
+
 
         .navlink {
             text-decoration: none;
 
-            &-active>div {
-                // background-color: ;
-            }
+
         }
     }
 

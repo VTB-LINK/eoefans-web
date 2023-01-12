@@ -1,4 +1,4 @@
-import { defineConfig, splitVendorChunkPlugin } from "vite";
+import { defineConfig } from "vite";
 import path from "path";
 import react from "@vitejs/plugin-react-swc";
 // 可视化打包文件
@@ -28,7 +28,6 @@ export default defineConfig({
     }),
     { ...visualizer(), apply: "build" },
     { ...viteCompression(), apply: "build" },
-    // { ...splitVendorChunkPlugin(), apply: "build" },
   ],
   build: {
     // target: "es2015",

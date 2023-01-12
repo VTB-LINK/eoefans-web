@@ -1,13 +1,5 @@
 import SearchSharpIcon from "@mui/icons-material/SearchSharp";
-import {
-  Outlet,
-  NavLink,
-  useLoaderData,
-  Form,
-  redirect,
-  useLocation,
-  useSubmit,
-} from "react-router-dom";
+import { Form } from "react-router-dom";
 import Header_Nav from "./nav";
 import styles from "./layout.module.less";
 import { useFocus } from "./hooks";

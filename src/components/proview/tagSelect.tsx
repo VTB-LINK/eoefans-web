@@ -1,16 +1,7 @@
 import { NavQueryItemType } from "@routers/layout/nav/tools";
-import {
-  useContext,
-  useState,
-  createContext,
-  useEffect,
-  ReactElement,
-  useReducer,
-} from "react";
+import { ReactChildrenType } from "./type";
+import { useContext, createContext, useReducer } from "react";
 
-type TagSelectProps = {
-  children: ReactElement;
-};
 interface TagStates {
   tags: NavQueryItemType[];
 }
@@ -43,7 +34,7 @@ function reducer(state: TagStates, action: TagsAction) {
       return state;
   }
 }
-const TagSelectProview = ({ children }: TagSelectProps) => {
+const TagSelectProview = ({ children }: ReactChildrenType) => {
   const [tags, tagsDispath] = useReducer(reducer, {
       tags: [] as NavQueryItemType[],
     }),

@@ -1,7 +1,7 @@
 import { fetchVideos } from "@utils/fetch";
-import { concurrencyRequest, Pick } from "@utils/index";
+import { Pick } from "@utils/index";
 import { useState, useEffect, FC, memo } from "react";
-import { VideoRouterImageCardType, VideoRouterMasonryType } from "./videotype";
+import { VideoRouterImageCardType } from "./videotype";
 import { Unstable_Grid2 as Grid } from "@mui/material";
 import ImageShouldResizeProview from "@components/proview/imageSize";
 import { VideoRouterImageCard } from "./item";

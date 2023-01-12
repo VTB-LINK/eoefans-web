@@ -1,24 +1,19 @@
-import React, { lazy, Suspense } from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import VideoPage from "./routers/video";
 import "./index.less";
-import ReadPage from "./routers/read";
 import Layout from "./routers/layout";
 import PhotoPage from "./routers/photo";
 import ErrorPage from "./routers/error";
 import ScreenProview from "@components/proview/screenSize";
 import TagSelectProview from "@components/proview/tagSelect";
-// const ReadPage = lazy(() => import("./routers/read")),
-//   Layout = lazy(() => import("./routers/layout")),
-//   PhotoPage = lazy(() => import("./routers/photo")),
-//   ErrorPage = lazy(() => import("./routers/error"));
 
 //ployfill
 import "intersection-observer";
 import "./normalize.css";
 import "loading-attribute-polyfill";
 import "whatwg-fetch";
+import NavShowProview from "@components/proview/navShow";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -35,17 +30,12 @@ const router = createBrowserRouter([
           {
             //默认页面
             index: true,
-            element: <PhotoPage />,
+            element: <VideoPage />,
           },
           {
             // video瀑布流展示页面
             path: "video",
             element: <VideoPage />,
-          },
-          {
-            // 二创文章瀑布流展示页面
-            path: "read",
-            element: <ReadPage />,
           },
           {
             // 二创图片瀑布流展示页面
@@ -59,14 +49,11 @@ const router = createBrowserRouter([
 ]);
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
-  // <React.StrictMode>
-  // <Suspense>
   <ScreenProview>
     <TagSelectProview>
-      <RouterProvider router={router} />
+      <NavShowProview>
+        <RouterProvider router={router} />
+      </NavShowProview>
     </TagSelectProview>
   </ScreenProview>
-  // </Suspense>
-
-  // </React.StrictMode>
 );

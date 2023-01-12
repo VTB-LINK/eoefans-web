@@ -14,14 +14,10 @@ import {
 } from "@dnd-kit/core";
 import { arrayMove, SortableContext, useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import {
-  restrictToHorizontalAxis,
-  restrictToParentElement,
-} from "@dnd-kit/modifiers";
+import { restrictToParentElement } from "@dnd-kit/modifiers";
 import styles from "./nav.module.less";
-import { FC, useState, useEffect, useMemo, memo } from "react";
-import { Pick } from "@utils/index";
-import { Flipped, Flipper } from "react-flip-toolkit";
+import { FC, useState, useMemo, memo } from "react";
+import { Flipped } from "react-flip-toolkit";
 import {
   NavListItemType,
   NavRouterItemType,
@@ -30,11 +26,12 @@ import {
 } from "./tools";
 import { setLocalstorage } from "../tools";
 import { useTagsSelected } from "@components/proview/tagSelect";
-//todo 拆分组件
+import { useNavShowed } from "../../../components/proview/navShow";
 export default function Header_Nav() {
   const [navLists, setLists] = useNavList();
   //tag区是否展开
-  const [showed, setShow] = useState(false);
+  // const [showed, setShow] = useState(false);
+  const { showed } = useNavShowed();
   //拖拽事件绑定
   const sensors = useSensors(
     // 鼠标点击
@@ -76,42 +73,38 @@ export default function Header_Nav() {
     [navLists]
   );
   return (
-    <Flipper flipKey={showed} decisionData={showed} spring={"veryGentle"}>
-      <Flipped flipId={"list"} spring={"veryGentle"}>
-        <div className={styles["nav"]}>
-          <DndContext
-            sensors={sensors}
-            collisionDetection={closestCenter}
-            onDragEnd={handleDragEnd}
-            modifiers={[restrictToParentElement]}
-          >
-            <Flipped inverseFlipId='list'>
-              <Stack
-                direction='row'
-                alignItems='center'
-                className={`${styles["navstack"]}`}
-                style={{
-                  // display: showed ? "grid" : "flex",
-                  flexWrap: showed ? "wrap" : "nowrap",
-                }}
-                data-showed={showed}
-              >
-                <SortableContext items={navLists}>{ComRes}</SortableContext>
-                <NavInViewItem handlerClick={() => setShow((show) => !show)} />
-              </Stack>
-            </Flipped>
-          </DndContext>
-        </div>
-      </Flipped>
-    </Flipper>
+    <Flipped flipId={"list"} spring={"veryGentle"}>
+      <div className={styles["nav"]}>
+        <DndContext
+          sensors={sensors}
+          collisionDetection={closestCenter}
+          onDragEnd={handleDragEnd}
+          modifiers={[restrictToParentElement]}
+        >
+          <Flipped inverseFlipId='list'>
+            <Stack
+              direction='row'
+              alignItems='center'
+              className={`${styles["navstack"]}`}
+              style={{
+                flexWrap: showed ? "wrap" : "nowrap",
+              }}
+              data-showed={showed}
+            >
+              <SortableContext items={navLists}>{ComRes}</SortableContext>
+              <NavInViewItem />
+            </Stack>
+          </Flipped>
+        </DndContext>
+      </div>
+    </Flipped>
   );
 }
 
-const NavInViewItem: FC<{
-  handlerClick: React.MouseEventHandler<HTMLDivElement>;
-}> = ({ handlerClick }) => {
+const NavInViewItem = () => {
   //最后一个span是否可见
   const { ref, inView } = useInView({ initialInView: true });
+  const { handlerChangeShow } = useNavShowed();
   return (
     <>
       <span
@@ -124,7 +117,7 @@ const NavInViewItem: FC<{
       <Flipped flipId={"nav-right"} delayUntil='list'>
         <div
           className={styles["nav-right-show-btn"]}
-          onClick={handlerClick}
+          onClick={handlerChangeShow}
           style={{
             display: inView ? "none" : "flex",
           }}
@@ -195,3 +188,5 @@ const NavTagChipItem: FC<NavQueryItemType> = memo((props) => {
   );
 });
 //todo：修复展示更多栏的bug
+//todo：拆分组件
+//todo：点击事件后修改icon

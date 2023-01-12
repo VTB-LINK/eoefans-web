@@ -1,12 +1,7 @@
 import { Breakpoint } from "@mui/material";
 import { useScreenMatchSize } from "@utils/hooks/match";
-import {
-  useContext,
-  useState,
-  createContext,
-  useEffect,
-  ReactElement,
-} from "react";
+import { ReactChildrenType } from "./type";
+import { useContext, createContext } from "react";
 const size_list: Breakpoint[] = ["lg", "md", "sm", "xs"];
 
 const ScreenContext = createContext<ScreenContextType>(
@@ -22,11 +17,8 @@ type ScreenContextType = {
   sm: boolean;
   xs: boolean;
 };
-type ProviewProps = {
-  children: ReactElement;
-};
 
-const ScreenProview = ({ children }: ProviewProps) => {
+const ScreenProview = ({ children }: ReactChildrenType) => {
   const ScreenSize: ScreenContextType = size_list.reduce((preObj, size) => {
     //@ts-ignore
     preObj[size] = useScreenMatchSize(size);

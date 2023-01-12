@@ -13,8 +13,7 @@ export function Once<T extends (...args: any) => any>(fn: T) {
  * 重复触发请求，在第一个完成之前忽略其他fn。
  */
 export function SingleRun<T extends (...args: any) => any>(handler: T) {
-  let flag = true,
-    times = 0;
+  let flag = true;
   return function (...res: Parameters<T>) {
     return new Promise((resolve, reject) => {
       if (flag) {

@@ -1,18 +1,11 @@
-import getrealtiveTime from "@utils/time";
-const url = `https://images.pexels.com/photos/5702958/pexels-photo-5702958.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1`;
 export default function PhotoPage() {
-  const time = getrealtiveTime(1672570122);
   return (
-    <>
-      {/* <Masonry /> */}
-      {/* <ImageMasonry /> */}
-      {/* <Image
-        url={url}
-        observer={true}
-        callback={(inView) => {
-          console.log(inView + "123");
-        }}
-      /> */}
-    </>
+    <h1
+      style={{
+        textAlign: "center",
+      }}
+    >
+      二创图片页还在制作,敬请期待!
+    </h1>
   );
 }
