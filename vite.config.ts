@@ -19,19 +19,16 @@ export default defineConfig({
   },
   plugins: [
     react(),
+    legacy({
+      // 设置目标浏览器，browserslist 配置语法
+      targets: [
+        "defaults",
+        "iOS >= 9, Android >= 4.4, last 2 versions, > 0.2%, not dead",
+      ],
+    }),
     { ...visualizer(), apply: "build" },
     { ...viteCompression(), apply: "build" },
-    {
-      ...legacy({
-        // 设置目标浏览器，browserslist 配置语法
-        targets: [
-          "defaults",
-          "iOS >= 9, Android >= 4.4, last 2 versions, > 0.2%, not dead",
-        ],
-      }),
-      apply: "build",
-    },
-    { ...splitVendorChunkPlugin(), apply: "build" },
+    // { ...splitVendorChunkPlugin(), apply: "build" },
   ],
   build: {
     // target: "es2015",
@@ -53,6 +50,13 @@ export default defineConfig({
             "@dnd-kit/modifiers",
             "@dnd-kit/sortable",
             "@dnd-kit/utilities",
+          ],
+          ployfill: [
+            "whatwg-fetch",
+            "intersection-observer",
+            "react-flip-toolkit",
+            "react-intersection-observer",
+            "dayjs",
           ],
         },
       },

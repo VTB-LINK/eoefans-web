@@ -25,16 +25,6 @@ export default function VideoMasonry(props: { q?: string }) {
           q: props.q,
         }),
         data = res.data.result;
-      // ,
-      // url_pic = data.map(
-      //   (item) => `${item.pic}@672w_378h_1c_!web-search-common-cover`
-      // ),
-      // url_face = data.map((item) => item.face);
-      // const imageSizelists = await concurrencyRequest(
-      //   [...url_pic, ...url_face],
-      //   getImageSize,
-      //   10
-      // );
       setLists((lists) => [
         ...lists,
         ...data.map((item, index) => {
@@ -63,7 +53,7 @@ export default function VideoMasonry(props: { q?: string }) {
               id: nanoid(4),
               observer: true,
               callback: (inView: boolean) => {
-                // fetchHandler(page + 1, ...resProps);
+                fetchHandler(page + 1);
               },
             };
           }

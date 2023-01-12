@@ -96,8 +96,6 @@ export function ImageBasic({
             style={{
               opacity: 1.0,
             }}
-            width='640'
-            height='360'
             alt=''
             loading='lazy'
           />

@@ -8,6 +8,7 @@ import Layout from "./routers/layout";
 import PhotoPage from "./routers/photo";
 import ErrorPage from "./routers/error";
 import ScreenProview from "@components/proview/screenSize";
+import TagSelectProview from "@components/proview/tagSelect";
 // const ReadPage = lazy(() => import("./routers/read")),
 //   Layout = lazy(() => import("./routers/layout")),
 //   PhotoPage = lazy(() => import("./routers/photo")),
@@ -17,7 +18,7 @@ import ScreenProview from "@components/proview/screenSize";
 import "intersection-observer";
 import "./normalize.css";
 import "loading-attribute-polyfill";
-import TagSelectProview from "@components/proview/tagSelect";
+import "whatwg-fetch";
 const router = createBrowserRouter([
   {
     path: "/",

@@ -15,4 +15,3 @@ export default function VideoPage() {
   );
 }
 //todo 优化搜索设置
-//todo 添加上拉刷新
