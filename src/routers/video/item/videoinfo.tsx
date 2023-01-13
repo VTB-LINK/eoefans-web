@@ -1,12 +1,9 @@
 import { Avatar, Link, styled } from "@mui/material";
-import ThumbUpSharpIcon from "@mui/icons-material/ThumbUpSharp";
-import FavoriteSharpIcon from "@mui/icons-material/FavoriteSharp";
 import { useScreenMatchSize } from "@utils/hooks/match";
-import getFixedNumber from "@utils/number";
 import getrealtiveTime from "@utils/time";
 import { FC } from "react";
 import { VideoRouterImageCardType } from "../videotype";
-import { BiliIcon, CoinIcon } from "./icon";
+import { UPIcon } from "./icon";
 import styles from "./item.module.less";
 export const VideoInfo: FC<
   Pick<VideoRouterImageCardType, "title" | "name" | "pubdate" | "bvid" | "face">
@@ -24,31 +21,12 @@ export const VideoInfo: FC<
         <DataP title={title}>{title}</DataP>
       </Link>
       <div className={styles["video-up"]}>
-        {matchsmSize ? (
-          <Avatar alt={name} src={`${face}@96w_96h_1s.webp`} />
-        ) : (
-          <BiliIcon height={18} color='grey' />
-        )}
+        <UPIcon height={16} width={32} title={`芝士${name.slice(0, 2)}`} />
         <div className={styles["video-up-desc"]}>
           <Link underline='none' color='inherit'>
             <span title={name}>{name}</span>
             {matchsmSize && <span>{getrealtiveTime(pubdate * 1000)}</span>}
           </Link>
-          {/* {matchsmSize && (
-            <div className={styles["video-up-desc-data"]}>
-              <span title='点赞数'>
-                <ThumbUpSharpIcon fontSize='small' htmlColor='#707070' />{" "}
-                {getFixedNumber(like)}
-              </span>
-              <span title='硬币数'>
-                <CoinIcon height={"1.25rem"} /> {getFixedNumber(coin)}
-              </span>
-              <span title='收藏数'>
-                <FavoriteSharpIcon fontSize='small' htmlColor='#707070' />{" "}
-                {getFixedNumber(favorite)}
-              </span>
-            </div>
-          )} */}
         </div>
       </div>
     </div>

@@ -3,10 +3,6 @@
     display: flex;
     flex-flow: column nowrap;
 
-    // &>:first-child {
-    //     flex: 1;
-    // }
-
     .video-data {
         transition: opacity .3s linear;
 
@@ -83,6 +79,10 @@
                 margin-left: 5px;
             }
 
+            &>svg {
+                flex-shrink: 0;
+            }
+
             &-desc {
                 flex: 1;
                 font-size: 13px;
@@ -119,9 +119,7 @@
                     }
 
                     &>span {
-                        overflow: hidden;
-                        text-overflow: ellipsis;
-                        word-break: break-all;
+
 
                         &:not(:first-of-type)::before {
                             content: '·';

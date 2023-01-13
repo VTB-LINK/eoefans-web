@@ -1,6 +1,5 @@
 import SearchSharpIcon from "@mui/icons-material/SearchSharp";
 import { Form } from "react-router-dom";
-import { Unstable_Grid2 as Grid } from "@mui/material";
 import Header_Nav from "./nav";
 import styles from "./layout.module.less";
 import { useFocus } from "./hooks";
@@ -11,15 +10,8 @@ export default function Header() {
   return (
     <header className={styles["header"]}>
       <LOGO />
-      <nav className={styles["nav"]}>
-        <RouterNav />
-        <div className={styles["nav-right"]}>
-          <Search />
-          <RightSide />
-        </div>
-      </nav>
-
-      <Header_Nav />
+      <Search />
+      <RightSide />
     </header>
   );
 }

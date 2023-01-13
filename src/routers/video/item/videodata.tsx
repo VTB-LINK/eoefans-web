@@ -1,5 +1,5 @@
 import { useScreenSize } from "@components/proview/screenSize";
-import SlowMotionVideoSharpIcon from "@mui/icons-material/SlowMotionVideoSharp";
+import SlideshowIcon from "@mui/icons-material/Slideshow";
 import SubjectSharpIcon from "@mui/icons-material/SubjectSharp";
 import getFixedNumber from "@utils/number";
 import { getVideoTime } from "@utils/time";
@@ -15,12 +15,20 @@ export const VideoData: FC<
     <div className={styles["video-data"]}>
       <div className={styles["video-data-left"]}>
         <span title='播放量'>
-          <SlowMotionVideoSharpIcon fontSize='small' />
+          <SlideshowIcon
+            sx={{
+              fontSize: "18px",
+            }}
+          />
           {getFixedNumber(view)}
         </span>
         {sm && (
           <span title='弹幕数'>
-            <SubjectSharpIcon fontSize='small' />
+            <SubjectSharpIcon
+              sx={{
+                fontSize: "18px",
+              }}
+            />
             {getFixedNumber(danmaku)}
           </span>
         )}

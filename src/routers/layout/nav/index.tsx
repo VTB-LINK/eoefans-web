@@ -20,11 +20,10 @@ import { Flipped } from "react-flip-toolkit";
 import { NavQueryItemType, useNavList } from "./tools";
 import { setLocalstorage } from "../tools";
 import { useTagsSelected } from "@components/proview/tagSelect";
-import { useNavShowed } from "../../../components/proview/navShow";
+import { useNavShowed } from "@components/proview/navShow";
 export default function Header_Nav() {
   const [navLists, setLists] = useNavList();
   //tag区是否展开
-  // const [showed, setShow] = useState(false);
   const { showed } = useNavShowed();
   //拖拽事件绑定
   const sensors = useSensors(
@@ -98,7 +97,7 @@ export default function Header_Nav() {
 const NavInViewItem = () => {
   //最后一个span是否可见
   const { ref, inView } = useInView({ initialInView: true });
-  const { handlerChangeShow } = useNavShowed();
+  const { handlerChangeShow, showed } = useNavShowed();
   return (
     <>
       <span
@@ -116,7 +115,11 @@ const NavInViewItem = () => {
             display: inView ? "none" : "flex",
           }}
         >
-          <SegmentIcon fontSize='medium' />
+          {showed ? (
+            <CloseFullscreenIcon fontSize='medium' />
+          ) : (
+            <SegmentIcon fontSize='medium' />
+          )}
         </div>
       </Flipped>
     </>
@@ -164,4 +167,3 @@ const NavTagChipItem: FC<NavQueryItemType> = memo((props) => {
 });
 //todo：修复展示更多栏的bug
 //todo：拆分组件
-//todo：点击事件后修改icon

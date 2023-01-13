@@ -27,3 +27,36 @@ export const BiliIcon: FC<{
     ></path>
   </svg>
 );
+
+export const UPIcon: FC<{
+  height: number | string;
+  width?: number | string;
+  color?: string;
+  title: string;
+}> = ({ height, width = height, color = "#fff", title }) => (
+  <svg width={width} height={height} viewBox='0 0 32 16'>
+    <g>
+      <title>{title}</title>
+      <g>
+        <defs transform='translate(-0.125002 0) translate(-0.125002 -3.50005) translate(-0.250003 -0.875012) translate(3.62505 0.375005) translate(-16.5001 0) translate(0 -13.0001) translate(46 34.5) scale(0.718746 0.677774) translate(-46 -34.5) translate(1.65244 6.37735) scale(0.62608 0.39753) translate(-1.65244 -6.37735) translate(5.70947 19.6703) scale(1.02315 1) translate(-5.70947 -19.6703) translate(65.882 19.6703) scale(1.04525 1.09279) translate(-65.882 -19.6703) translate(3.59401 17.685) scale(1.01299 1.10378) translate(-3.59401 -17.685)'>
+          <clipPath id='svg_9'>
+            <rect height='49' width='63' y='-18' x='-7' />
+          </clipPath>
+        </defs>
+        <g transform='translate(-6 1)' clipPath='url(#svg_9)'>
+          <path
+            stroke='#D9D9D9'
+            fillRule='evenodd'
+            fill='none'
+            strokeMiterlimit='8'
+            strokeWidth='1.33333'
+            d='m7.30751,0.74584c0,-0.562 0.68339,-1.01758 1.52641,-1.01758l26.19677,0c0.84302,0 1.52644,0.45559 1.52644,1.01758l0,12.58943c0,0.56201 -0.68342,1.01761 -1.52644,1.01761l-26.19677,0c-0.84303,0 -1.52641,-0.45561 -1.52641,-1.01761l0,-12.58943z'
+          />
+        </g>
+      </g>
+      <text stroke='#D9D9D9' fontSize='12' y='12' x='8' strokeWidth='0.5'>
+        UP
+      </text>
+    </g>
+  </svg>
+);

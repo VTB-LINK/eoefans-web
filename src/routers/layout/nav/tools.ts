@@ -1,7 +1,6 @@
 import { nanoid } from "nanoid";
 import { useMemo, useState } from "react";
 import { getLocalStorage } from "../tools";
-//todo 将数据加密
 export function useNavList(): [
   NavQueryItemType[],
   React.Dispatch<React.SetStateAction<NavQueryItemType[]>>

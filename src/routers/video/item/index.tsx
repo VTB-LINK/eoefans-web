@@ -57,4 +57,5 @@ export const VideoRouterImageCard: FC<{ data: VideoRouterImageCardType }> = ({
     </section>
   );
 };
-//todo 修改卡片样式
+//todo 传统的两行有兼容问题，修改
+//todo 使用redux替换preview

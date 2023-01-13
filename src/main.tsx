@@ -31,7 +31,7 @@ const router = createBrowserRouter([
           {
             //默认页面
             index: true,
-            element: <PhotoPage />,
+            element: <VideoPage />,
           },
           {
             // video瀑布流展示页面
