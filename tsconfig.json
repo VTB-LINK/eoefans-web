@@ -20,7 +20,8 @@
       "@utils/*": ["src/utils/*"],
       "@components/*": ["src/components/*"],
       "@store/*": ["src/store/*"],
-      "@routers/*": ["src/routers/*"]
+      "@routers/*": ["src/routers/*"],
+      "@assets/*": ["src/assets/*"]
     }
   },
   "include": ["src"]

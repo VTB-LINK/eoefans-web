@@ -9,19 +9,9 @@ import { VideoRouterImageCardType } from "../videotype";
 import { BiliIcon, CoinIcon } from "./icon";
 import styles from "./item.module.less";
 export const VideoInfo: FC<
-  Pick<
-    VideoRouterImageCardType,
-    | "title"
-    | "name"
-    | "updated_at"
-    | "bvid"
-    | "coin"
-    | "favorite"
-    | "like"
-    | "face"
-  >
+  Pick<VideoRouterImageCardType, "title" | "name" | "pubdate" | "bvid" | "face">
 > = (props) => {
-  const { title, name, bvid, updated_at, coin, like, favorite, face } = props;
+  const { title, name, bvid, pubdate, face } = props;
   const matchsmSize = useScreenMatchSize("sm");
   return (
     <div className={styles["video-info"]}>
@@ -42,9 +32,9 @@ export const VideoInfo: FC<
         <div className={styles["video-up-desc"]}>
           <Link underline='none' color='inherit'>
             <span title={name}>{name}</span>
-            {matchsmSize && <span>{getrealtiveTime(updated_at * 1000)}</span>}
+            {matchsmSize && <span>{getrealtiveTime(pubdate * 1000)}</span>}
           </Link>
-          {matchsmSize && (
+          {/* {matchsmSize && (
             <div className={styles["video-up-desc-data"]}>
               <span title='点赞数'>
                 <ThumbUpSharpIcon fontSize='small' htmlColor='#707070' />{" "}
@@ -58,7 +48,7 @@ export const VideoInfo: FC<
                 {getFixedNumber(favorite)}
               </span>
             </div>
-          )}
+          )} */}
         </div>
       </div>
     </div>

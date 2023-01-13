@@ -14,6 +14,7 @@ import "./normalize.css";
 import "loading-attribute-polyfill";
 import "whatwg-fetch";
 import NavShowProview from "@components/proview/navShow";
+import MUIThemePreview from "@components/proview/themePreview";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -30,7 +31,7 @@ const router = createBrowserRouter([
           {
             //默认页面
             index: true,
-            element: <VideoPage />,
+            element: <PhotoPage />,
           },
           {
             // video瀑布流展示页面
@@ -52,7 +53,9 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <ScreenProview>
     <TagSelectProview>
       <NavShowProview>
-        <RouterProvider router={router} />
+        <MUIThemePreview>
+          <RouterProvider router={router} />
+        </MUIThemePreview>
       </NavShowProview>
     </TagSelectProview>
   </ScreenProview>

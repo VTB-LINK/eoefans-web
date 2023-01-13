@@ -2,7 +2,6 @@ import { Chip, Stack } from "@mui/material";
 import { useInView } from "react-intersection-observer";
 import SegmentIcon from "@mui/icons-material/Segment";
 import CloseFullscreenIcon from "@mui/icons-material/CloseFullscreen";
-import { NavLink } from "react-router-dom";
 import {
   DndContext,
   closestCenter,
@@ -18,12 +17,7 @@ import { restrictToParentElement } from "@dnd-kit/modifiers";
 import styles from "./nav.module.less";
 import { FC, useState, useMemo, memo } from "react";
 import { Flipped } from "react-flip-toolkit";
-import {
-  NavListItemType,
-  NavRouterItemType,
-  NavQueryItemType,
-  useNavList,
-} from "./tools";
+import { NavQueryItemType, useNavList } from "./tools";
 import { setLocalstorage } from "../tools";
 import { useTagsSelected } from "@components/proview/tagSelect";
 import { useNavShowed } from "../../../components/proview/navShow";
@@ -129,7 +123,7 @@ const NavInViewItem = () => {
   );
 };
 
-const NavItem: FC<NavListItemType> = memo((props) => {
+const NavItem: FC<NavQueryItemType> = memo((props) => {
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id: props.id });
   const style = {
@@ -139,30 +133,11 @@ const NavItem: FC<NavListItemType> = memo((props) => {
   return (
     <Flipped flipId={props.id} spring={"veryGentle"} translate>
       <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
-        {props.type === "router" ? (
-          <NavRouterChipItem {...props} />
-        ) : (
-          <NavTagChipItem {...props} />
-        )}
+        <NavTagChipItem {...props} />
       </div>
     </Flipped>
   );
 });
-
-const NavRouterChipItem: FC<NavRouterItemType> = memo((props) => (
-  <NavLink
-    to={props.pathname}
-    className={({ isActive, isPending }) =>
-      `${styles["navlink"]} ${isActive ? styles["navlink-active"] : ""}`
-    }
-  >
-    <Chip
-      className={styles["navstack-filter-tag"]}
-      label={props.name}
-      clickable
-    />
-  </NavLink>
-));
 
 const NavTagChipItem: FC<NavQueryItemType> = memo((props) => {
   const [clicked, setClick] = useState<boolean>(false),

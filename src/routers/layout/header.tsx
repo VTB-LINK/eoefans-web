@@ -1,17 +1,29 @@
 import SearchSharpIcon from "@mui/icons-material/SearchSharp";
 import { Form } from "react-router-dom";
+import { Unstable_Grid2 as Grid } from "@mui/material";
 import Header_Nav from "./nav";
 import styles from "./layout.module.less";
 import { useFocus } from "./hooks";
+import RouterNav from "./routernav";
+import LOGO from "./logo";
+import RightSide from "./rightSide";
 export default function Header() {
   return (
     <header className={styles["header"]}>
-      <Search />
+      <LOGO />
+      <nav className={styles["nav"]}>
+        <RouterNav />
+        <div className={styles["nav-right"]}>
+          <Search />
+          <RightSide />
+        </div>
+      </nav>
 
       <Header_Nav />
     </header>
   );
 }
+//todo 换掉header
 //todo 添加搜索
 function Search() {
   const { focused, bind } = useFocus();

@@ -33,7 +33,7 @@ export const VideoRouterImageCard: FC<{ data: VideoRouterImageCardType }> = ({
             "coin",
             "share",
             "like",
-            "updated_at",
+            "pubdate",
             "danmaku",
             "duration"
           )}
@@ -46,7 +46,7 @@ export const VideoRouterImageCard: FC<{ data: VideoRouterImageCardType }> = ({
           data,
           "title",
           "name",
-          "updated_at",
+          "pubdate",
           "bvid",
           "coin",
           "favorite",
@@ -57,3 +57,4 @@ export const VideoRouterImageCard: FC<{ data: VideoRouterImageCardType }> = ({
     </section>
   );
 };
+//todo 修改卡片样式

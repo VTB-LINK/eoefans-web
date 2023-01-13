@@ -41,7 +41,7 @@ export default function VideoMasonry(props: { q?: string }) {
             "coin",
             "share",
             "like",
-            "updated_at",
+            "pubdate",
             "danmaku",
             "duration",
             "favorite",
