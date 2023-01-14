@@ -6,20 +6,17 @@ import getFixedNumber from "@utils/number";
 import { getVideoTime } from "@utils/time";
 import { FC } from "react";
 import { VideoRouterImageCardType } from "../videotype";
+import { PlayIcon } from "./icon";
 import styles from "./item.module.less";
 export const VideoData: FC<
   Pick<VideoRouterImageCardType, "view" | "danmaku" | "duration">
 > = (props) => {
   const { view, danmaku, duration } = props;
   return (
-    <div className={styles["video-data"]}>
+    <BorderDiv className={styles["video-data"]}>
       <div className={styles["video-data-left"]}>
         <SizeSpan title='播放量'>
-          <SlideshowIcon
-            sx={{
-              fontSize: "18px",
-            }}
-          />
+          <PlayIcon height='1em' />
           {getFixedNumber(view)}
         </SizeSpan>
 
@@ -32,24 +29,30 @@ export const VideoData: FC<
             },
           }}
         >
-          <SubjectSharpIcon
-            sx={{
-              fontSize: "18px",
-            }}
-          />
+          <SubjectSharpIcon fontSize='inherit' />
           {getFixedNumber(danmaku)}
         </SizeSpan>
       </div>
-      <span title='视频时长'>{getVideoTime(duration)}</span>
-    </div>
+      <SizeSpan title='视频时长'>{getVideoTime(duration)}</SizeSpan>
+    </BorderDiv>
   );
 };
-
+const BorderDiv = styled("div")(({ theme }) => ({
+  padding: "16px 8px 6px",
+  borderBottomLeftRadius: "8px",
+  borderBottomRightRadius: "8px",
+  [theme.breakpoints.down("sm")]: {
+    padding: "8px 6px 4px",
+  },
+}));
 const SizeSpan = styled("span")(({ theme }) => ({
   fontSize: "13px",
-  alignItems: "center",
   display: "flex",
+  lineHeight: "1",
+  "&>svg": {
+    marginRight: "2px",
+  },
   [theme.breakpoints.down("sm")]: {
-    fontSize: "11px",
+    fontSize: "12px",
   },
 }));

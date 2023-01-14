@@ -33,36 +33,45 @@ export const UPIcon: FC<{
   width?: number | string;
   color?: string;
   title: string;
-}> = ({ height, width = height, color = "#fff", title }) => (
-  <svg width={width} height={height} viewBox='0 0 32 16'>
+}> = ({ height, width = height, color = "#8A8A8A", title }) => (
+  <svg fill='none' width={width} height={height} viewBox='0 0 32 16'>
+    <title>{title}</title>
     <g>
-      <title>{title}</title>
       <g>
-        <defs transform='translate(-0.125002 0) translate(-0.125002 -3.50005) translate(-0.250003 -0.875012) translate(3.62505 0.375005) translate(-16.5001 0) translate(0 -13.0001) translate(46 34.5) scale(0.718746 0.677774) translate(-46 -34.5) translate(1.65244 6.37735) scale(0.62608 0.39753) translate(-1.65244 -6.37735) translate(5.70947 19.6703) scale(1.02315 1) translate(-5.70947 -19.6703) translate(65.882 19.6703) scale(1.04525 1.09279) translate(-65.882 -19.6703) translate(3.59401 17.685) scale(1.01299 1.10378) translate(-3.59401 -17.685)'>
-          <clipPath id='svg_9'>
-            <rect height='49' width='63' y='-18' x='-7' />
-          </clipPath>
-        </defs>
-        <g transform='translate(-6 1)' clipPath='url(#svg_9)'>
-          <path
-            stroke='#D9D9D9'
-            fillRule='evenodd'
-            fill='none'
-            strokeMiterlimit='8'
-            strokeWidth='1.33333'
-            d='m7.30751,0.74584c0,-0.562 0.68339,-1.01758 1.52641,-1.01758l26.19677,0c0.84302,0 1.52644,0.45559 1.52644,1.01758l0,12.58943c0,0.56201 -0.68342,1.01761 -1.52644,1.01761l-26.19677,0c-0.84303,0 -1.52641,-0.45561 -1.52641,-1.01761l0,-12.58943z'
-          />
-        </g>
+        <rect x='0' y='0' width='32' height='16' rx='3' />
+        <rect
+          x='0.5'
+          y='0.5'
+          width='31'
+          height='15'
+          rx='2.5'
+          stroke={color}
+          strokeWidth='1'
+        />
       </g>
-      <text
-        stroke='rgb(222,222,222)'
-        fontSize='12'
-        y='12'
-        x='8'
-        strokeWidth='0.5'
-      >
-        UP
-      </text>
+      <g>
+        <path
+          d='M12.83919,12.2083C14.32682,12.2083,15.4694,11.4108,15.4694,9.04427L15.4694,4.70833L14.57747,4.70833L14.57747,9.06706C14.57747,10.83789,13.809249999999999,11.401,12.83919,11.401C11.878910000000001,11.401,11.12695,10.83789,11.12695,9.06706L11.12695,4.70833L10.20898,4.70833L10.20898,9.04427C10.20898,11.4108,11.33854,12.2083,12.83919,12.2083ZM17.529899999999998,12L18.4479,12L18.4479,9.08333L19.6589,9.08333C21.270200000000003,9.08333,22.3607,8.3737,22.3607,6.84375C22.3607,5.25846,21.2604,4.70833,19.619799999999998,4.70833L17.529899999999998,4.70833L17.529899999999998,12ZM18.4479,8.33464L18.4479,5.46029L19.499299999999998,5.46029C20.7884,5.46029,21.439500000000002,5.78581,21.439500000000002,6.84375C21.439500000000002,7.87891,20.8307,8.33464,19.5384,8.33464L18.4479,8.33464Z'
+          fill={color}
+        />
+      </g>
     </g>
+  </svg>
+);
+
+export const PlayIcon: FC<{
+  height: number | string;
+  width?: number | string;
+}> = ({ height, width = height }) => (
+  <svg
+    viewBox='64 64 896 896'
+    focusable='false'
+    data-icon='play-square'
+    width={width}
+    height={height}
+    fill='currentColor'
+  >
+    <path d='M442.3 677.6l199.4-156.7a11.3 11.3 0 000-17.7L442.3 346.4c-7.4-5.8-18.3-.6-18.3 8.8v313.5c0 9.4 10.9 14.7 18.3 8.9z'></path>
+    <path d='M880 112H144c-17.7 0-32 14.3-32 32v736c0 17.7 14.3 32 32 32h736c17.7 0 32-14.3 32-32V144c0-17.7-14.3-32-32-32zm-40 728H184V184h656v656z'></path>
   </svg>
 );
