@@ -3,6 +3,7 @@
  */
 import { ImageProps } from "@components/image/imagetype";
 import { RFetchVideoRes } from "@utils/fetch/fetchtype";
+import { IFetchVideoParams } from "../../utils/fetch/fetchtype";
 
 /**
  * @description video路由瀑布流卡片参数
@@ -28,4 +29,6 @@ export type VideoRouterImageCardType = Pick<
 > &
   Omit<ImageProps, "url">;
 
-export type VideoRouterMasonryType = {};
+export type VideoRouterMasonryType = Partial<
+  Pick<IFetchVideoParams, "copyright" | "order" | "q" | "tname">
+>;

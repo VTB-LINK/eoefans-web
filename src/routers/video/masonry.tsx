@@ -1,7 +1,7 @@
 import { fetchVideos } from "@utils/fetch";
 import { Pick } from "@utils/index";
 import { useState, useEffect, FC, memo } from "react";
-import { VideoRouterImageCardType } from "./videotype";
+import { VideoRouterImageCardType, VideoRouterMasonryType } from "./videotype";
 import { Unstable_Grid2 as Grid } from "@mui/material";
 import ImageShouldResizeProview from "@components/proview/imageSize";
 import { VideoRouterImageCard } from "./item";
@@ -11,7 +11,7 @@ import styles from "./video.module.less";
 /**
  * @description 该组件负责渲染视频图片的瀑布流
  */
-export default function VideoMasonry(props: { q?: string }) {
+export default function VideoMasonry(props: VideoRouterMasonryType) {
   const [lists, setLists] = useState<
     (VideoRouterImageCardType & { id: string })[]
   >([]);
@@ -20,9 +20,9 @@ export default function VideoMasonry(props: { q?: string }) {
     // 在内部定义fetchHandler，保证拿到的是同步的
     const fetchHandler = async (page: number = 1) => {
       const res = await fetchVideos({
+          ...props,
           order: "view",
           page,
-          q: props.q,
         }),
         data = res.data.result;
       setLists((lists) => [

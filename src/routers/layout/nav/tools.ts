@@ -108,12 +108,6 @@ const nav_tag_list = [
     },
     {
       type: "query",
-      query: "所有二创",
-      queryType: "q",
-      queryString: "",
-    },
-    {
-      type: "query",
       query: "露早",
       queryType: "q",
       queryString: "露早",
@@ -172,12 +166,6 @@ const nav_tag_list = [
       queryType: "tname",
       queryString: "guichu",
     },
-    {
-      type: "query",
-      query: "其他分区",
-      queryType: "tname",
-      queryString: "other",
-    },
   ].map((item) => ({
     ...item,
     id: nanoid(3),
@@ -190,3 +178,4 @@ const nav_tag_list = [
 export const router_nav_list = nav_tag_list.filter(
   (item) => item.type === "router"
 ) as NavRouterItemType[];
+//todo 增加新的tag

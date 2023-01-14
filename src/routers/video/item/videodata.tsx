@@ -1,5 +1,3 @@
-import { useScreenSize } from "@components/proview/screenSize";
-import SlideshowIcon from "@mui/icons-material/Slideshow";
 import SubjectSharpIcon from "@mui/icons-material/SubjectSharp";
 import { styled } from "@mui/material";
 import getFixedNumber from "@utils/number";
