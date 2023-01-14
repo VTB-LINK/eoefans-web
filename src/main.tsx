@@ -1,20 +1,22 @@
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+//router page
 import VideoPage from "./routers/video";
-import "./index.less";
 import Layout from "./routers/layout";
 import PhotoPage from "./routers/photo";
 import ErrorPage from "./routers/error";
+//preview
 import ScreenProview from "@components/proview/screenSize";
-import TagSelectProview from "@components/proview/tagSelect";
-
+import MUIThemePreview from "@components/proview/themePreview";
+import { Provider } from "react-redux";
+import store from "@store/index";
 //ployfill
 import "intersection-observer";
 import "./normalize.css";
 import "loading-attribute-polyfill";
 import "whatwg-fetch";
-import NavShowProview from "@components/proview/navShow";
-import MUIThemePreview from "@components/proview/themePreview";
+import "./index.less";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -51,12 +53,10 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <ScreenProview>
-    <TagSelectProview>
-      <NavShowProview>
-        <MUIThemePreview>
-          <RouterProvider router={router} />
-        </MUIThemePreview>
-      </NavShowProview>
-    </TagSelectProview>
+    <MUIThemePreview>
+      <Provider store={store}>
+        <RouterProvider router={router} />
+      </Provider>
+    </MUIThemePreview>
   </ScreenProview>
 );

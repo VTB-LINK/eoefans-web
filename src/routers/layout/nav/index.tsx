@@ -15,16 +15,21 @@ import { arrayMove, SortableContext, useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { restrictToParentElement } from "@dnd-kit/modifiers";
 import styles from "./nav.module.less";
-import { FC, useState, useMemo, memo } from "react";
+import { FC, useMemo, memo } from "react";
 import { Flipped } from "react-flip-toolkit";
 import { NavQueryItemType, useNavList } from "./tools";
 import { setLocalstorage } from "../tools";
-import { useTagsSelected } from "@components/proview/tagSelect";
-import { useNavShowed } from "@components/proview/navShow";
+import { useAppSelector, useAppDispatch } from "@store/hooks";
+import { changeNavMoreShowed, selectNavMoreShowed } from "@store/device/index";
+import {
+  handerAddTag,
+  handerDeleteTag,
+  selectActiveTags,
+} from "@store/tags/index";
 export default function Header_Nav() {
   const [navLists, setLists] = useNavList();
   //tag区是否展开
-  const { showed } = useNavShowed();
+  const showed = useAppSelector(selectNavMoreShowed);
   //拖拽事件绑定
   const sensors = useSensors(
     // 鼠标点击
@@ -96,8 +101,10 @@ export default function Header_Nav() {
 
 const NavInViewItem = () => {
   //最后一个span是否可见
-  const { ref, inView } = useInView({ initialInView: true });
-  const { handlerChangeShow, showed } = useNavShowed();
+  const { ref, inView } = useInView({ initialInView: true }),
+    showed = useAppSelector(selectNavMoreShowed),
+    dispatch = useAppDispatch();
+
   return (
     <>
       <span
@@ -110,7 +117,7 @@ const NavInViewItem = () => {
       <Flipped flipId={"nav-right"} delayUntil='list'>
         <div
           className={styles["nav-right-show-btn"]}
-          onClick={handlerChangeShow}
+          onClick={() => dispatch(changeNavMoreShowed())}
           style={{
             display: inView ? "none" : "flex",
           }}
@@ -143,25 +150,22 @@ const NavItem: FC<NavQueryItemType> = memo((props) => {
 });
 
 const NavTagChipItem: FC<NavQueryItemType> = memo((props) => {
-  const [clicked, setClick] = useState<boolean>(false),
-    { handerAddTag, handerDeleteTag } = useTagsSelected();
+  const clicked = useAppSelector(selectActiveTags).some(
+      (item) => item.id === props.id
+    ),
+    dispatch = useAppDispatch();
   return (
     <Chip
       className={styles["navstack-filter-tag"]}
       label={props.query}
       color={clicked ? "info" : "default"}
-      onClick={() =>
-        setClick((clicked) => {
-          //注意这里是要改变点击状态，所以应该反着来
-          //说明之前是点击状态，现在要取消点击
-          if (clicked) {
-            handerDeleteTag(props);
-          } else {
-            handerAddTag(props);
-          }
-          return !clicked;
-        })
-      }
+      onClick={() => {
+        if (clicked) {
+          dispatch(handerDeleteTag(props));
+        } else {
+          dispatch(handerAddTag(props));
+        }
+      }}
     />
   );
 });
