@@ -11,6 +11,7 @@ import {
   fallbackUrl as DefaultFallbackUrl,
   ImageSize,
 } from "./tool";
+import { styled } from "@mui/material";
 
 /**
  * @description 图片预加载hook
@@ -88,7 +89,7 @@ export function ImageBasic({
   return (
     <InView>
       {({ inView, ref, entry }) => (
-        <div ref={ref} className={styles.imgWrapper}>
+        <BorderDiv ref={ref} className={styles.imgWrapper}>
           <img
             src={`${url}${
               !md ? `@480w_270h_1c` : `@672w_378h_1c_!web-search-common-cover`
@@ -101,8 +102,15 @@ export function ImageBasic({
           />
           <>{observer && inView && once_callback(inView)}</>
           {children}
-        </div>
+        </BorderDiv>
       )}
     </InView>
   );
 }
+
+const BorderDiv = styled("div")(({ theme }) => ({
+  borderRadius: "8px",
+  [theme.breakpoints.down("sm")]: {
+    borderRadius: "4px",
+  },
+}));

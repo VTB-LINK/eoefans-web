@@ -1,9 +1,7 @@
 import SearchSharpIcon from "@mui/icons-material/SearchSharp";
 import { Form } from "react-router-dom";
-import Header_Nav from "./nav";
 import styles from "./layout.module.less";
 import { useFocus } from "./hooks";
-import RouterNav from "./routernav";
 import LOGO from "./logo";
 import RightSide from "./rightSide";
 export default function Header() {

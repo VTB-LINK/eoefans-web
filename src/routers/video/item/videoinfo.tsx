@@ -23,6 +23,7 @@ export const VideoInfo: FC<
       <div className={styles["video-up"]}>
         <UPIcon height={16} width={32} title={`芝士${name.slice(0, 2)}`} />
         <div className={styles["video-up-desc"]}>
+          {/* todo 这里在手机端没对齐 */}
           <Link underline='none' color='inherit'>
             <span title={name}>{name}</span>
             {matchsmSize && <span>{getrealtiveTime(pubdate * 1000)}</span>}
@@ -35,11 +36,8 @@ export const VideoInfo: FC<
 
 const DataP = styled("p")(({ theme }) => ({
   fontSize: "15px",
-  height: "40px",
-  lineHeight: "20px",
+  margin: "5px 0",
   [theme.breakpoints.down("sm")]: {
     fontSize: "13px",
-    height: "30px",
-    lineHeight: "15px",
   },
 }));

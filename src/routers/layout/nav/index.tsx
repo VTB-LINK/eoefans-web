@@ -1,4 +1,4 @@
-import { Chip, Stack } from "@mui/material";
+import { Button, Stack } from "@mui/material";
 import { useInView } from "react-intersection-observer";
 import SegmentIcon from "@mui/icons-material/Segment";
 import CloseFullscreenIcon from "@mui/icons-material/CloseFullscreen";
@@ -42,7 +42,7 @@ export default function Header_Nav() {
     // 触摸屏幕
     useSensor(TouchSensor, {
       activationConstraint: {
-        delay: 100,
+        delay: 500,
         tolerance: 5,
       },
     })
@@ -153,21 +153,25 @@ const NavTagChipItem: FC<NavQueryItemType> = memo((props) => {
   const clicked = useAppSelector(selectActiveTags).some(
       (item) => item.id === props.id
     ),
-    dispatch = useAppDispatch();
+    dispatch = useAppDispatch(),
+    handerclick = () => {
+      if (clicked) {
+        dispatch(handerDeleteTag(props));
+      } else {
+        dispatch(handerAddTag(props));
+      }
+    };
+  //todo 修改颜色
   return (
-    <Chip
-      className={styles["navstack-filter-tag"]}
-      label={props.query}
-      color={clicked ? "info" : "default"}
-      onClick={() => {
-        if (clicked) {
-          dispatch(handerDeleteTag(props));
-        } else {
-          dispatch(handerAddTag(props));
-        }
+    <Button
+      variant='contained'
+      color={clicked ? "secondary" : "primary"}
+      onClick={handerclick}
+      sx={{
+        wordBreak: "keep-all",
       }}
-    />
+    >
+      {props.query}
+    </Button>
   );
 });
-//todo：修复展示更多栏的bug
-//todo：拆分组件

@@ -54,7 +54,13 @@ export const UPIcon: FC<{
           />
         </g>
       </g>
-      <text stroke='#D9D9D9' fontSize='12' y='12' x='8' strokeWidth='0.5'>
+      <text
+        stroke='rgb(222,222,222)'
+        fontSize='12'
+        y='12'
+        x='8'
+        strokeWidth='0.5'
+      >
         UP
       </text>
     </g>

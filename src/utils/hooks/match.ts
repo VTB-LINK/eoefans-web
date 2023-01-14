@@ -5,7 +5,7 @@ import { Breakpoint, useMediaQuery, useTheme } from "@mui/material";
  */
 export const useScreenMatchSize = (size: Breakpoint) => {
   const theme = useTheme();
-  const matchSize = useMediaQuery(theme.breakpoints.up(size));
+  const matchSize = useMediaQuery(theme.breakpoints.down(size));
   return matchSize;
 };
 //个人主页头像大小

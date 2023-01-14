@@ -76,6 +76,7 @@ export default function VideoMasonry(props: { q?: string }) {
             sm: 1,
             xs: 1,
           }}
+          rowSpacing={2}
           columns={{
             lg: 10,
             md: 8,
@@ -113,16 +114,8 @@ const LoadingSkeleton: FC<{ num: number }> = ({ num = 0 }) => {
           <Skeleton animation='wave' height={20} />
           <Skeleton animation='wave' width={"50%"} height={20} />
           <div className={styles["skeleton-content"]}>
-            <Skeleton
-              variant='circular'
-              animation='wave'
-              width={40}
-              height={40}
-            />
-            <div className={styles["skeleton-info"]}>
-              <Skeleton animation='wave' width={"80%"} height={20} />
-              <Skeleton animation='wave' width={"80%"} height={20} />
-            </div>
+            <Skeleton animation='wave' width={40} height={25} />
+            <Skeleton animation='wave' width={"60%"} height={20} />
           </div>
         </Grid>
       ))}

@@ -33,13 +33,6 @@
             display: flex;
             align-items: center;
 
-            &>span {
-                font-size: 13px;
-                display: flex;
-                align-items: center;
-
-            }
-
             &>span:not(:last-of-type) {
                 margin-right: 12px;
             }
@@ -47,6 +40,10 @@
     }
 
     .video-info {
+        flex: 1;
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: space-between;
 
         &>*:not(:first-child) {
             margin-top: 5px;
@@ -63,7 +60,7 @@
             text-overflow: ellipsis;
             line-break: anywhere;
             -webkit-line-clamp: 2;
-            word-wrap: break-all;
+            word-break: break-all;
 
             &:hover,
             &:active {
