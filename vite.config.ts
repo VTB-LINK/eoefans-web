@@ -9,6 +9,9 @@ import viteCompression from "vite-plugin-compression";
 import legacy from "@vitejs/plugin-legacy";
 // https://vitejs.dev/config/
 export default defineConfig({
+  define: {
+    __APP_VERSION__: "0.1",
+  },
   resolve: {
     alias: {
       "@utils": path.resolve(__dirname, "src/utils"),

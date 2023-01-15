@@ -1,12 +1,31 @@
-export function getLocalStorage<T>(searchName: string, defaultRes: T): T {
-  if (!localStorage) {
-    return defaultRes;
+export class Storage<T> {
+  itemName: string;
+  constructor(itemName: string) {
+    this.itemName = itemName;
   }
-  if (!localStorage.getItem(searchName)) {
-    localStorage.setItem(searchName, JSON.stringify(defaultRes));
+  private getStorage(Storagename: globalThis.Storage, defaultRes: T): T {
+    if (!Storagename) {
+      return Storagename;
+    }
+    if (!Storagename.getItem(this.itemName)) {
+      Storagename.setItem(this.itemName, JSON.stringify(defaultRes));
+    }
+    return JSON.parse(Storagename.getItem(this.itemName) as string);
   }
-  return JSON.parse(localStorage.getItem(searchName) as string);
-}
-export function setLocalstorage(itemName: string, targetRes: unknown): void {
-  if (localStorage) localStorage.setItem(itemName, JSON.stringify(targetRes));
+  private setStorage(Storagename: globalThis.Storage, targetRes: T): void {
+    if (Storagename)
+      Storagename.setItem(this.itemName, JSON.stringify(targetRes));
+  }
+  getLocalStorage(defaultRes: T): T {
+    return this.getStorage(localStorage, defaultRes);
+  }
+  getSessionStorage(defaultRes: T): T {
+    return this.getStorage(sessionStorage, defaultRes);
+  }
+  setLocalstorage(targetRes: T): void {
+    this.setStorage(localStorage, targetRes);
+  }
+  setSessionStorage(targetRes: T): void {
+    this.setStorage(sessionStorage, targetRes);
+  }
 }

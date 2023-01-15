@@ -1,17 +1,29 @@
 import { nanoid } from "nanoid";
 import { useMemo, useState } from "react";
-import { getLocalStorage } from "../tools";
+import { Storage } from "../tools";
+import { getVersion } from "@utils/index";
+
+interface DnavStorage {
+  version: string;
+  res: NavQueryItemType[];
+}
+
+export const NavStorage = new Storage<DnavStorage>("navTagLists");
+
 export function useNavList(): [
   NavQueryItemType[],
   React.Dispatch<React.SetStateAction<NavQueryItemType[]>>
 ] {
   const nav_ok_lists = useMemo(() => {
-    const local_lists = getLocalStorage(
-      "navTagLists",
-      [] as NavQueryItemType[]
-    );
-    if (PassNavList(local_lists)) {
-      return local_lists;
+    const local_lists = NavStorage.getLocalStorage({
+      version: getVersion(),
+      res: [],
+    } as DnavStorage);
+    if (parseFloat(local_lists.version) < parseFloat(getVersion())) {
+      return query_nav_list;
+    }
+    if (PassNavList(local_lists.res)) {
+      return local_lists.res;
     }
     return query_nav_list;
   }, []);
@@ -90,22 +102,12 @@ export type NavQueryItemType = {
   id: string;
   type: "query";
   query: string;
-  queryType: "q" | "tname" | "copyright";
+  queryType: "q" | "tname" | "copyright" | "order";
   queryString: string;
   cancelable: boolean;
 };
 export type NavListItemType = NavQueryItemType | NavRouterItemType;
-const nav_tag_list = [
-    {
-      type: "router",
-      pathname: "photo",
-      name: "图片",
-    },
-    {
-      type: "router",
-      pathname: "video",
-      name: "视频",
-    },
+const nav_tag_list_no_id: Omit<NavQueryItemType, "id" | "cancelable">[] = [
     {
       type: "query",
       query: "露早",
@@ -166,16 +168,51 @@ const nav_tag_list = [
       queryType: "tname",
       queryString: "guichu",
     },
-  ].map((item) => ({
+    {
+      type: "query",
+      query: "原创",
+      queryType: "copyright",
+      queryString: "1",
+    },
+    {
+      type: "query",
+      query: "转载",
+      queryType: "copyright",
+      queryString: "2",
+    },
+    {
+      type: "query",
+      query: "最新发布",
+      queryType: "order",
+      queryString: "pubdate",
+    },
+    {
+      type: "query",
+      query: "最多播放",
+      queryType: "order",
+      queryString: "view",
+    },
+  ],
+  query_nav_list = nav_tag_list_no_id.map((item) => ({
     ...item,
     id: nanoid(3),
     cancelable: false,
-  })) as NavListItemType[],
-  query_nav_list = nav_tag_list.filter(
-    (item) => item.type === "query"
-  ) as NavQueryItemType[];
-
-export const router_nav_list = nav_tag_list.filter(
-  (item) => item.type === "router"
-) as NavRouterItemType[];
+  })) as NavQueryItemType[];
+const router_list: Omit<NavRouterItemType, "id" | "cancelable">[] = [
+  {
+    type: "router",
+    pathname: "photo",
+    name: "图片",
+  },
+  {
+    type: "router",
+    pathname: "video",
+    name: "视频",
+  },
+];
+export const router_nav_list = router_list.map((item) => ({
+  ...item,
+  id: nanoid(3),
+  cancelable: false,
+})) as NavRouterItemType[];
 //todo 增加新的tag

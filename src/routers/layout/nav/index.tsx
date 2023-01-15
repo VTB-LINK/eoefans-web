@@ -18,9 +18,10 @@ import styles from "./nav.module.less";
 import { FC, useMemo, memo } from "react";
 import { Flipped } from "react-flip-toolkit";
 import { NavQueryItemType, useNavList } from "./tools";
-import { setLocalstorage } from "../tools";
+import { NavStorage } from "./tools";
 import { useAppSelector, useAppDispatch } from "@store/hooks";
 import { changeNavMoreShowed, selectNavMoreShowed } from "@store/device/index";
+import { getVersion } from "../../../utils/index";
 import {
   handerAddTag,
   handerDeleteTag,
@@ -55,7 +56,10 @@ export default function Header_Nav() {
         const oldIndex = items.findIndex((item) => item.id === active.id),
           newIndex = items.findIndex((item) => item.id === over.id),
           newLists = arrayMove(items, oldIndex, newIndex);
-        setLocalstorage("navTagLists", newLists);
+        NavStorage.setLocalstorage({
+          version: getVersion(),
+          res: newLists,
+        });
         return newLists;
       });
     }

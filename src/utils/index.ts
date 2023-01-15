@@ -158,3 +158,8 @@ export function thorttleFn<T extends (...args: any) => any>(
     }
   };
 }
+
+/**
+ * @description 获取当前版本
+ */
+export const getVersion = () => __APP_VERSION__;
