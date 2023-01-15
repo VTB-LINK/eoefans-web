@@ -16,6 +16,7 @@ import "./normalize.css";
 import "loading-attribute-polyfill";
 import "whatwg-fetch";
 import "./index.less";
+import SearchFocuspreview from "@components/proview/searchFocus";
 
 const router = createBrowserRouter([
   {
@@ -54,9 +55,11 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <ScreenProview>
     <MUIThemePreview>
-      <Provider store={store}>
-        <RouterProvider router={router} />
-      </Provider>
+      <SearchFocuspreview>
+        <Provider store={store}>
+          <RouterProvider router={router} />
+        </Provider>
+      </SearchFocuspreview>
     </MUIThemePreview>
   </ScreenProview>
 );

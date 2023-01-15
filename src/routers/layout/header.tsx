@@ -1,46 +1,25 @@
-import SearchSharpIcon from "@mui/icons-material/SearchSharp";
-import { Form } from "react-router-dom";
+import { useSearchFocus } from "@components/proview/searchFocus";
+import { Flipped } from "react-flip-toolkit";
 import styles from "./layout.module.less";
-import { useFocus } from "./hooks";
 import LOGO from "./logo";
 import RightSide from "./rightSide";
+import Search from "./search";
 export default function Header() {
+  const { focused } = useSearchFocus();
   return (
-    <header className={styles["header"]}>
-      <LOGO />
-      <Search />
-      <RightSide />
-    </header>
+    <Flipped flipId={"list"} spring={"veryGentle"}>
+      <header
+        className={styles["header"]}
+        style={{
+          justifyContent: focused ? "center" : "space-between",
+          height: focused ? "100px" : "40px",
+        }}
+      >
+        {!focused && <LOGO />}
+        <Search />
+        {!focused && <RightSide />}
+      </header>
+    </Flipped>
   );
 }
 //todo 换掉header
-//todo 添加搜索
-function Search() {
-  const { focused, bind } = useFocus();
-  return (
-    <>
-      <div className={styles["search-box"]}>
-        <Form
-          role='search'
-          className={`${styles["search-form"]} ${
-            focused ? styles["form-active"] : ""
-          }`}
-        >
-          <div className={styles["search-content"]}>
-            <input
-              {...bind}
-              type='text'
-              autoComplete='off'
-              maxLength={50}
-              className={styles["search-input"]}
-              placeholder='尝试在这里搜索些什么'
-            />
-          </div>
-          <div className={styles["search-btn"]}>
-            <SearchSharpIcon />
-          </div>
-        </Form>
-      </div>
-    </>
-  );
-}

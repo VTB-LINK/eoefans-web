@@ -34,7 +34,7 @@ $ npm run preview
 - [x] 基础 tag 栏展示
 - [x] tag 栏用户自定义排序
 - [x] tag 栏放缩动画
-- [x] 根据tag栏进行重新查询
+- [x] 根据 tag 栏进行重新查询
 
 ## TODO
 
@@ -43,6 +43,7 @@ $ npm run preview
 - [ ] UI 设计
 - [ ] 搜索功能
 - [ ] 图片加载序列
+- [ ] header 栏根据滚动进行显示隐藏
 
 ### 现在还没定论的
 
