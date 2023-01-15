@@ -18,7 +18,6 @@ export function fetchVideos(
   ${params.tname ? `&tname=${params.tname}` : ""}`
     .replace(/\s+/g, "")
     .trim();
-  console.log({ fetchUrl });
   return fetch(fetchUrl, {
     method: "GET",
     headers: {

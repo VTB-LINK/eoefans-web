@@ -165,11 +165,11 @@ const NavTagChipItem: FC<NavQueryItemType> = memo((props) => {
         dispatch(handerAddTag(props));
       }
     };
-  //todo 修改颜色
+  //todo 修改颜色,我感觉这个颜色应该会蛮难写的
   return (
     <Button
-      variant='contained'
-      color={clicked ? "secondary" : "primary"}
+      variant={clicked ? "contained" : "outlined"}
+      color='info'
       onClick={handerclick}
       sx={{
         wordBreak: "keep-all",

@@ -10,15 +10,17 @@ export default function VideoPage() {
       ?.queryString as ValueOf<Pick<VideoRouterMasonryType, "tname">>,
     copyright = activeTags.find((item) => item.queryType === "copyright")
       ?.queryString as ValueOf<Pick<VideoRouterMasonryType, "copyright">>,
+    order = activeTags.find((item) => item.queryType === "order")
+      ?.queryString as ValueOf<Pick<VideoRouterMasonryType, "order">>,
     q = activeTags
       .filter((item) => item.queryType === "q")
-      .reduceRight((pre, cur) => {
-        return `${cur.queryString}+${pre}`;
-      }, "");
+      .reduceRight((pre, cur, index, arr) => {
+        return `${cur.queryString}${index < arr.length - 1 ? "+" : ""}${pre}`;
+      }, ""),
+    props = { tname, copyright, order, q };
   return (
     <>
-      <VideoMasonry tname={tname} copyright={copyright} />
+      <VideoMasonry {...props} />
     </>
   );
 }
-//todo 重新写q
