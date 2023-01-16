@@ -19,6 +19,10 @@ export function useNavList(): [
       version: getVersion(),
       res: [],
     } as DnavStorage);
+    if (!local_lists.version) {
+      return query_nav_list;
+    }
+    //todo 修改逻辑
     if (parseFloat(local_lists.version) < parseFloat(getVersion())) {
       return query_nav_list;
     }

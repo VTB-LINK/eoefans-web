@@ -164,18 +164,29 @@ const NavTagChipItem: FC<NavQueryItemType> = memo((props) => {
       } else {
         dispatch(handerAddTag(props));
       }
-    };
+    },
+    //@ts-ignore
+    color = nameToColor[props.query] || "info";
   //todo 修改颜色,我感觉这个颜色应该会蛮难写的
   return (
     <Button
       variant={clicked ? "contained" : "outlined"}
-      color='info'
+      color={color}
       onClick={handerclick}
       sx={{
         wordBreak: "keep-all",
+        fontWeight: "600",
       }}
     >
       {props.query}
     </Button>
   );
 });
+
+const nameToColor = {
+  露早: "luzao",
+  柚恩: "youen",
+  莞儿: "waner",
+  米诺: "minuo",
+  虞莫: "yumo",
+};

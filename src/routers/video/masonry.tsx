@@ -1,5 +1,3 @@
-import { fetchVideos } from "@utils/fetch";
-import { Pick } from "@utils/index";
 import { useState, useEffect, FC, memo } from "react";
 import { VideoRouterImageCardType, VideoRouterMasonryType } from "./videotype";
 import { Unstable_Grid2 as Grid } from "@mui/material";
@@ -8,6 +6,7 @@ import { VideoRouterImageCard } from "./item";
 import { Skeleton } from "@mui/material";
 import { nanoid } from "nanoid";
 import styles from "./video.module.less";
+import { fetchVideohnadler, PickVideoRouterImageCardType } from "./tools";
 /**
  * @description 该组件负责渲染视频图片的瀑布流
  */
@@ -19,34 +18,11 @@ export default function VideoMasonry(props: VideoRouterMasonryType) {
   useEffect(() => {
     // 在内部定义fetchHandler，保证拿到的是同步的
     const fetchHandler = async (page: number = 1) => {
-      const res = await fetchVideos({
-          ...props,
-          order: "view",
-          page,
-        }),
-        data = res.data.result;
+      const data = await fetchVideohnadler(page, props);
       setLists((lists) => [
         ...lists,
         ...data.map((item, index) => {
-          const itemRes: VideoRouterImageCardType = Pick(
-            item,
-            "title",
-            "bvid",
-            "name",
-            "tname",
-            "copyright",
-            "pic",
-            "tag",
-            "view",
-            "coin",
-            "share",
-            "like",
-            "pubdate",
-            "danmaku",
-            "duration",
-            "favorite",
-            "face"
-          );
+          const itemRes = PickVideoRouterImageCardType(item);
           if (index === data.length - 3) {
             return {
               ...itemRes,
@@ -83,6 +59,7 @@ export default function VideoMasonry(props: VideoRouterMasonryType) {
             sm: 6,
             xs: 4,
           }}
+          className={styles["container"]}
         >
           {lists.map((item) => (
             <MemoItems key={item.id} {...item} />

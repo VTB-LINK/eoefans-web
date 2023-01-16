@@ -172,7 +172,7 @@ export interface RFetchVideoRes {
   /**
    * @example 0
    */
-  code: number;
+  code: 0 | 400;
   /**
    * @example "ok"
    */

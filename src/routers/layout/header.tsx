@@ -5,21 +5,15 @@ import LOGO from "./logo";
 import RightSide from "./rightSide";
 import Search from "./search";
 export default function Header() {
-  const { focused } = useSearchFocus();
+  // const { focused } = useSearchFocus();
   return (
-    <Flipped flipId={"list"} spring={"veryGentle"}>
-      <header
-        className={styles["header"]}
-        style={{
-          justifyContent: focused ? "center" : "space-between",
-          height: focused ? "100px" : "40px",
-        }}
-      >
-        {!focused && <LOGO />}
+    // <Flipped flipId={"list"} spring={"veryGentle"}>
+    <header className={styles["header"]}>
+      {/* {!focused && <LOGO />}
         <Search />
-        {!focused && <RightSide />}
-      </header>
-    </Flipped>
+        {!focused && <RightSide />} */}
+      <LOGO />
+    </header>
+    // </Flipped>
   );
 }
-//todo 换掉header

@@ -9,6 +9,7 @@ import styles from "./layout.module.less";
 export default function Layout() {
   const showed = useAppSelector(selectNavMoreShowed),
     { focused } = useSearchFocus();
+
   return (
     <>
       <Flipper
@@ -18,12 +19,7 @@ export default function Layout() {
         className={styles["container"]}
       >
         <Header />
-        <nav
-          className='feedContainer'
-          style={{
-            paddingTop: "40px",
-          }}
-        >
+        <nav className='feedContainer'>
           <Header_Nav />
         </nav>
         <Flipped flipId={"list"} spring={"veryGentle"}>

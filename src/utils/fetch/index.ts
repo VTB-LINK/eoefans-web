@@ -10,7 +10,7 @@ export function fetchVideos(
   params: IFetchVideoParams
 ): Promise<RFetchVideoRes> {
   const fetchUrl = `/v1/video-interface/advanced-search?order=${
-    params.order
+    params.order || "view"
   }&page=${params.page}${
     params.copyright ? `&copyright=${params.copyright}` : ""
   }
