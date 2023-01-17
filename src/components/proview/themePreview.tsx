@@ -6,6 +6,7 @@ declare module "@mui/material/styles" {
   interface Palette {
     palette: {
       luzao: Palette["primary"];
+      luzaoRed: Palette["primary"];
       minuo: Palette["primary"];
       waner: Palette["primary"];
       yumo: Palette["primary"];
@@ -15,6 +16,7 @@ declare module "@mui/material/styles" {
   }
   interface PaletteOptions {
     luzao: Palette["primary"];
+    luzaoRed: Palette["primary"];
     minuo: Palette["primary"];
     waner: Palette["primary"];
     yumo: Palette["primary"];
@@ -25,6 +27,7 @@ declare module "@mui/material/styles" {
 declare module "@mui/material/Button" {
   interface ButtonPropsColorOverrides {
     luzao: true;
+    luzaoRed: true;
     minuo: true;
     waner: true;
     yumo: true;
@@ -38,6 +41,7 @@ const theme = createTheme({
   },
   palette: {
     luzao: { main: "#3dff9e", contrastText: "#fff" },
+    luzaoRed: { main: "#A0191D", contrastText: "#fff" },
     minuo: { main: "#f068B0", contrastText: "#fff" },
     waner: { main: "#1eafe4", contrastText: "#fff" },
     yumo: { main: "#b77fdd", contrastText: "#fff" },

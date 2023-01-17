@@ -5,7 +5,7 @@ export default function PhotoPage() {
         textAlign: "center",
       }}
     >
-      二创图片页还在制作,敬请期待!
+      🙇‍♂️🙇‍♂️🙇‍♂️二创图片页还在制作中,敬请期待!
     </h1>
   );
 }

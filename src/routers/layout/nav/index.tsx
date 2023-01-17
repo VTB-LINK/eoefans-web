@@ -176,6 +176,7 @@ const NavTagChipItem: FC<NavQueryItemType> = memo((props) => {
       sx={{
         wordBreak: "keep-all",
         fontWeight: "600",
+        // padding: "1px 10px",
       }}
     >
       {props.query}
@@ -184,7 +185,7 @@ const NavTagChipItem: FC<NavQueryItemType> = memo((props) => {
 });
 
 const nameToColor = {
-  露早: "luzao",
+  露早: "luzaoRed",
   柚恩: "youen",
   莞儿: "waner",
   米诺: "minuo",
