@@ -1,16 +1,70 @@
-import { FC } from "react";
+import { Button, Modal } from "@mui/material";
+import { FC, useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "./layout.module.less";
+
 export default function LOGO() {
+  const [open, set] = useState(false),
+    handlerClick = () => set((open) => !open);
   return (
     <div className={styles["logo"]}>
       <Link to='/'>
-        <h1>EOEfans-web端</h1>
+        <h1>
+          EOEfans-web端
+          <Button onClick={handlerClick} sx={{ padding: "0" }}>
+            QA
+          </Button>
+          <Modal open={open} onClose={handlerClick}>
+            <div className={styles["modal"]}>
+              <hr className={styles["line_text"]} data-content='QA' />
+              <ul>
+                <li>
+                  <p>
+                    <strong>Q: </strong>
+                    <span>为什么界面这么丑？</span>
+                  </p>
+                  <p>
+                    <strong>A: </strong>
+                    <span>web端没有UI捏🙇‍♂️🙇‍♂️🙇‍♂️果咩。</span>
+                  </p>
+                </li>
+                <li>
+                  <p>
+                    <strong>Q: </strong>
+                    <span>如何查找我想看的视频类型？</span>
+                  </p>
+                  <p>
+                    <strong>A: </strong>
+                    <span>
+                      😩目前只能通过点击下方tag栏进行查询，其中各分区、原创和转载、
+                      最新发布和最多播放互斥外其他tag皆满足异或查询。
+                      <br />
+                      🤔tag排序不是固定的，可以使用鼠标或者触摸按住tag半秒后进行移动。
+                      <br />
+                      🤗可以自定义任何你想要的tag栏顺序，下一次访问也有效。
+                    </span>
+                  </p>
+                </li>
+              </ul>
+              <Button
+                sx={{
+                  position: "relative",
+                  left: "50%",
+                  transform: "translate(-50%,0)",
+                }}
+                onClick={handlerClick}
+              >
+                我知道了
+              </Button>
+            </div>
+          </Modal>
+        </h1>
         <Yituo width={"220px"} height={"125px"} />
       </Link>
     </div>
   );
 }
+
 //todo 修改logo
 
 const Yituo: FC<{

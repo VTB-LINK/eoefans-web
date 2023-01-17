@@ -31,7 +31,82 @@
             left: 50%;
             transform: translate(-50%, -50%);
             white-space: nowrap;
-            //todo 根据应援色修改
+
+            button {
+                position: absolute;
+                transform: translate(-20px, -10px);
+            }
         }
+    }
+}
+
+.modal {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    border-radius: 4px;
+    padding: 15px 10px;
+    max-width: 400px;
+    width: 90%;
+    max-height: 400px;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    //todo 优化fq
+    ul {
+        display: flex;
+        flex-flow: column nowrap;
+    }
+
+    li {
+        margin: 10px;
+        list-style: none;
+        box-sizing: border-box;
+
+        &>p:not(:last-of-type) {
+            margin-bottom: 12px;
+
+        }
+
+        &>p {
+            display: flex;
+
+            strong {
+                flex: 0 0 25px;
+            }
+        }
+
+
+    }
+}
+
+
+.line_text {
+    width: 100%;
+    // color: #a2a9b6;
+    border: 0;
+    font-size: 14px;
+    padding: 1em 0;
+    position: relative;
+    -webkit-mask-image: linear-gradient(to right,
+            transparent,
+            black,
+            transparent);
+    mask-image: linear-gradient(to right, transparent, black, transparent);
+
+    &::before {
+        content: attr(data-content);
+        position: absolute;
+        padding: 0 1ch;
+        line-height: 1px;
+        border: solid #d0d0d5;
+        border-width: 0 99vw;
+        width: fit-content;
+        /* for 不支持fit-content浏览器 */
+        white-space: nowrap;
+        left: 50%;
+        transform: translateX(-50%);
     }
 }
