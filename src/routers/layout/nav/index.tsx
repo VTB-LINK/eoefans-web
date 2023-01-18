@@ -1,4 +1,5 @@
-import { Button, Stack } from "@mui/material";
+import { Stack } from "@mui/material";
+import Button from "@mui/lab/LoadingButton";
 import { useInView } from "react-intersection-observer";
 import SegmentIcon from "@mui/icons-material/Segment";
 import CloseFullscreenIcon from "@mui/icons-material/CloseFullscreen";
@@ -17,11 +18,11 @@ import { restrictToParentElement } from "@dnd-kit/modifiers";
 import styles from "./nav.module.less";
 import { FC, useMemo, memo } from "react";
 import { Flipped } from "react-flip-toolkit";
-import { NavQueryItemType, useNavList } from "./tools";
-import { NavStorage } from "./tools";
+import { NavQueryItemType, useNavList, NavStorage } from "./tools";
 import { useAppSelector, useAppDispatch } from "@store/hooks";
 import { changeNavMoreShowed, selectNavMoreShowed } from "@store/device/index";
-import { getVersion } from "../../../utils/index";
+import { getVersion } from "@utils/index";
+import { selectVideoLoadingState } from "@store/loading/index";
 import {
   handerAddTag,
   handerDeleteTag,
@@ -75,31 +76,29 @@ export default function Header_Nav() {
     [navLists]
   );
   return (
-    <Flipped flipId={"list"} spring={"veryGentle"}>
-      <div className={styles["nav"]}>
-        <DndContext
-          sensors={sensors}
-          collisionDetection={closestCenter}
-          onDragEnd={handleDragEnd}
-          modifiers={[restrictToParentElement]}
-        >
-          <Flipped inverseFlipId='list'>
-            <Stack
-              direction='row'
-              alignItems='center'
-              className={`${styles["navstack"]}`}
-              style={{
-                flexWrap: showed ? "wrap" : "nowrap",
-              }}
-              data-showed={showed}
-            >
-              <SortableContext items={navLists}>{ComRes}</SortableContext>
-              <NavInViewItem />
-            </Stack>
-          </Flipped>
-        </DndContext>
-      </div>
-    </Flipped>
+    <div className={styles["nav"]}>
+      <DndContext
+        sensors={sensors}
+        collisionDetection={closestCenter}
+        onDragEnd={handleDragEnd}
+        modifiers={[restrictToParentElement]}
+      >
+        <Flipped inverseFlipId='list'>
+          <Stack
+            direction='row'
+            alignItems='center'
+            className={`${styles["navstack"]}`}
+            style={{
+              flexWrap: showed ? "wrap" : "nowrap",
+            }}
+            data-showed={showed}
+          >
+            <SortableContext items={navLists}>{ComRes}</SortableContext>
+            <NavInViewItem />
+          </Stack>
+        </Flipped>
+      </DndContext>
+    </div>
   );
 }
 
@@ -145,7 +144,7 @@ const NavItem: FC<NavQueryItemType> = memo((props) => {
     transition,
   };
   return (
-    <Flipped flipId={props.id} spring={"veryGentle"} translate>
+    <Flipped flipId={props.id} spring={"veryGentle"}>
       <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
         <NavTagChipItem {...props} />
       </div>
@@ -165,18 +164,24 @@ const NavTagChipItem: FC<NavQueryItemType> = memo((props) => {
         dispatch(handerAddTag(props));
       }
     },
+    isVideoFetching = useAppSelector(selectVideoLoadingState),
     //@ts-ignore
     color = nameToColor[props.query] || "info";
-  //todo 修改颜色,我感觉这个颜色应该会蛮难写的
   return (
     <Button
       variant={clicked ? "contained" : "outlined"}
       color={color}
       onClick={handerclick}
+      loading={isVideoFetching}
       sx={{
         wordBreak: "keep-all",
         fontWeight: "600",
-        // padding: "1px 10px",
+        fontSize: {
+          xs: "12px",
+          sm: "14px",
+        },
+        padding: "1px 10px",
+        verticalAlign: "center",
       }}
     >
       {props.query}

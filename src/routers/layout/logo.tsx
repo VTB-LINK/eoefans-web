@@ -1,4 +1,4 @@
-import { Button, Modal } from "@mui/material";
+import { Button, Modal, styled } from "@mui/material";
 import { FC, useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "./layout.module.less";
@@ -9,7 +9,7 @@ export default function LOGO() {
   return (
     <div className={styles["logo"]}>
       <Link to='/'>
-        <h1>
+        <H1>
           EOEfans-web端
           <Button onClick={handlerClick} sx={{ padding: "0" }}>
             QA
@@ -45,6 +45,27 @@ export default function LOGO() {
                     </span>
                   </p>
                 </li>
+                <li>
+                  <p>
+                    <strong>Q: </strong>
+                    <span>露早tag为什么不是应援色？</span>
+                  </p>
+                  <p>
+                    <strong>A: </strong>
+                    <span>
+                      露早GOGO的应援色为
+                      <span
+                        style={{
+                          color: "#3dff9e",
+                        }}
+                      >
+                        #3dff9e
+                      </span>
+                      ,tag字面显示不明显，所以更换为黑露早形态的
+                      <span style={{ color: "#A0191D" }}>#A0191D</span>
+                    </span>
+                  </p>
+                </li>
               </ul>
               <Button
                 sx={{
@@ -58,12 +79,18 @@ export default function LOGO() {
               </Button>
             </div>
           </Modal>
-        </h1>
-        <Yituo width={"220px"} height={"125px"} />
+        </H1>
+        <Yituo width={"64px"} height={"30px"} />
       </Link>
     </div>
   );
 }
+const H1 = styled("h1")(({ theme }) => ({
+  fontSize: "24px",
+  [theme.breakpoints.down("sm")]: {
+    fontSize: "15px",
+  },
+}));
 
 //todo 修改logo
 

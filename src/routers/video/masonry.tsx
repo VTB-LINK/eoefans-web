@@ -7,6 +7,11 @@ import { Skeleton } from "@mui/material";
 import { nanoid } from "nanoid";
 import styles from "./video.module.less";
 import { fetchVideohnadler, PickVideoRouterImageCardType } from "./tools";
+import { useAppSelector, useAppDispatch } from "@store/hooks";
+import {
+  changeLoading,
+  selectVideoLoadingState,
+} from "../../store/loading/index";
 /**
  * @description 该组件负责渲染视频图片的瀑布流
  */
@@ -14,7 +19,10 @@ export default function VideoMasonry(props: VideoRouterMasonryType) {
   const [lists, setLists] = useState<
     (VideoRouterImageCardType & { id: string })[]
   >([]);
-  const [isLoading, setLoading] = useState<boolean>(true);
+  const isLoading = useAppSelector(selectVideoLoadingState),
+    dispatch = useAppDispatch(),
+    handerChangeLoading = (state: boolean) =>
+      dispatch(changeLoading({ stateName: "videoIsLoading", Tostate: state }));
   useEffect(() => {
     // 在内部定义fetchHandler，保证拿到的是同步的
     const fetchHandler = async (page: number = 1) => {
@@ -38,8 +46,8 @@ export default function VideoMasonry(props: VideoRouterMasonryType) {
       ]);
     };
     setLists([]);
-    setLoading(true);
-    fetchHandler(1).then(() => setLoading(false));
+    handerChangeLoading(true);
+    fetchHandler(1).then(() => handerChangeLoading(false));
   }, [props]);
   return (
     <div className='feedContainer'>

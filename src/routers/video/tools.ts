@@ -8,7 +8,7 @@ export const fetchVideohnadler = async (
   props: VideoRouterMasonryType
 ) => {
   const res = await fetchVideos({
-    order: "view",
+    order: "score",
     ...props,
     page,
   });

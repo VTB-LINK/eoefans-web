@@ -17,12 +17,20 @@ export default function Layout() {
         decisionData={showed}
         spring={"veryGentle"}
         className={styles["container"]}
+        staggerConfig={{
+          default: {
+            reverse: false,
+            speed: 0.8,
+          },
+        }}
       >
         <Header />
-        <nav className='feedContainer'>
-          <Header_Nav />
-        </nav>
-        <Flipped flipId={"list"} spring={"veryGentle"}>
+        <Flipped flipId={"list"}>
+          <nav className={"feedContainer " + styles["nav"]}>
+            <Header_Nav />
+          </nav>
+        </Flipped>
+        <Flipped flipId={"container"} spring={"veryGentle"}>
           <main>
             <section
             // className=

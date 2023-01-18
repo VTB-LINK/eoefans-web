@@ -12,11 +12,12 @@ export default function VideoPage() {
       ?.queryString as ValueOf<Pick<VideoRouterMasonryType, "copyright">>,
     order = activeTags.find((item) => item.queryType === "order")
       ?.queryString as ValueOf<Pick<VideoRouterMasonryType, "order">>,
-    q = activeTags
+    q_not_tag = activeTags
       .filter((item) => item.queryType === "q")
       .reduceRight((pre, cur, index, arr) => {
         return `${cur.queryString}${index < arr.length - 1 ? "+" : ""}${pre}`;
       }, ""),
+    q = q_not_tag.length > 1 ? `tag.${q_not_tag}` : q_not_tag,
     props = { tname, copyright, order, q };
   return (
     <>

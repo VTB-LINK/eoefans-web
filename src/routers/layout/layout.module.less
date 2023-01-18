@@ -3,12 +3,19 @@
 
 }
 
+.nav {
+    // position: sticky;
+    // top: 0;
+    z-index: 1000;
+
+}
+
 .header {
     max-width: 1440px;
     margin: 0 auto;
+    padding-top: 10px;
     display: flex;
     align-items: center;
-    justify-content: center;
     background-color: #fff;
 }
 
@@ -22,14 +29,14 @@
     }
 
     &>a:only-child {
-        display: block;
+        display: flex;
         position: relative;
+        flex-flow: row-reverse nowrap;
+        align-items: center;
+        padding: 5px 0;
 
         h1 {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            margin: 0;
             white-space: nowrap;
 
             button {
@@ -50,14 +57,16 @@
     padding: 15px 10px;
     max-width: 400px;
     width: 90%;
-    max-height: 400px;
-    overflow-y: auto;
-    overflow-x: hidden;
 
-    //todo 优化fq
+
+
+
     ul {
         display: flex;
         flex-flow: column nowrap;
+        max-height: 60vh;
+        overflow-y: auto;
+        overflow-x: hidden;
     }
 
     li {
@@ -67,7 +76,7 @@
 
         &>p:not(:last-of-type) {
             margin-bottom: 12px;
-
+            color: grey;
         }
 
         &>p {
