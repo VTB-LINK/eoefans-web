@@ -8,6 +8,7 @@ import ErrorPage from "./routers/error";
 //preview
 import ScreenProview from "@components/proview/screenSize";
 import MUIThemePreview from "@components/proview/themePreview";
+import SearchFocuspreview from "@components/proview/searchFocus";
 import { Provider } from "react-redux";
 import store from "@store/index";
 //ployfill
@@ -16,7 +17,6 @@ import "./normalize.css";
 import "loading-attribute-polyfill";
 import "whatwg-fetch";
 import "./index.less";
-import SearchFocuspreview from "@components/proview/searchFocus";
 
 const router = createBrowserRouter([
   {
