@@ -1,27 +1,54 @@
+import axios from "axios";
 /**
  * 类型文件导入
  */
 import { IFetchVideoParams, RFetchVideoRes } from "./fetchtype";
 import { Host_Url } from "./tool";
 
+export const BackEndAxios = axios.create({
+  baseURL: Host_Url,
+  timeout: 2500,
+});
+/**
+ * 后端接口配置
+ */
+BackEndAxios.interceptors.request.use((config) => {
+  //添加请求凭证
+  config.params = {
+    ...config.params,
+    "subscription-key": "3cc4284fbb864965a7a9ad0f28af8496",
+  };
+  return config;
+});
+
 /**
  * video视频数据获取接口
  */
-export function fetchVideos(
+export async function fetchVideos(
   params: IFetchVideoParams
 ): Promise<RFetchVideoRes> {
-  const fetchUrl = `${Host_Url}/v1/video-interface/advanced-search?order=${
-    params.order || "score"
-  }&page=${params.page}${
-    params.copyright ? `&copyright=${params.copyright}` : ""
+  try {
+    const res = await BackEndAxios.get("/v1/video-interface/advanced-search", {
+      params: {
+        order: params.order || "score",
+        page: params.page,
+        copyright: params.copyright,
+        q: params.q,
+        tname: params.tname,
+      },
+    });
+    return res.data;
+  } catch (e) {
+    // console.log({ e });
+    return {
+      code: 500,
+      message: "网络请求错误，您似乎处于断网状态",
+      ttl: 0,
+      data: {
+        page: 0,
+        numResults: 0,
+        result: [],
+      },
+    };
   }
-  ${params.q ? `&q=${params.q}` : ""}
-  ${
-    params.tname ? `&tname=${params.tname}` : ""
-  }&subscription-key=3cc4284fbb864965a7a9ad0f28af8496`
-    .replace(/\s+/g, "")
-    .trim();
-  return fetch(fetchUrl, {
-    method: "GET",
-  }).then((response) => response.json() as Promise<RFetchVideoRes>);
 }

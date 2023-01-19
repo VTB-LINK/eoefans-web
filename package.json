@@ -20,6 +20,7 @@
     "@mui/lab": "5.0.0-alpha.114",
     "@mui/material": "^5.11.3",
     "@reduxjs/toolkit": "^1.9.1",
+    "axios": "^1.2.3",
     "dayjs": "^1.11.7",
     "imagesloaded": "^5.0.0",
     "intersection-observer": "^0.12.2",
@@ -35,8 +36,7 @@
     "react-photo-view": "^1.2.3",
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.6.1",
-    "react-use": "^17.4.0",
-    "whatwg-fetch": "^3.6.2"
+    "react-use": "^17.4.0"
   },
   "devDependencies": {
     "@babel/core": ">=7.0.0 <8.0.0",

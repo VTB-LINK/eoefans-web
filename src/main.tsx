@@ -15,7 +15,6 @@ import store from "@store/index";
 import "intersection-observer";
 import "./normalize.css";
 import "loading-attribute-polyfill";
-import "whatwg-fetch";
 import "./index.less";
 
 const router = createBrowserRouter([

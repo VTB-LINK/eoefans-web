@@ -5,6 +5,7 @@ import { VideoRouterMasonryType } from "./videotype";
 
 type ValueOf<T> = T[keyof T];
 export default function VideoPage() {
+  //处理搜索条件
   const activeTags = useAppSelector(selectActiveTags),
     tname = activeTags.find((item) => item.queryType === "tname")
       ?.queryString as ValueOf<Pick<VideoRouterMasonryType, "tname">>,

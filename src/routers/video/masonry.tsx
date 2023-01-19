@@ -8,10 +8,7 @@ import { nanoid } from "nanoid";
 import styles from "./video.module.less";
 import { fetchVideohnadler, PickVideoRouterImageCardType } from "./tools";
 import { useAppSelector, useAppDispatch } from "@store/hooks";
-import {
-  changeLoading,
-  selectVideoLoadingState,
-} from "../../store/loading/index";
+import { changeLoading, selectVideoLoadingState } from "@store/loading/index";
 /**
  * @description 该组件负责渲染视频图片的瀑布流
  */
