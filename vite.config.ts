@@ -59,7 +59,6 @@ export default defineConfig(({ mode }) => {
               "@dnd-kit/utilities",
             ],
             ployfill: [
-              "whatwg-fetch",
               "intersection-observer",
               "react-flip-toolkit",
               "react-intersection-observer",
