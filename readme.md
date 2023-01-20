@@ -11,22 +11,17 @@
 
 ```bash
 # install dependencies
-$ npm install
+$ pnpm install
 
 # serve with hot reload
-$ npm run dev
+$ pnpm run dev
 
 # build for production
-$ npm run build
+$ pnpm run build
 
 # local preview
-$ npm run preview
+$ pnpm run preview
 ```
-
-## 时间线
-
-- 15 号->完成整体布局
-- 22 号->上线
 
 ## 已完成功能
 
