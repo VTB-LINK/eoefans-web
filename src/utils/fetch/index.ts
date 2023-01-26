@@ -2,8 +2,14 @@ import axios from "axios";
 /**
  * 类型文件导入
  */
-import { IFetchVideoParams, RFetchVideoRes } from "./fetchtype";
+import {
+  IFetchVideoParams,
+  RFetchPhotoRes,
+  RFetchVideoRes,
+  IFetchPhotoParams,
+} from "./fetchtype";
 import { Host_Url } from "./tool";
+import { Omit } from "../index";
 
 export const BackEndAxios = axios.create({
   baseURL: Host_Url,
@@ -28,7 +34,7 @@ export async function fetchVideos(
   params: IFetchVideoParams
 ): Promise<RFetchVideoRes> {
   try {
-    const res = await BackEndAxios.get("/v1/video-interface/advanced-search", {
+    const res = await BackEndAxios.get("/video-interface/advanced-search", {
       params: {
         order: params.order || "score",
         page: params.page,
@@ -47,6 +53,30 @@ export async function fetchVideos(
       data: {
         page: 0,
         numResults: 0,
+        result: [],
+      },
+    };
+  }
+}
+/**
+ * photo图片数据获取接口
+ */
+export async function fetchPhotos(
+  params: IFetchPhotoParams
+): Promise<RFetchPhotoRes> {
+  try {
+    const res = await BackEndAxios.get(`/pic/${params.type}`, {
+      params: Omit(params, "type"),
+    });
+    return res.data;
+  } catch (e) {
+    return {
+      code: 500,
+      message: "网络请求错误，您似乎处于断网状态",
+      ttl: 0,
+      data: {
+        page: 0,
+        total: 0,
         result: [],
       },
     };

@@ -2,7 +2,7 @@ import { FC, useState, useEffect, useCallback } from "react";
 import { Masonry as Masonic_masonry } from "masonic";
 import Image from "@components/image";
 import { SingleRun, concurrencyRequest } from "@utils/index";
-import { fetchVideos } from "@utils/fetch";
+import { fetchPhotos, fetchVideos } from "@utils/fetch";
 import { nanoid } from "nanoid";
 import { getImageSize } from "../image/tool";
 export default function Masonry() {
@@ -12,38 +12,12 @@ export default function Masonry() {
     stopIndex: number,
     currentItems: any[]
   ) => {
-    const res = await fetchVideos({
-        order: "view",
-        page: 1,
+    const res = await fetchPhotos({
+        type: "recommend",
+        page: 0,
+        topic_id: 0,
       }),
-      data = res.data.result,
-      urls = data.map((item) => item.face);
-    const fetchimagres = await concurrencyRequest(urls, getImageSize, 6);
-    setLists((lists) => {
-      return [
-        ...lists,
-        ...data.map((item, index) => {
-          // if (index !== data.length - 6) {
-          return {
-            image: item.face,
-            name: item.name,
-            id: nanoid(10),
-          };
-          // }
-          return {
-            image: item.face,
-            name: item.name,
-            id: nanoid(10),
-            observer: true,
-            callback: (inView: boolean) => {
-              //@ts-ignore
-              fetchMoreItems();
-              console.log("fetching!");
-            },
-          };
-        }),
-      ];
-    });
+      data = res.data.result;
   };
   const fetchMoreItemsHandler = useCallback(SingleRun(fetchMoreItems), [
     setLists,

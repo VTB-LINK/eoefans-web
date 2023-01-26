@@ -1,19 +1,29 @@
-import { useSearchFocus } from "@components/proview/searchFocus";
-import { Flipped } from "react-flip-toolkit";
 import styles from "./layout.module.less";
 import LOGO from "./logo";
-import RightSide from "./rightSide";
-import Search from "./search";
+import { useAppDispatch } from "@store/hooks";
+import { Link, useLocation } from "react-router-dom";
+import { useEffect, useMemo } from "react";
+import { changeLoadingCauseByUrl } from "@store/loading";
 export default function Header() {
-  // const { focused } = useSearchFocus();
-  return (
-    // <Flipped flipId={"list"} spring={"veryGentle"}>
-    <header className={styles["header"]}>
-      {/* {!focused && <LOGO />}
-        <Search />
-        {!focused && <RightSide />} */}
-      <LOGO />
-    </header>
-    // </Flipped>
+  const dispatch = useAppDispatch(),
+    location = useLocation();
+  useEffect(() => {
+    dispatch(
+      changeLoadingCauseByUrl({
+        stateName:
+          location.pathname == "/photo" ? "photoIsloading" : "videoIsLoading",
+      })
+    );
+  }, [location.pathname]);
+  const JSXRes = useMemo(
+    () => (
+      <header className={styles["header"]}>
+        <LOGO />
+        <Link to='/video'>video</Link>
+        <Link to='/photo'>photo</Link>
+      </header>
+    ),
+    []
   );
+  return <>{JSXRes}</>;
 }

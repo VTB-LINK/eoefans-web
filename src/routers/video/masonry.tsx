@@ -1,12 +1,11 @@
 import { useState, useEffect, FC, memo } from "react";
 import { VideoRouterImageCardType, VideoRouterMasonryType } from "./videotype";
 import { Unstable_Grid2 as Grid } from "@mui/material";
-import ImageShouldResizeProview from "@components/proview/imageSize";
 import { VideoRouterImageCard } from "./item";
 import { Skeleton } from "@mui/material";
 import { nanoid } from "nanoid";
 import styles from "./video.module.less";
-import { fetchVideohnadler, PickVideoRouterImageCardType } from "./tools";
+import { fetchVideohandler, PickVideoRouterImageCardType } from "./tools";
 import { useAppSelector, useAppDispatch } from "@store/hooks";
 import { changeLoading, selectVideoLoadingState } from "@store/loading/index";
 /**
@@ -23,7 +22,7 @@ export default function VideoMasonry(props: VideoRouterMasonryType) {
   useEffect(() => {
     // 在内部定义fetchHandler，保证拿到的是同步的
     const fetchHandler = async (page: number = 1) => {
-      const data = await fetchVideohnadler(page, props);
+      const data = await fetchVideohandler(page, props);
       setLists((lists) => [
         ...lists,
         ...data.map((item, index) => {
@@ -48,30 +47,28 @@ export default function VideoMasonry(props: VideoRouterMasonryType) {
   }, [props]);
   return (
     <div className='feedContainer'>
-      <ImageShouldResizeProview>
-        <Grid
-          container
-          spacing={{
-            lg: 2,
-            md: 1,
-            sm: 1,
-            xs: 1,
-          }}
-          rowSpacing={2}
-          columns={{
-            lg: 10,
-            md: 8,
-            sm: 6,
-            xs: 4,
-          }}
-          className={styles["container"]}
-        >
-          {lists.map((item) => (
-            <MemoItems key={item.id} {...item} />
-          ))}
-          {isLoading && <LoadingSkeleton num={20} />}
-        </Grid>
-      </ImageShouldResizeProview>
+      <Grid
+        container
+        spacing={{
+          lg: 2,
+          md: 1,
+          sm: 1,
+          xs: 1,
+        }}
+        rowSpacing={2}
+        columns={{
+          lg: 10,
+          md: 8,
+          sm: 6,
+          xs: 4,
+        }}
+        className={styles["container"]}
+      >
+        {lists.map((item) => (
+          <MemoItems key={item.id} {...item} />
+        ))}
+        {isLoading && <LoadingSkeleton num={20} />}
+      </Grid>
     </div>
   );
 }

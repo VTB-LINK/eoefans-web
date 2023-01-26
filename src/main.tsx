@@ -16,7 +16,7 @@ import "intersection-observer";
 import "./normalize.css";
 import "loading-attribute-polyfill";
 import "./index.less";
-
+import "swiper/css/bundle";
 const router = createBrowserRouter([
   {
     path: "/",

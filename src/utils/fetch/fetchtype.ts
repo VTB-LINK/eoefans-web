@@ -165,10 +165,8 @@ interface RFetchVideoResData {
   numResults: number;
   result: RFetchVideoResResult[];
 }
-/**
- * @description video接口的返回类型
- */
-export interface RFetchVideoRes {
+
+type CustomFetchRes<T> = {
   /**
    * @example 0
    */
@@ -184,5 +182,61 @@ export interface RFetchVideoRes {
   /**
    * @description 放数据的
    */
-  data: RFetchVideoResData;
+  data: T;
+};
+/**
+ * @description video接口的返回类型
+ */
+export type RFetchVideoRes = CustomFetchRes<RFetchVideoResData>;
+
+interface RFetchPhotoResPicturesArr {
+  /**
+   * @description img url src
+   */
+  img_src: string;
+  img_size: number;
+  /**
+   * @description img origin width
+   */
+  img_width: number;
+  /**
+   * @description img origin height
+   */
+  img_height: number;
 }
+
+interface RFetchPhotoResData {
+  page: number;
+  total: number;
+  result: {
+    dynamic_id: number;
+    sent_at: number;
+    pictures: RFetchPhotoResPicturesArr[];
+  }[];
+}
+
+/**
+ * @description photo接口的返回类型
+ */
+export type RFetchPhotoRes = CustomFetchRes<RFetchPhotoResData>;
+
+/**
+ *
+ */
+export type IFetchPhotoParams = {
+  /**
+   * @description photo display rules
+   */
+  type: "recommend" | "latest";
+  /**
+   * @description topic recommend:28953983->莞儿
+                                  28950030->柚恩
+                                  29067608->露早
+                                  28948378->虞莫
+                                  29069147->猴子
+                                  29156150->官号
+                                  0 -> default,all 
+   */
+  topic_id: 28953983 | 28950030 | 29067608 | 28948378 | 29069147 | 29156150 | 0;
+  page: number;
+};

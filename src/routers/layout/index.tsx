@@ -4,16 +4,13 @@ import Header from "./header";
 import Header_Nav from "./nav";
 import { useAppSelector } from "@store/hooks";
 import { selectNavMoreShowed } from "@store/device/index";
-import { useSearchFocus } from "@components/proview/searchFocus";
 import styles from "./layout.module.less";
 export default function Layout() {
-  const showed = useAppSelector(selectNavMoreShowed),
-    { focused } = useSearchFocus();
-
+  const showed = useAppSelector(selectNavMoreShowed);
   return (
     <>
       <Flipper
-        flipKey={`${showed}-${focused}`}
+        flipKey={`${showed}`}
         decisionData={showed}
         spring={"veryGentle"}
         className={styles["container"]}
@@ -31,12 +28,8 @@ export default function Layout() {
           </nav>
         </Flipped>
         <Flipped flipId={"container"} spring={"veryGentle"}>
-          <main>
-            <section
-            // className=
-            >
-              <Outlet />
-            </section>
+          <main className='feedContainer'>
+            <Outlet />
           </main>
         </Flipped>
       </Flipper>

@@ -3,7 +3,7 @@ import { fetchVideos } from "@utils/fetch/index";
 import message from "@components/message";
 import { Pick } from "@utils/index";
 
-export const fetchVideohnadler = async (
+export const fetchVideohandler = async (
   page: number = 1,
   props: VideoRouterMasonryType
 ) => {
