@@ -3,7 +3,6 @@ import { InView } from "react-intersection-observer";
 import { Once } from "@utils/index";
 import { ImageProps } from "./imagetype";
 import styles from "./image.module.less";
-import { useScreenSize } from "../proview/screenSize";
 import {
   getImageSize,
   getResizeHeight,
@@ -79,24 +78,24 @@ export function ImageBasic({
   observer,
   callback,
   children,
-}: Omit<ImageProps, "width" | "height"> & {
+  ...resProps
+}: ImageProps & {
   children?: ReactElement;
+  [k: string]: any;
 }) {
   const once_callback = useCallback(Once(callback!!), []);
-  const { md } = useScreenSize();
   return (
     <InView>
       {({ inView, ref, entry }) => (
         <BorderDiv ref={ref} className={styles.imgWrapper}>
           <img
-            src={`${url}${
-              !md ? `@480w_270h_1c` : `@672w_378h_1c_!web-search-common-cover`
-            }`}
+            src={url}
             style={{
               opacity: 1.0,
             }}
             alt=''
             loading='lazy'
+            {...resProps}
           />
           <>{observer && inView && once_callback(inView)}</>
           {children}

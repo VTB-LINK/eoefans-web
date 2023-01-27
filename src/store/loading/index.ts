@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import type { RootState } from "..";
 
-interface LoadingState {
+export interface LoadingState {
   /**
    * @description 视频接口是否正在获取
    */

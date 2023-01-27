@@ -1,11 +1,10 @@
-import { Avatar, Link, styled } from "@mui/material";
-import { useScreenMatchSize } from "@utils/hooks/match";
+import { Link, styled } from "@mui/material";
 import getrealtiveTime from "@utils/time";
 import { FC } from "react";
 import { VideoRouterImageCardType } from "../videotype";
 import { UPIcon } from "./icon";
 import styles from "./item.module.less";
-import { useScreenSize } from "../../../components/proview/screenSize";
+import { useScreenSize } from "@components/proview/screenSize";
 export const VideoInfo: FC<
   Pick<VideoRouterImageCardType, "title" | "name" | "pubdate" | "bvid">
 > = (props) => {

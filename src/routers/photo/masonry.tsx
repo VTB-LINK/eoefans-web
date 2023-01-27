@@ -7,6 +7,7 @@ import { changeLoading } from "@store/loading/index";
 import { fetchPhotoHandler } from "./tools";
 import { PhotoRouterImageCardType } from "./phototype";
 import PhotoCard from "./item";
+import { useScreenSize } from "@components/proview/screenSize";
 
 //todo props type change
 export default function Masonry(props: any) {
@@ -31,6 +32,7 @@ export default function Masonry(props: any) {
         return [
           ...lists,
           ...data.map((item) => ({
+            dynamic_id: item.dynamic_id,
             images: item.pictures.map((img) => ({
               src: img.img_src,
               height: img.img_height,
@@ -42,13 +44,16 @@ export default function Masonry(props: any) {
     };
     fetchHandler();
   }, [props]);
+  const { sm, md } = useScreenSize(),
+    minCount = sm ? { columnCount: 2 } : {};
   return (
     <>
       <Masonic_masonry
         items={lists}
         maxColumnCount={5}
-        columnGutter={10}
-        rowGutter={10}
+        {...minCount}
+        columnGutter={md ? 5 : 10}
+        rowGutter={md ? 5 : 10}
         columnWidth={200}
         render={PhotoCard}
       />

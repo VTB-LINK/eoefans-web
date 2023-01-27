@@ -9,6 +9,7 @@ export type basicImageType = {
  */
 export type PhotoRouterImageCardType = {
   images: basicImageType[];
+  dynamic_id: number;
   observer?: boolean;
   callback?: (inView: boolean) => void;
 };

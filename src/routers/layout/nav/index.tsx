@@ -24,9 +24,9 @@ import { changeNavMoreShowed, selectNavMoreShowed } from "@store/device/index";
 import { getVersion } from "@utils/index";
 import { selectVideoLoadingState } from "@store/loading/index";
 import {
-  handerAddTag,
-  handerDeleteTag,
-  selectActiveTags,
+  handerVideoAddTag,
+  handerVideoDeleteTag,
+  selectVideoActiveTags,
 } from "@store/tags/index";
 export default function Header_Nav() {
   const [navLists, setLists] = useNavList();
@@ -117,7 +117,7 @@ const NavInViewItem = () => {
           width: "1px",
         }}
       ></span>
-      <Flipped flipId={"nav-right"} delayUntil='list'>
+      <Flipped flipId={"nav-right"} delayUntil='list' opacity translate>
         <div
           className={styles["nav-right-show-btn"]}
           onClick={() => dispatch(changeNavMoreShowed())}
@@ -153,15 +153,15 @@ const NavItem: FC<NavQueryItemType> = memo((props) => {
 });
 
 const NavTagChipItem: FC<NavQueryItemType> = memo((props) => {
-  const clicked = useAppSelector(selectActiveTags).some(
+  const clicked = useAppSelector(selectVideoActiveTags).some(
       (item) => item.id === props.id
     ),
     dispatch = useAppDispatch(),
     handerclick = () => {
       if (clicked) {
-        dispatch(handerDeleteTag(props));
+        dispatch(handerVideoDeleteTag(props));
       } else {
-        dispatch(handerAddTag(props));
+        dispatch(handerVideoAddTag(props));
       }
     },
     isVideoFetching = useAppSelector(selectVideoLoadingState),

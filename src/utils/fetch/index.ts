@@ -1,4 +1,5 @@
 import axios from "axios";
+import JSONBigInt from "json-bigint";
 /**
  * 类型文件导入
  */
@@ -13,7 +14,16 @@ import { Omit } from "../index";
 
 export const BackEndAxios = axios.create({
   baseURL: Host_Url,
-  timeout: 2500,
+  timeout: 9000,
+  transformResponse: [
+    (data) => {
+      try {
+        return JSONBigInt.parse(data);
+      } catch (err) {
+        return data;
+      }
+    },
+  ],
 });
 /**
  * 后端接口配置

@@ -202,20 +202,3 @@ const nav_tag_list_no_id: Omit<NavQueryItemType, "id" | "cancelable">[] = [
     id: nanoid(3),
     cancelable: false,
   })) as NavQueryItemType[];
-const router_list: Omit<NavRouterItemType, "id" | "cancelable">[] = [
-  {
-    type: "router",
-    pathname: "photo",
-    name: "图片",
-  },
-  {
-    type: "router",
-    pathname: "video",
-    name: "视频",
-  },
-];
-export const router_nav_list = router_list.map((item) => ({
-  ...item,
-  id: nanoid(3),
-  cancelable: false,
-})) as NavRouterItemType[];

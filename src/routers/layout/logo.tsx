@@ -1,87 +1,99 @@
 import { Button, Modal, styled } from "@mui/material";
 import { FC, useState } from "react";
-import { Link } from "react-router-dom";
 import styles from "./layout.module.less";
+
+const Explain: FC<{ open: boolean; handlerClick: () => void }> = (props) => (
+  <>
+    <Modal open={props.open} onClose={props.handlerClick}>
+      <div className={styles["modal"]}>
+        <hr className={styles["line_text"]} data-content='QA' />
+        <ul>
+          <li>
+            <p>
+              <strong>Q: </strong>
+              <span>为什么界面这么丑？</span>
+            </p>
+            <p>
+              <strong>A: </strong>
+              <span>web端没有UI捏🙇‍♂️🙇‍♂️🙇‍♂️果咩。</span>
+            </p>
+          </li>
+          <li>
+            <p>
+              <strong>Q: </strong>
+              <span>如何查找我想看的视频类型？</span>
+            </p>
+            <p>
+              <strong>A: </strong>
+              <span>
+                😩目前只能通过点击下方tag栏进行查询，其中各分区、原创和转载、
+                最新发布和最多播放互斥外其他tag皆满足异或查询。
+                <br />
+                🤔tag排序不是固定的，可以使用鼠标或者触摸按住tag半秒后进行移动。
+                <br />
+                🤗可以自定义任何你想要的tag栏顺序，下一次访问也有效。
+              </span>
+            </p>
+          </li>
+          <li>
+            <p>
+              <strong>Q: </strong>
+              <span>露早tag为什么不是应援色？</span>
+            </p>
+            <p>
+              <strong>A: </strong>
+              <span>
+                露早GOGO的应援色为
+                <span
+                  style={{
+                    color: "#3dff9e",
+                  }}
+                >
+                  #3dff9e
+                </span>
+                ,tag字面显示不明显，所以更换为黑露早形态的
+                <span style={{ color: "#A0191D" }}>#A0191D</span>
+              </span>
+            </p>
+          </li>
+        </ul>
+        <Button
+          sx={{
+            position: "relative",
+            left: "50%",
+            transform: "translate(-50%,0)",
+          }}
+          onClick={props.handlerClick}
+        >
+          我知道了
+        </Button>
+      </div>
+    </Modal>
+  </>
+);
 
 export default function LOGO() {
   const [open, set] = useState(false),
     handlerClick = () => set((open) => !open);
   return (
     <div className={styles["logo"]}>
-      <Link to='/'>
-        <H1>
-          EOEfans-web端
-          <Button onClick={handlerClick} sx={{ padding: "0" }}>
-            QA
-          </Button>
-          <Modal open={open} onClose={handlerClick}>
-            <div className={styles["modal"]}>
-              <hr className={styles["line_text"]} data-content='QA' />
-              <ul>
-                <li>
-                  <p>
-                    <strong>Q: </strong>
-                    <span>为什么界面这么丑？</span>
-                  </p>
-                  <p>
-                    <strong>A: </strong>
-                    <span>web端没有UI捏🙇‍♂️🙇‍♂️🙇‍♂️果咩。</span>
-                  </p>
-                </li>
-                <li>
-                  <p>
-                    <strong>Q: </strong>
-                    <span>如何查找我想看的视频类型？</span>
-                  </p>
-                  <p>
-                    <strong>A: </strong>
-                    <span>
-                      😩目前只能通过点击下方tag栏进行查询，其中各分区、原创和转载、
-                      最新发布和最多播放互斥外其他tag皆满足异或查询。
-                      <br />
-                      🤔tag排序不是固定的，可以使用鼠标或者触摸按住tag半秒后进行移动。
-                      <br />
-                      🤗可以自定义任何你想要的tag栏顺序，下一次访问也有效。
-                    </span>
-                  </p>
-                </li>
-                <li>
-                  <p>
-                    <strong>Q: </strong>
-                    <span>露早tag为什么不是应援色？</span>
-                  </p>
-                  <p>
-                    <strong>A: </strong>
-                    <span>
-                      露早GOGO的应援色为
-                      <span
-                        style={{
-                          color: "#3dff9e",
-                        }}
-                      >
-                        #3dff9e
-                      </span>
-                      ,tag字面显示不明显，所以更换为黑露早形态的
-                      <span style={{ color: "#A0191D" }}>#A0191D</span>
-                    </span>
-                  </p>
-                </li>
-              </ul>
-              <Button
-                sx={{
-                  position: "relative",
-                  left: "50%",
-                  transform: "translate(-50%,0)",
-                }}
-                onClick={handlerClick}
-              >
-                我知道了
-              </Button>
-            </div>
-          </Modal>
-        </H1>
-        <Yituo width={"64px"} height={"30px"} />
-      </Link>
+      <H1>
+        EOEfans-web端
+        <Button
+          onClick={handlerClick}
+          sx={{
+            padding: "0",
+            minWidth: "initial",
+            position: "absolute",
+            transform: "translate(5px,-5px)",
+            width: "20px",
+          }}
+        >
+          QA
+        </Button>
+        <Explain open={open} handlerClick={handlerClick} />
+      </H1>
+      <Yituo width={"64px"} height={"30px"} />
     </div>
   );
 }
@@ -92,13 +104,12 @@ const H1 = styled("h1")(({ theme }) => ({
   },
 }));
 
-//todo 修改logo
-
 const Yituo: FC<{
   height: number | string;
   width: number | string;
 }> = ({ height, width }) => (
   <svg width={width} height={height} viewBox='0 0 524.739 295.223'>
+    <title>芝士蛞蝓</title>
     <g id='Component_6_1' data-name='Component 6 – 1'>
       <path
         d='M352.413,1039.154s-18.184-28.564,0-43.279,66.674-109.064,219.936-45.01c0,0,102.175-44.145,120.359-64.919-2.6,0-8.659-33.758-23.379-40.683s-34.636-22.505-32.038-32.892,37.233-3.463,42.429,24.236c3.464,0,34.636,33.758,38.965,34.623.866,0,38.965-16.446,75.333,5.194,0,.866,27.708-22.505,22.513-53.666s25.111-28.564,25.111-28.564,31.172,19.908,0,42.414c0,1.731-27.709,41.548-19.916,56.263s35.5,43.279,32.038,73.575,12.988,7.79,12.988,7.79,7.793,17.312-5.2,16.446-13.854-6.059-13.854-6.059-6.927,105.6-83.991,104.736-34.636-17.312-126.42,0c-77.93,0-174.044-12.118-206.082-19.908.866,2.6-23.379-25.1-53.685-30.3Z'

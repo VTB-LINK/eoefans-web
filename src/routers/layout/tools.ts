@@ -5,7 +5,7 @@ export class Storage<T> {
   }
   private getStorage(Storagename: globalThis.Storage, defaultRes: T): T {
     if (!Storagename) {
-      return Storagename;
+      return defaultRes;
     }
     if (!Storagename.getItem(this.itemName)) {
       Storagename.setItem(this.itemName, JSON.stringify(defaultRes));
@@ -27,5 +27,8 @@ export class Storage<T> {
   }
   setSessionStorage(targetRes: T): void {
     this.setStorage(sessionStorage, targetRes);
+  }
+  clearLocalstorage(): void {
+    localStorage.removeItem(this.itemName);
   }
 }

@@ -1,12 +1,12 @@
 import { useAppSelector } from "@store/hooks";
-import { selectActiveTags } from "@store/tags";
+import { selectVideoActiveTags } from "@store/tags";
 import VideoMasonry from "./masonry";
 import { VideoRouterMasonryType } from "./videotype";
 
 type ValueOf<T> = T[keyof T];
 export default function VideoPage() {
   //处理搜索条件
-  const activeTags = useAppSelector(selectActiveTags),
+  const activeTags = useAppSelector(selectVideoActiveTags),
     tname = activeTags.find((item) => item.queryType === "tname")
       ?.queryString as ValueOf<Pick<VideoRouterMasonryType, "tname">>,
     copyright = activeTags.find((item) => item.queryType === "copyright")

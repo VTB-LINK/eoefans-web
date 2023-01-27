@@ -5,47 +5,48 @@ import type { RootState } from "..";
 
 interface TagStates {
   /**
-   * @description 用户点击的tag栏
+   * @description video页面点击tags
    */
-  activeTags: NavQueryItemType[];
+  VideoActiveTags: NavQueryItemType[];
 }
 const initialState: TagStates = {
-  activeTags: [],
+  VideoActiveTags: [],
 };
 export const ActiveTagsSlice = createSlice({
-  name: "activeTags",
+  name: "VideoActiveTags",
   initialState,
   reducers: {
     /**
-     * @description 添加tag
+     * @description video页面添加tag
      */
-    handerAddTag: (state, action: PayloadAction<NavQueryItemType>) => {
-      //这里需要注意的是queryType有三种，只有q可以同存.
+    handerVideoAddTag: (state, action: PayloadAction<NavQueryItemType>) => {
+      //这里需要注意的是queryType多种，只有q可以同存.
       switch (action.payload.queryType) {
         case "q":
           break;
 
         default:
-          state.activeTags = state.activeTags.filter(
+          state.VideoActiveTags = state.VideoActiveTags.filter(
             (item) => item.queryType !== action.payload.queryType
           );
           break;
       }
-      state.activeTags = [...state.activeTags, action.payload];
+      state.VideoActiveTags = [...state.VideoActiveTags, action.payload];
     },
     /**
-     * @description 删除tag
+     * @description video页面删除tag
      */
-    handerDeleteTag: (state, action: PayloadAction<NavQueryItemType>) => {
-      state.activeTags = state.activeTags.filter(
+    handerVideoDeleteTag: (state, action: PayloadAction<NavQueryItemType>) => {
+      state.VideoActiveTags = state.VideoActiveTags.filter(
         (item) => item.id !== action.payload.id
       );
     },
   },
 });
 
-export const { handerAddTag, handerDeleteTag } = ActiveTagsSlice.actions;
+export const { handerVideoAddTag, handerVideoDeleteTag } =
+  ActiveTagsSlice.actions;
 
-export const selectActiveTags = (state: RootState) =>
-  state.ActiveTags.activeTags;
+export const selectVideoActiveTags = (state: RootState) =>
+  state.ActiveTags.VideoActiveTags;
 export default ActiveTagsSlice.reducer;

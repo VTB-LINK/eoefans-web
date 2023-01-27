@@ -8,7 +8,7 @@ import viteCompression from "vite-plugin-compression";
 // polyfill
 import legacy from "@vitejs/plugin-legacy";
 // https://vitejs.dev/config/
-
+//@ts-ignore
 export default defineConfig(({ mode }) => {
   return {
     define: {
@@ -45,13 +45,9 @@ export default defineConfig(({ mode }) => {
             react: ["react", "react-dom"],
             "react-router": ["react-router-dom"],
             "react-redux": ["@reduxjs/toolkit", "react-redux"],
-            lib: [
-              "@mui/icons-material",
-              "@mui/lab",
-              "@mui/material",
-              "@emotion/react",
-              "@emotion/styled",
-            ],
+            axios: ["axios"],
+            lib: ["@mui/icons-material", "@mui/lab", "@mui/material"],
+            transform: ["json-bigint", "@emotion/react", "@emotion/styled"],
             "dnd-tool": [
               "@dnd-kit/core",
               "@dnd-kit/modifiers",

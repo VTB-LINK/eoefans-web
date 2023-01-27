@@ -1,4 +1,5 @@
 import { ImageBasic } from "@components/image";
+import { useScreenSize } from "@components/proview/screenSize";
 import { FC } from "react";
 import { Link } from "@mui/material";
 import { VideoRouterImageCardType } from "../videotype";
@@ -11,6 +12,7 @@ export const VideoRouterImageCard: FC<{ data: VideoRouterImageCardType }> = ({
   data,
 }) => {
   const { pic, bvid } = data;
+  const { md } = useScreenSize();
   return (
     <section className={styles["video-section"]}>
       <Link
@@ -20,7 +22,11 @@ export const VideoRouterImageCard: FC<{ data: VideoRouterImageCardType }> = ({
         color='inherit'
       >
         <ImageBasic
-          url={pic}
+          height={9}
+          width={16}
+          url={`${pic}${
+            md ? `@480w_270h_1c` : `@672w_378h_1c_!web-search-common-cover`
+          }`}
           {...Omit(
             data,
             "pic",
