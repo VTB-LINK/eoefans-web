@@ -46,8 +46,14 @@ export default defineConfig(({ mode }) => {
             "react-router": ["react-router-dom"],
             "react-redux": ["@reduxjs/toolkit", "react-redux"],
             axios: ["axios"],
-            lib: ["@mui/icons-material", "@mui/lab", "@mui/material"],
-            transform: ["json-bigint", "@emotion/react", "@emotion/styled"],
+            lib: [
+              "@mui/icons-material",
+              "@mui/lab",
+              "@mui/material",
+              "@emotion/react",
+              "@emotion/styled",
+            ],
+            transform: ["json-bigint"],
             "dnd-tool": [
               "@dnd-kit/core",
               "@dnd-kit/modifiers",
