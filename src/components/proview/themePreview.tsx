@@ -36,9 +36,6 @@ declare module "@mui/material/Button" {
   }
 }
 const theme = createTheme({
-  typography: {
-    fontFamily: "Proxima Soft",
-  },
   palette: {
     luzao: { main: "#3dff9e", contrastText: "#fff" },
     luzaoRed: { main: "#A0191D", contrastText: "#fff" },

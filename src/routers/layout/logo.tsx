@@ -1,4 +1,4 @@
-import { Button, Modal, styled } from "@mui/material";
+import { Button, Link, Modal, styled } from "@mui/material";
 import { FC, useState } from "react";
 import styles from "./layout.module.less";
 
@@ -53,6 +53,37 @@ const Explain: FC<{ open: boolean; handlerClick: () => void }> = (props) => (
                 </span>
                 ,tag字面显示不明显，所以更换为黑露早形态的
                 <span style={{ color: "#A0191D" }}>#A0191D</span>
+              </span>
+            </p>
+          </li>
+          <li>
+            <p>
+              <strong>Q: </strong>
+              <span>如何进行用户反馈？</span>
+            </p>
+            <p>
+              <strong>A: </strong>
+              <span>
+                请前往
+                <Link
+                  href={`http://eoe.best/appfeedback`}
+                  target='_blank'
+                  underline='none'
+                >
+                  eoefans反馈
+                </Link>
+              </span>
+            </p>
+          </li>
+          <li>
+            <p>
+              <strong>Q: </strong>
+              <span>图片页图片太小了？</span>
+            </p>
+            <p>
+              <strong>A: </strong>
+              <span>
+                图片页可点击图片进入放大镜模式，支持手势返回和空白处返回；可使用双指放大对图片大小进行调整。
               </span>
             </p>
           </li>

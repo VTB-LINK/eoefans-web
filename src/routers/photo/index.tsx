@@ -1,13 +1,23 @@
 import Masonry from "./masonry";
+import { useAppSelector } from "@store/hooks";
+import { selectPhotoActiveTags } from "@store/tags";
+import {
+  PhotoSearchType,
+  PhotoTopicType,
+} from "@routers/layout/nav/photoTools";
 
 export default function PhotoPage() {
+  const activeTags = useAppSelector(selectPhotoActiveTags),
+    typeitem = activeTags.find(
+      (item) => item.queryType === "type"
+    )! as PhotoSearchType,
+    topicItem = activeTags.find(
+      (item) => item.queryType === "topic_id"
+    ) as PhotoTopicType;
+
   return (
     <>
-      <Masonry />
+      <Masonry type={typeitem.queryString} topic_id={topicItem.queryString} />
     </>
   );
 }
-//todo 替换掉nav，应该在每个路由下有单独的nav
-//todo 添加滚动加载-photo页面
-//todo 选好nav列表
-//todo photo图片进行收缩

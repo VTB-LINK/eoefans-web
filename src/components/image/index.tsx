@@ -54,7 +54,7 @@ export default memo(function Image({
   return (
     <InView>
       {({ inView, ref, entry }) => (
-        <div ref={ref} className={styles.imgWrapper}>
+        <BorderDiv ref={ref} className={styles.imgWrapper}>
           <img
             width={real_width}
             height={real_height}
@@ -67,7 +67,7 @@ export default memo(function Image({
           />
           <>{observer && inView && once_callback(inView)}</>
           {children}
-        </div>
+        </BorderDiv>
       )}
     </InView>
   );
@@ -88,15 +88,7 @@ export function ImageBasic({
     <InView>
       {({ inView, ref, entry }) => (
         <BorderDiv ref={ref} className={styles.imgWrapper}>
-          <img
-            src={url}
-            style={{
-              opacity: 1.0,
-            }}
-            alt=''
-            loading='lazy'
-            {...resProps}
-          />
+          <img src={url} alt='' loading='lazy' {...resProps} />
           <>{observer && inView && once_callback(inView)}</>
           {children}
         </BorderDiv>

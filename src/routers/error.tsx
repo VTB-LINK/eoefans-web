@@ -1,3 +1,4 @@
+import message from "@components/message";
 import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
 
@@ -24,11 +25,15 @@ export default function ErrorPage() {
         <Link to={"/"}>
           <Button>首页</Button>
         </Link>
-        和
-        <Link to={"/"}>
+        、
+        <Link to={"/video"}>
           <Button>视频页</Button>
         </Link>
-        两个页面(虽然两个是同一个页面)。
+        和
+        <Link to={"/photo"}>
+          <Button>图片页</Button>
+        </Link>
+        。
       </p>
       <p>
         请尝试点击链接
@@ -49,4 +54,5 @@ export default function ErrorPage() {
 const deleteAllDataStorage = () => {
   localStorage.clear();
   sessionStorage.clear();
+  message.info("重置网站数据成功!");
 };

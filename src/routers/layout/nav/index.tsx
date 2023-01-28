@@ -18,18 +18,45 @@ import { restrictToParentElement } from "@dnd-kit/modifiers";
 import styles from "./nav.module.less";
 import { FC, useMemo, memo } from "react";
 import { Flipped } from "react-flip-toolkit";
-import { NavQueryItemType, useNavList, NavStorage } from "./tools";
+import {
+  VideoNavQueryItemType,
+  useVideoNavList,
+  VideoNavStorage,
+} from "./VideoTools";
 import { useAppSelector, useAppDispatch } from "@store/hooks";
 import { changeNavMoreShowed, selectNavMoreShowed } from "@store/device/index";
 import { getVersion } from "@utils/index";
-import { selectVideoLoadingState } from "@store/loading/index";
 import {
+  selectPhotoLoadingState,
+  selectVideoLoadingState,
+} from "@store/loading/index";
+import { useLocation } from "react-router-dom";
+import {
+  PhotoNavQueryItemType,
+  PhotoNavStorage,
+  usePhotoNavList,
+} from "./photoTools";
+import {
+  handerPhotoAddTag,
+  handerPhotoDeleteTag,
   handerVideoAddTag,
   handerVideoDeleteTag,
+  selectPhotoActiveTags,
   selectVideoActiveTags,
 } from "@store/tags/index";
+
+function useSelectList() {
+  const { pathname } = useLocation(),
+    flag = pathname === "/photo",
+    storageSelect = flag ? PhotoNavStorage : VideoNavStorage;
+  const PhotoHook = usePhotoNavList(),
+    VideoHook = useVideoNavList();
+  const [navLists, setLists] = flag ? PhotoHook : VideoHook;
+  return { navLists, setLists, storageSelect };
+}
+
 export default function Header_Nav() {
-  const [navLists, setLists] = useNavList();
+  const { navLists, setLists, storageSelect } = useSelectList();
   //tag区是否展开
   const showed = useAppSelector(selectNavMoreShowed);
   //拖拽事件绑定
@@ -53,11 +80,11 @@ export default function Header_Nav() {
   function handleDragEnd(event: DragEndEvent) {
     const { active, over } = event;
     if (over && active.id !== over.id) {
-      setLists((items) => {
+      setLists((items: any[]) => {
         const oldIndex = items.findIndex((item) => item.id === active.id),
           newIndex = items.findIndex((item) => item.id === over.id),
           newLists = arrayMove(items, oldIndex, newIndex);
-        NavStorage.setLocalstorage({
+        storageSelect.setLocalstorage({
           version: getVersion(),
           res: newLists,
         });
@@ -69,7 +96,7 @@ export default function Header_Nav() {
     () => (
       <>
         {navLists.map((item) => (
-          <NavItem key={item.id} {...item} />
+          <NavItem key={item.id as string} {...item} />
         ))}
       </>
     ),
@@ -93,7 +120,9 @@ export default function Header_Nav() {
             }}
             data-showed={showed}
           >
-            <SortableContext items={navLists}>{ComRes}</SortableContext>
+            <SortableContext items={navLists as any[]}>
+              {ComRes}
+            </SortableContext>
             <NavInViewItem />
           </Stack>
         </Flipped>
@@ -136,58 +165,78 @@ const NavInViewItem = () => {
   );
 };
 
-const NavItem: FC<NavQueryItemType> = memo((props) => {
-  const { attributes, listeners, setNodeRef, transform, transition } =
-    useSortable({ id: props.id });
-  const style = {
-    transform: CSS.Translate.toString(transform),
-    transition,
-  };
-  return (
-    <Flipped flipId={props.id} spring={"veryGentle"}>
-      <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
-        <NavTagChipItem {...props} />
-      </div>
-    </Flipped>
-  );
-});
+const NavItem: FC<VideoNavQueryItemType | PhotoNavQueryItemType> = memo(
+  (props) => {
+    const { attributes, listeners, setNodeRef, transform, transition } =
+      useSortable({ id: props.id as string });
+    const style = {
+      transform: CSS.Translate.toString(transform),
+      transition,
+    };
+    return (
+      <Flipped flipId={props.id as string} spring={"veryGentle"}>
+        <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
+          <NavTagChipItem {...props} />
+        </div>
+      </Flipped>
+    );
+  }
+);
 
-const NavTagChipItem: FC<NavQueryItemType> = memo((props) => {
-  const clicked = useAppSelector(selectVideoActiveTags).some(
-      (item) => item.id === props.id
-    ),
+const useTagSelect = () => {
+  const { pathname } = useLocation(),
+    flag = pathname === "/photo",
+    tag_lists = flag
+      ? useAppSelector(selectPhotoActiveTags)
+      : useAppSelector(selectVideoActiveTags),
+    loading = flag
+      ? useAppSelector(selectPhotoLoadingState)
+      : useAppSelector(selectVideoLoadingState),
     dispatch = useAppDispatch(),
-    handerclick = () => {
+    addTagFunc = flag ? handerPhotoAddTag : handerVideoAddTag,
+    deleteFunc = flag ? handerPhotoDeleteTag : handerVideoDeleteTag;
+
+  return { tag_lists, loading, dispatch, addTagFunc, deleteFunc };
+};
+
+const NavTagChipItem: FC<VideoNavQueryItemType | PhotoNavQueryItemType> = memo(
+  (props) => {
+    const { tag_lists, loading, dispatch, addTagFunc, deleteFunc } =
+      useTagSelect();
+    const clicked = tag_lists.some((item) => item.query === props.query);
+    const handerclick = () => {
       if (clicked) {
-        dispatch(handerVideoDeleteTag(props));
+        //@ts-ignore
+        dispatch(deleteFunc(props));
       } else {
-        dispatch(handerVideoAddTag(props));
+        //@ts-ignore
+        dispatch(addTagFunc(props));
       }
-    },
-    isVideoFetching = useAppSelector(selectVideoLoadingState),
+    };
     //@ts-ignore
-    color = nameToColor[props.query] || "info";
-  return (
-    <Button
-      variant={clicked ? "contained" : "outlined"}
-      color={color}
-      onClick={handerclick}
-      loading={isVideoFetching}
-      sx={{
-        wordBreak: "keep-all",
-        fontWeight: "600",
-        fontSize: {
-          xs: "12px",
-          sm: "14px",
-        },
-        padding: "1px 10px",
-        verticalAlign: "center",
-      }}
-    >
-      {props.query}
-    </Button>
-  );
-});
+    const color = nameToColor[props.query] || "info";
+    return (
+      <Button
+        variant={clicked ? "contained" : "outlined"}
+        color={color}
+        onClick={handerclick}
+        loading={loading}
+        sx={{
+          wordBreak: "keep-all",
+          fontWeight: "600",
+          fontSize: {
+            xs: "12px",
+            sm: "14px",
+          },
+          padding: "1px 10px",
+          verticalAlign: "center",
+        }}
+      >
+        {props.query}
+      </Button>
+    );
+  }
+);
 
 const nameToColor = {
   露早: "luzaoRed",

@@ -14,4 +14,4 @@ export type PhotoRouterImageCardType = {
   callback?: (inView: boolean) => void;
 };
 
-export type PhotoRouterMasonryType = IFetchPhotoParams;
+export type PhotoRouterMasonryType = Omit<IFetchPhotoParams, "page">;

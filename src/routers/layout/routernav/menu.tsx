@@ -29,7 +29,12 @@ export default function MenuRouter() {
 }
 function RouterItem(props: TabProps & { onClick: () => void }) {
   return (
-    <MenuItem onClick={props.onClick}>
+    <MenuItem
+      onClick={props.onClick}
+      sx={{
+        padding: "0",
+      }}
+    >
       <TabLink {...Omit(props, "onClick")} />
     </MenuItem>
   );

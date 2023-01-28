@@ -3,35 +3,35 @@ import { useMemo, useState } from "react";
 import { Storage } from "../tools";
 import { getVersion } from "@utils/index";
 
-interface DnavStorage {
+export interface VideoNavStorage {
   version: string;
-  res: NavQueryItemType[];
+  res: VideoNavQueryItemType[];
 }
 
-export const NavStorage = new Storage<DnavStorage>("navTagLists");
+export const VideoNavStorage = new Storage<VideoNavStorage>("navTagLists");
 
-export function useNavList(): [
-  NavQueryItemType[],
-  React.Dispatch<React.SetStateAction<NavQueryItemType[]>>
+export function useVideoNavList(): [
+  VideoNavQueryItemType[],
+  React.Dispatch<React.SetStateAction<VideoNavQueryItemType[]>>
 ] {
   const nav_ok_lists = useMemo(() => {
-    const local_lists = NavStorage.getLocalStorage({
+    const local_lists = VideoNavStorage.getLocalStorage({
       version: getVersion(),
       res: [],
-    } as DnavStorage);
+    } as VideoNavStorage);
     if (!local_lists.version) {
-      return query_nav_list;
+      return video_query_nav_list;
     }
     //todo 修改逻辑
     if (parseFloat(local_lists.version) < parseFloat(getVersion())) {
-      return query_nav_list;
+      return video_query_nav_list;
     }
     if (PassNavList(local_lists.res)) {
       return local_lists.res;
     }
-    return query_nav_list;
+    return video_query_nav_list;
   }, []);
-  const [navLists, setLists] = useState<NavQueryItemType[]>(nav_ok_lists);
+  const [navLists, setLists] = useState<VideoNavQueryItemType[]>(nav_ok_lists);
   return [navLists, setLists];
 }
 // 判断类型
@@ -49,7 +49,7 @@ function checkPropertyType<T extends { [k: string]: any }>(
   return input.hasOwnProperty(property) && typeof input[property] === type;
 }
 //检测从localstorage提取的querylist是否满足条件
-function PassNavList(lists: NavQueryItemType[]) {
+function PassNavList(lists: VideoNavQueryItemType[]) {
   if (
     lists.length > 0 &&
     lists.every((item) => {
@@ -102,7 +102,7 @@ export type NavRouterItemType = {
   name: string;
   cancelable: boolean;
 };
-export type NavQueryItemType = {
+export type VideoNavQueryItemType = {
   id: string;
   type: "query";
   query: string;
@@ -110,8 +110,8 @@ export type NavQueryItemType = {
   queryString: string;
   cancelable: boolean;
 };
-export type NavListItemType = NavQueryItemType | NavRouterItemType;
-const nav_tag_list_no_id: Omit<NavQueryItemType, "id" | "cancelable">[] = [
+export type NavListItemType = VideoNavQueryItemType | NavRouterItemType;
+const nav_tag_list_no_id: Omit<VideoNavQueryItemType, "id" | "cancelable">[] = [
     {
       type: "query",
       query: "露早",
@@ -197,8 +197,8 @@ const nav_tag_list_no_id: Omit<NavQueryItemType, "id" | "cancelable">[] = [
       queryString: "view",
     },
   ],
-  query_nav_list = nav_tag_list_no_id.map((item) => ({
+  video_query_nav_list = nav_tag_list_no_id.map((item) => ({
     ...item,
     id: nanoid(3),
     cancelable: false,
-  })) as NavQueryItemType[];
+  })) as VideoNavQueryItemType[];

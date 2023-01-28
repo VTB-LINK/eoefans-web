@@ -74,6 +74,7 @@ export async function fetchVideos(
 export async function fetchPhotos(
   params: IFetchPhotoParams
 ): Promise<RFetchPhotoRes> {
+  // console.log({ params });
   try {
     const res = await BackEndAxios.get(`/pic/${params.type}`, {
       params: Omit(params, "type"),
