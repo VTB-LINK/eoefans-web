@@ -1,5 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { VideoNavQueryItemType } from "@routers/layout/nav/VideoTools";
+import {
+  VideoNavQueryItemType,
+  VideoQueryNavList,
+} from "@routers/layout/nav/VideoTools";
 import {
   PhotoNavQueryItemType,
   PhotoQueryNavList,
@@ -10,7 +13,10 @@ const Photo_Topic_id_all = PhotoQueryNavList.find(
     (item) => item.queryString === 0
   )!,
   Photo_type_default = PhotoQueryNavList.find(
-    (item) => item.queryString === "recommend"
+    (item) => item.queryString === "latest"
+  )!,
+  Video_default_show = VideoQueryNavList.find(
+    (item) => item.queryString === "pubdate"
   )!;
 
 interface TagStates {
@@ -24,7 +30,7 @@ interface TagStates {
   PhotoActivetags: PhotoNavQueryItemType[];
 }
 const initialState: TagStates = {
-  VideoActiveTags: [],
+  VideoActiveTags: [Video_default_show],
   PhotoActivetags: [Photo_Topic_id_all, Photo_type_default],
 };
 export const ActiveTagsSlice = createSlice({

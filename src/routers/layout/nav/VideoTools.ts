@@ -202,3 +202,5 @@ const nav_tag_list_no_id: Omit<VideoNavQueryItemType, "id" | "cancelable">[] = [
     id: nanoid(3),
     cancelable: false,
   })) as VideoNavQueryItemType[];
+
+export const VideoQueryNavList = video_query_nav_list;
