@@ -6,6 +6,7 @@ import { Link, styled } from "@mui/material";
 import style from "./photo.module.less";
 import { ImageBasic } from "@components/image";
 import { Omit } from "@utils/index";
+import CollectionsIcon from "@mui/icons-material/Collections";
 type CardType = {
   data: PhotoRouterImageCardType;
 };
@@ -40,16 +41,40 @@ export default function PhotoCard(props: CardType) {
           <ChevronRightIcon />
         </Link>
       </DivJump>
+      {images.length > 1 && (
+        <DivImgNum>
+          <CollectionsIcon color='inherit' fontSize='inherit' />
+          {images.length}
+        </DivImgNum>
+      )}
     </div>
   );
 }
+
+const DivImgNum = styled("div")`
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  padding: 7px;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: 2px;
+  pointer-events: none;
+`;
+
 const DivJump = styled("div")(({ theme }) => ({
   borderBottomLeftRadius: "8px",
   borderBottomRightRadius: "8px",
   position: "absolute",
   bottom: "0px",
   width: "100%",
-  backgroundImage: `linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.8) 100%)`,
+  backgroundImage: `linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(90, 90,90, 0.8) 100%)`,
+  "&:hover": {
+    backgroundImage: `linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0,0, 0.8) 100%)`,
+  },
   [theme.breakpoints.down("sm")]: {
     borderBottomLeftRadius: "4px",
     borderBottomRightRadius: "4px",
