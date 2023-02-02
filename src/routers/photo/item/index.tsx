@@ -51,19 +51,20 @@ export default function PhotoCard(props: CardType) {
   );
 }
 
-const DivImgNum = styled("div")`
-  position: absolute;
-  right: 0px;
-  top: 0px;
-  padding: 7px;
-  color: white;
-  background-color: rgba(0, 0, 0, 0.4);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  column-gap: 2px;
-  pointer-events: none;
-`;
+const DivImgNum = styled("div")(({ theme }) => ({
+  position: "absolute",
+  right: "0px",
+  top: "0px",
+  padding: "7px",
+  color: "white",
+  backgroundColor: "rgba(0, 0, 0, 0.4)",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  columnGap: "2px",
+  pointerEvents: "none",
+  fontSize: "14px",
+}));
 
 const DivJump = styled("div")(({ theme }) => ({
   borderBottomLeftRadius: "8px",

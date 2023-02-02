@@ -24,7 +24,7 @@ export default function Masonry() {
   ]);
   useEffect(() => {
     fetchMoreItemsHandler(0, 20, []);
-    console.log("effect");
+    // console.log("effect");
   }, [fetchMoreItemsHandler]);
   return (
     <div
